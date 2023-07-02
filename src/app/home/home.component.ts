@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-dashboard',
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
 
-  constructor(private oauthService: OAuthService) {
+  userInfo = this.httpClient.get('https://api.spotify.com/v1/me');
+
+  constructor(private httpClient: HttpClient) {
   }
 
-  login() {
-    this.oauthService.initCodeFlow();
-  }
 }
