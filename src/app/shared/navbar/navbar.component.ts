@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  @Input() showBurgerMenu = false;
+
+  @Output() burgerMenuClicked = new EventEmitter<MouseEvent>();
 }

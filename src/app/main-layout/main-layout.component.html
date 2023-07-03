@@ -1,10 +1,17 @@
+<app-navbar [showBurgerMenu]="!(alwaysShowSideNav$ | async)"
+            (burgerMenuClicked)="sidenav.toggle()"
+/>
+
 <mat-sidenav-container class="flex-grow">
-  <mat-sidenav opened mode="side" class="w-64">
+  <mat-sidenav #sidenav
+               class="w-64"
+               [opened]="alwaysShowSideNav$ | async"
+               [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'" >
     <app-sidenav />
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <router-outlet />
   </mat-sidenav-content>
 </mat-sidenav-container>
 

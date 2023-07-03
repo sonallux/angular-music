@@ -8,7 +8,6 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 import { LoginModule } from './login/login.module';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { SharedModule } from './shared/shared.module';
         sendAccessToken: true
       }
     }),
-    SharedModule,
     MainLayoutModule,
     LoginModule,
   ],

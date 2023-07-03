@@ -1,4 +1,9 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button
+          *ngIf="showBurgerMenu"
+          (click)="burgerMenuClicked.emit($event)">
+    <mat-icon>menu</mat-icon>
+  </button>
   <a mat-button href="/">
     <img matButtonIcon
          src="../../../assets/img/angular-white-transparent.svg"
