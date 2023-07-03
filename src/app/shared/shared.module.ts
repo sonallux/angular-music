@@ -3,6 +3,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -11,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
     MatButtonModule,
     MatToolbarModule,
+    MatSidenavModule,
   ],
   exports: [NavbarComponent]
 })

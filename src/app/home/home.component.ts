@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { UserApiService } from 'ngx-spotify';
+import { map, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent {
 
-  userInfo = this.httpClient.get('https://api.spotify.com/v1/me');
+  userInfo$ = this.userApiService.getCurrentUser().pipe(shareReplay({refCount: true}));
+  userName$ = this.userInfo$.pipe(map(user => user.display_name))
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private userApiService: UserApiService) {
   }
 
 }

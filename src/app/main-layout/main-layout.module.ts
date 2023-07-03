@@ -4,10 +4,14 @@ import { MainLayoutComponent } from './main-layout.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
-    MainLayoutComponent
+    MainLayoutComponent,
+    SidenavComponent
   ],
   imports: [
     CommonModule,
@@ -15,6 +19,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
     MatButtonModule,
     MatSidenavModule,
+    MatListModule,
+    MatIconModule,
   ]
 })
 export class MainLayoutModule { }

@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:ngx-spotify": "ng build ngx-spotify",
+    "generate-model": "openapi-generator-cli generate -i projects/ngx-spotify/fixed-spotify-open-api.yml -g typescript-angular -o projects/ngx-spotify/src/lib/generated --additional-properties=fileNaming=kebab-case"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +31,7 @@
     "@angular-devkit/build-angular": "16.1.1",
     "@angular/cli": "16.1.1",
     "@angular/compiler-cli": "16.1.2",
+    "@openapitools/openapi-generator-cli": "2.6.0",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
@@ -36,6 +39,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-packagr": "^16.1.0",
     "tailwindcss": "^3.3.2",
     "typescript": "~5.0.2"
   }
