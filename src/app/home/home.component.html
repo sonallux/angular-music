@@ -1,3 +1,18 @@
-<h2>Hello {{userName$ | async}}</h2>
+<h1 class="mat-headline-2">Hello {{userName$ | async}}</h1>
 
-<p>{{userInfo$ | async | json}}</p>
+<section class="mb-8">
+  <h2 class="mat-headline-4 mb-4">{{featuredPlaylistsMessage$ | async}}</h2>
+
+  <div class="flex flex-wrap gap-4">
+    <app-clickable-card *ngFor="let playlist of playlists$ | async" [item]="playlist" />
+  </div>
+</section>
+
+<section class="mb-8">
+  <h2 class="mat-headline-4 mb-4">New releases</h2>
+
+  <div class="flex gap-4">
+    <mat-card><mat-card-content>Foo</mat-card-content></mat-card>
+    <mat-card><mat-card-content>Bar</mat-card-content></mat-card>
+  </div>
+</section>

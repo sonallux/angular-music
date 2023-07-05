@@ -10,11 +10,8 @@ export { ImageObject } from './generated/model/image-object';
 export { PrivateUserObjectExternalUrls } from './generated/model/private-user-object-external-urls';
 export { PrivateUserObjectExplicitContent } from './generated/model/private-user-object-explicit-content';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class UserApiService {
-
   constructor(
     private httpClient: HttpClient,
     @Inject(SPOTIFY_BASE_URL_TOKEN) private spotifyBaseUrl: string

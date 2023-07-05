@@ -1,0 +1,16 @@
+.clickable-card {
+  @apply w-44;
+
+  &:hover {
+    @apply bg-white/[0.15] cursor-pointer;
+  }
+
+  &:focus {
+    @apply bg-white/[0.25] outline-none;
+  }
+
+  mat-card-content {
+    // restore card padding, because matRipple causes removal of padding on click
+    @apply p-4;
+  }
+}

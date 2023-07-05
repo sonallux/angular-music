@@ -1,23 +1,25 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button
-          *ngIf="showBurgerMenu"
-          (click)="burgerMenuClicked.emit($event)">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <a mat-button href="/">
-    <img matButtonIcon
-         src="../../../assets/img/angular-white-transparent.svg"
-         alt="angular"
-    >
-    <img matButtonIcon src="../../../assets/img/Spotify_Icon_RGB_White.png">
-    Angular Spotify
-  </a>
-  <span class="flex-grow"></span>
-  <a mat-button href="https://github.com/sonallux/angular-spotify">
-    <img matButtonIcon
-         src="../../../assets/img/github-circle-white-transparent.svg"
-         alt="github"
-    >
-    GitHub
-  </a>
-</mat-toolbar>
+<header>
+  <mat-toolbar color="primary">
+    <button mat-icon-button
+            *ngIf="showBurgerMenu"
+            (click)="burgerMenuClicked.emit($event)">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a mat-button href="/">
+      <img matButtonIcon
+           src="../../../assets/img/angular-white-transparent.svg"
+           alt="angular"
+      >
+      <img matButtonIcon src="../../../assets/img/Spotify_Icon_RGB_White.png">
+      Angular Spotify
+    </a>
+    <span class="flex-grow"></span>
+    <a mat-button href="https://github.com/sonallux/angular-spotify">
+      <img matButtonIcon
+           src="../../../assets/img/github-circle-white-transparent.svg"
+           alt="github"
+      >
+      GitHub
+    </a>
+  </mat-toolbar>
+</header>

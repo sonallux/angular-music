@@ -7,5 +7,6 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  important: true, // TailwindCSS classes should take precedent over Angular Material theme
 }
 

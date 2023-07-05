@@ -4,15 +4,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
-import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 import { LoginModule } from './login/login.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +26,7 @@ import { LoginModule } from './login/login.module';
     }),
     MainLayoutModule,
     LoginModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
