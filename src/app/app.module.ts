@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 import { LoginModule } from './login/login.module';
 import { HomeModule } from './pages/home/home.module';
+import { BrowseModule } from './pages/browse/browse.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeModule } from './pages/home/home.module';
     }),
     MainLayoutModule,
     LoginModule,
-    HomeModule
+    HomeModule,
+    BrowseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

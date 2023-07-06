@@ -4,6 +4,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { HomeComponent } from './pages/home/home.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { LoginComponent } from './login/login.component';
+import { BrowseComponent } from './pages/browse/browse.component';
 
 const routes: Routes = [
   {
@@ -15,8 +16,8 @@ const routes: Routes = [
         path: '',
         component: HomeComponent
       }, {
-        path: 'home',
-        component: HomeComponent
+        path: 'browse',
+        component: BrowseComponent
       }
     ]
   }, {
