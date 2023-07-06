@@ -11,8 +11,7 @@
 <section class="mb-8">
   <h2 class="mat-headline-4 mb-4">New releases</h2>
 
-  <div class="flex gap-4">
-    <mat-card><mat-card-content>Foo</mat-card-content></mat-card>
-    <mat-card><mat-card-content>Bar</mat-card-content></mat-card>
+  <div class="flex flex-wrap gap-4">
+    <app-clickable-card *ngFor="let album of newReleases$ | async" [item]="album" />
   </div>
 </section>

@@ -1,5 +1,5 @@
 .clickable-card {
-  @apply w-44;
+  @apply w-44 h-64;
 
   &:hover {
     @apply bg-white/[0.15] cursor-pointer;
@@ -7,6 +7,14 @@
 
   &:focus {
     @apply bg-white/[0.25] outline-none;
+  }
+
+  &-title {
+    @apply my-2 truncate text-base;
+  }
+
+  &-subtitle {
+    @apply line-clamp-2;
   }
 
   mat-card-content {

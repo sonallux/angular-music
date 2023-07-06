@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UserApiService } from 'ngx-spotify';
+import { SimplifiedAlbumObject, UserApiService } from 'ngx-spotify';
 import { map, shareReplay } from 'rxjs';
 import { BrowseApiService, SimplifiedPlaylistObject } from 'ngx-spotify';
-import { CardItem } from '../shared/clickable-card/clickable-card.component';
+import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +10,12 @@ import { CardItem } from '../shared/clickable-card/clickable-card.component';
 })
 export class HomeComponent {
 
-  private userInfo$ = this.userApiService.getCurrentUser().pipe(shareReplay({refCount: true}));
-  userName$ = this.userInfo$.pipe(map(user => user.display_name))
+  private userInfo$ = this.userApiService.getCurrentUser().pipe(
+    shareReplay({refCount: true})
+  );
+  userName$ = this.userInfo$.pipe(
+    map(user => user.display_name)
+  );
 
   private featuredPlaylists$ = this.browseApiService.getFeaturedPlaylists({limit: 8}).pipe(
     shareReplay({refCount: true})
@@ -26,6 +30,11 @@ export class HomeComponent {
     map(playlists => playlists.map(playlistToCardItem))
   )
 
+  newReleases$ = this.browseApiService.getNewReleases({limit: 8}).pipe(
+    map(newReleases => newReleases.albums.items),
+    map(albums => albums.map(albumToCardItem))
+  )
+
   constructor(private userApiService: UserApiService,
               private browseApiService: BrowseApiService) {
   }
@@ -38,5 +47,14 @@ function playlistToCardItem(playlist: SimplifiedPlaylistObject): CardItem {
     subtitle: playlist.description ?? 'Unknown',
     imageUrl: playlist.images[0].url,
     link: `playlist/${playlist.id}`
-  }
+  };
+}
+
+function albumToCardItem(album: SimplifiedAlbumObject): CardItem {
+  return {
+    title: album.name,
+    subtitle: album.artists.map(artist => artist.name).join(', '),
+    imageUrl: album.images[0].url,
+    link: `album/${album.id}`
+  };
 }

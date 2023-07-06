@@ -7,7 +7,7 @@ import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 import { LoginModule } from './login/login.module';
-import { HomeModule } from './home/home.module';
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
