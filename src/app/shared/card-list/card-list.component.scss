@@ -1,0 +1,11 @@
+.card-list-section {
+  @apply mb-8;
+
+  h2 {
+    @apply mb-4 text-4xl font-normal;
+  }
+
+  .card-list-container {
+    @apply flex flex-wrap gap-4;
+  }
+}

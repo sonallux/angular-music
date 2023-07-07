@@ -1,0 +1,7 @@
+<section class="card-list-section">
+  <ng-content select="[title]"></ng-content>
+
+  <div class="card-list-container">
+    <app-clickable-card *ngFor="let item of cardItems" [item]="item" />
+  </div>
+</section>

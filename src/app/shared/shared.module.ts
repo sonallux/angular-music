@@ -9,9 +9,10 @@ import { ClickableCardComponent } from './clickable-card/clickable-card.componen
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
+import { CardListComponent } from './card-list/card-list.component';
 
 @NgModule({
-  declarations: [NavbarComponent, ClickableCardComponent],
+  declarations: [NavbarComponent, ClickableCardComponent, CardListComponent],
   imports: [
     CommonModule,
 
@@ -23,7 +24,7 @@ import { RouterLink } from '@angular/router';
     MatRippleModule,
     RouterLink,
   ],
-  exports: [NavbarComponent, ClickableCardComponent]
+  exports: [NavbarComponent, ClickableCardComponent, CardListComponent]
 })
 export class SharedModule {
 

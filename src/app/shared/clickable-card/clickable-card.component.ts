@@ -11,7 +11,7 @@ export class ClickableCardComponent {
 
 export interface CardItem {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   imageUrl: string;
   link: string;
 }

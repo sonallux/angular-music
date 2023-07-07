@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SPOTIFY_BASE_URL_TOKEN } from './base-url.token';
 import { PagingFeaturedPlaylistObject } from './generated/model/paging-featured-playlist-object';
 import { GetNewReleases200Response } from './generated/model/get-new-releases200-response';
+import { GetCategories200Response } from './generated/model/get-categories200-response';
 
 export { PagingFeaturedPlaylistObject } from './generated/model/paging-featured-playlist-object';
 export { PagingPlaylistObject } from './generated/model/paging-playlist-object';
@@ -22,6 +23,9 @@ export { SimplifiedArtistObject } from './generated/model/simplified-artist-obje
 export { AlbumBaseExternalUrls } from './generated/model/album-base-external-urls';
 export { ArtistObjectExternalUrls } from './generated/model/artist-object-external-urls';
 
+export { GetCategories200Response } from './generated/model/get-categories200-response';
+export { GetCategories200ResponseCategories } from './generated/model/get-categories200-response-categories';
+export { CategoryObject } from './generated/model/category-object';
 
 @Injectable({providedIn: 'root'})
 export class BrowseApiService {
@@ -49,5 +53,17 @@ export class BrowseApiService {
       `${this.spotifyBaseUrl}/browse/new-releases`,
       {params}
     );
+  }
+
+  public getCategories(params: {
+    country?: string,
+    locale?: string,
+    limit?: number,
+    offset?: number
+  } = {}) {
+    return this.httpClient.get<GetCategories200Response>(
+      `${this.spotifyBaseUrl}/browse/categories`,
+      {params}
+    )
   }
 }

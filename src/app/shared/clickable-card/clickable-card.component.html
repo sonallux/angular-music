@@ -3,7 +3,7 @@
     <mat-card-content>
       <img [src]="item.imageUrl" alt="image" aria-hidden="true"/>
       <p class="clickable-card-title">{{item.title}}</p>
-      <p class="clickable-card-subtitle">{{item.subtitle}}</p>
+      <p class="clickable-card-subtitle" *ngIf="item.subtitle !== undefined">{{item.subtitle}}</p>
     </mat-card-content>
   </mat-card>
 </a>

@@ -1,17 +1,9 @@
 <h1 class="mat-headline-2">Hello {{userName$ | async}}</h1>
 
-<section class="mb-8">
-  <h2 class="mat-headline-4 mb-4">{{featuredPlaylistsMessage$ | async}}</h2>
+<app-card-list [cardItems]="(playlists$ | async) ?? []">
+  <h2 title>{{featuredPlaylistsMessage$ | async}}</h2>
+</app-card-list>
 
-  <div class="flex flex-wrap gap-4">
-    <app-clickable-card *ngFor="let playlist of playlists$ | async" [item]="playlist" />
-  </div>
-</section>
-
-<section class="mb-8">
-  <h2 class="mat-headline-4 mb-4">New releases</h2>
-
-  <div class="flex flex-wrap gap-4">
-    <app-clickable-card *ngFor="let album of newReleases$ | async" [item]="album" />
-  </div>
-</section>
+<app-card-list [cardItems]="(newReleases$ | async) ?? []">
+  <h2 title>New releases</h2>
+</app-card-list>
