@@ -46,7 +46,7 @@ function playlistToCardItem(playlist: SimplifiedPlaylistObject): CardItem {
     title: playlist.name ?? 'Playlist',
     subtitle: playlist.description ?? 'Unknown',
     imageUrl: playlist.images[0].url,
-    link: `playlist/${playlist.id}`
+    link: `/playlist/${playlist.id}`
   };
 }
 
@@ -55,6 +55,6 @@ function albumToCardItem(album: SimplifiedAlbumObject): CardItem {
     title: album.name,
     subtitle: album.artists.map(artist => artist.name).join(', '),
     imageUrl: album.images[0].url,
-    link: `album/${album.id}`
+    link: `/album/${album.id}`
   };
 }

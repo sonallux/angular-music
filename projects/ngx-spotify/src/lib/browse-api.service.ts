@@ -4,6 +4,7 @@ import { SPOTIFY_BASE_URL_TOKEN } from './base-url.token';
 import { PagingFeaturedPlaylistObject } from './generated/model/paging-featured-playlist-object';
 import { GetNewReleases200Response } from './generated/model/get-new-releases200-response';
 import { GetCategories200Response } from './generated/model/get-categories200-response';
+import { CategoryObject } from './generated/model/category-object';
 
 export { PagingFeaturedPlaylistObject } from './generated/model/paging-featured-playlist-object';
 export { PagingPlaylistObject } from './generated/model/paging-playlist-object';
@@ -64,6 +65,20 @@ export class BrowseApiService {
     return this.httpClient.get<GetCategories200Response>(
       `${this.spotifyBaseUrl}/browse/categories`,
       {params}
-    )
+    );
+  }
+
+  public getCategory(categoryId: string, params: { country?: string, locale?: string,} = {}) {
+    return this.httpClient.get<CategoryObject>(
+      `${this.spotifyBaseUrl}/browse/categories/${categoryId}`,
+      {params}
+    );
+  }
+
+  public getCategoriesPlaylist(categoryId: string, params: { country?: string, limit?: number, offset?: number} = {}) {
+    return this.httpClient.get<PagingFeaturedPlaylistObject>(
+      `${this.spotifyBaseUrl}/browse/categories/${categoryId}/playlists`,
+      {params}
+    );
   }
 }

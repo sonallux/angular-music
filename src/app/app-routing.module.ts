@@ -6,6 +6,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { LoginComponent } from './login/login.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const routes: Routes = [
   {
@@ -15,10 +16,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
         component: HomeComponent
       }, {
         path: 'browse',
         component: BrowseComponent
+      }, {
+        path: 'category/:categoryId',
+        component: CategoryComponent
       }, {
         path: '**',
         component: NotFoundComponent
@@ -36,7 +41,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    bindToComponentInputs: true
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -2,10 +2,10 @@
   @apply mb-8;
 
   h2 {
-    @apply mb-4 text-4xl font-normal;
+    @apply mb-6 text-4xl font-normal;
   }
 
   .card-list-container {
-    @apply flex flex-wrap gap-4;
+    @apply flex flex-wrap gap-6;
   }
 }

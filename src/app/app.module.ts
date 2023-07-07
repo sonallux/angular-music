@@ -10,6 +10,7 @@ import { LoginModule } from './login/login.module';
 import { HomeModule } from './pages/home/home.module';
 import { BrowseModule } from './pages/browse/browse.module';
 import { NotFoundModule } from './pages/not-found/not-found.module';
+import { CategoryModule } from './pages/category/category.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NotFoundModule } from './pages/not-found/not-found.module';
     LoginModule,
     HomeModule,
     BrowseModule,
-    NotFoundModule
+    NotFoundModule,
+    CategoryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,7 +11,7 @@ export class BrowseComponent {
   categories$ = this.browseApiService.getCategories({country: 'DE', locale: 'en_US', limit: 50}).pipe(
     map(response => response.categories.items),
     map(categories => categories.map(categoryToCardItem))
-  )
+  );
 
   constructor(private browseApiService: BrowseApiService) {
   }
@@ -21,6 +21,6 @@ function categoryToCardItem(category: CategoryObject): CardItem {
   return {
     title: category.name,
     imageUrl: category.icons[0].url,
-    link: `category/${category.id}`
+    link: `/category/${category.id}`
   }
 }
