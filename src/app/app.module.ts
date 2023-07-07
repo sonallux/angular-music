@@ -9,6 +9,7 @@ import { MainLayoutModule } from './main-layout/main-layout.module';
 import { LoginModule } from './login/login.module';
 import { HomeModule } from './pages/home/home.module';
 import { BrowseModule } from './pages/browse/browse.module';
+import { NotFoundModule } from './pages/not-found/not-found.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { BrowseModule } from './pages/browse/browse.module';
     MainLayoutModule,
     LoginModule,
     HomeModule,
-    BrowseModule
+    BrowseModule,
+    NotFoundModule
   ],
   providers: [],
   bootstrap: [AppComponent]

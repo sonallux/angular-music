@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { LoginComponent } from './login/login.component';
 import { BrowseComponent } from './pages/browse/browse.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,10 @@ const routes: Routes = [
       }, {
         path: 'browse',
         component: BrowseComponent
-      }
+      }, {
+        path: '**',
+        component: NotFoundComponent
+      },
     ]
   }, {
     path: '',
