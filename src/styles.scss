@@ -4,3 +4,10 @@
 
 html, body { height: 100vh; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-button-base {
+  img {
+    height: 26px;
+    margin-right: 6px;
+  }
+}

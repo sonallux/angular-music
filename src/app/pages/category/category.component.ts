@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BrowseApiService, CategoryObject, SimplifiedPlaylistObject } from 'ngx-spotify';
+import { BrowseApiService, SimplifiedPlaylistObject } from 'ngx-spotify';
 import { EMPTY, map, Observable } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
+import { HeroData } from '../../shared/hero-header/hero-header.component';
 
 @Component({
   selector: 'app-category',
@@ -12,7 +13,7 @@ export class CategoryComponent implements OnInit {
   @Input({required: true})
   categoryId!: string
 
-  category$: Observable<CategoryObject> = EMPTY;
+  categoryHeroData$: Observable<HeroData> = EMPTY;
 
   playlists$: Observable<CardItem[]> = EMPTY;
 
@@ -20,7 +21,13 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.category$ = this.browseApiService.getCategory(this.categoryId, {country: 'DE', locale: 'en_US'});
+    this.categoryHeroData$ = this.browseApiService.getCategory(this.categoryId, {country: 'DE', locale: 'en_US'}).pipe(
+      map(category => ({
+        title: category.name,
+        type: 'Category',
+        imageUrl: category.icons[0].url,
+      }))
+    );
     this.playlists$ = this.browseApiService.getCategoriesPlaylist(this.categoryId, {country: 'DE', limit: 50}).pipe(
       map(response => response.playlists.items),
       map(playlists => playlists.map(playlistToCardItem))

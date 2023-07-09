@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.hero-header-card {
+  @apply overflow-hidden flex-row h-48 lg:h-56;
+
+  .info-container {
+    @apply flex flex-col flex-grow p-4 overflow-hidden;
+
+    &-type {
+      @apply font-medium truncate;
+    }
+
+    &-title {
+      @apply flex-grow text-4xl lg:text-5xl truncate;
+    }
+
+    &-description {
+      @apply flex-grow line-clamp-1 lg:line-clamp-2
+    }
+  }
+}

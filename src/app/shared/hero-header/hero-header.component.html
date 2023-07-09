@@ -1,0 +1,11 @@
+<mat-card class="hero-header-card">
+    <img class="hero-header-image" [src]="heroData?.imageUrl" alt="icon" aria-hidden="true">
+
+    <div class="info-container">
+      <p class="info-container-type">{{heroData?.type}}</p>
+
+      <h1 class="info-container-title">{{heroData?.title}}</h1>
+
+      <p *ngIf="heroData?.description" class="info-container-description">{{heroData?.description}}</p>
+    </div>
+</mat-card>

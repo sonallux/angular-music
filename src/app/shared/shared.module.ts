@@ -10,9 +10,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { CardListComponent } from './card-list/card-list.component';
+import { HeroHeaderComponent } from './hero-header/hero-header.component';
 
 @NgModule({
-  declarations: [NavbarComponent, ClickableCardComponent, CardListComponent],
+  declarations: [NavbarComponent, ClickableCardComponent, CardListComponent, HeroHeaderComponent],
   imports: [
     CommonModule,
 
@@ -24,7 +25,7 @@ import { CardListComponent } from './card-list/card-list.component';
     MatRippleModule,
     RouterLink,
   ],
-  exports: [NavbarComponent, ClickableCardComponent, CardListComponent]
+  exports: [NavbarComponent, ClickableCardComponent, CardListComponent, HeroHeaderComponent]
 })
 export class SharedModule {
 
