@@ -6,6 +6,6 @@
 
       <h1 class="info-container-title">{{heroData?.title}}</h1>
 
-      <p *ngIf="heroData?.description" class="info-container-description">{{heroData?.description}}</p>
+      <ng-content />
     </div>
 </mat-card>

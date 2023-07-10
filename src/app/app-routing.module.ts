@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { PlaylistComponent } from './pages/playlist/playlist.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,9 @@ const routes: Routes = [
       }, {
         path: 'category/:categoryId',
         component: CategoryComponent
+      }, {
+        path: 'playlist/:playlistId',
+        component: PlaylistComponent
       }, {
         path: '**',
         component: NotFoundComponent

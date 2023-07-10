@@ -11,6 +11,7 @@ import { HomeModule } from './pages/home/home.module';
 import { BrowseModule } from './pages/browse/browse.module';
 import { NotFoundModule } from './pages/not-found/not-found.module';
 import { CategoryModule } from './pages/category/category.module';
+import { PlaylistModule } from './pages/playlist/playlist.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CategoryModule } from './pages/category/category.module';
     HomeModule,
     BrowseModule,
     NotFoundModule,
-    CategoryModule
+    CategoryModule,
+    PlaylistModule
   ],
   providers: [],
   bootstrap: [AppComponent]

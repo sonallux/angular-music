@@ -1,0 +1,13 @@
+<ng-container *ngIf="(playlist$ | async) as playlist">
+  <app-hero-header [heroData]="categoryHeroData$ | async">
+    <p class="truncate mt-auto" *ngIf="playlist.description">{{playlist.description}}</p>
+
+    <p class="m-0">
+      <a routerLink="/user/{{playlist.owner?.id}}">{{playlist.owner?.display_name}}</a> -
+      {{playlist.followers?.total}} Followers -
+      {{playlist.tracks?.total}} Tracks
+    </p>
+  </app-hero-header>
+
+  <p *ngFor="let track of playlist.tracks?.items">{{track.track?.name}} - {{track.track?.type}}</p>
+</ng-container>
