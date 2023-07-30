@@ -1,23 +1,26 @@
 import { Component } from '@angular/core';
-import { BrowseApiService, CategoryObject } from 'ngx-spotify';
 import { map } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
+import { SpotifyClientService } from '../../spotify-client/spotify-client.service';
+import { fromPromise } from 'rxjs/internal/observable/innerFrom';
+import { Category } from '@spotify/web-api-ts-sdk';
 
 @Component({
   selector: 'app-browse',
   templateUrl: './browse.component.html'
 })
 export class BrowseComponent {
-  categories$ = this.browseApiService.getCategories({country: 'DE', locale: 'en_US', limit: 50}).pipe(
+  // TODO fix limit
+  categories$ = fromPromise(this.spotifyClient.browse.getCategories('DE', 'en_US', 49)).pipe(
     map(response => response.categories.items),
     map(categories => categories.map(categoryToCardItem))
   );
 
-  constructor(private browseApiService: BrowseApiService) {
+  constructor(private spotifyClient: SpotifyClientService) {
   }
 }
 
-function categoryToCardItem(category: CategoryObject): CardItem {
+function categoryToCardItem(category: Category): CardItem {
   return {
     title: category.name,
     imageUrl: category.icons[0].url,

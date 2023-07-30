@@ -11,11 +11,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "paths": {
-      "ngx-spotify": [
-        "dist/ngx-spotify"
-      ]
-    },
+    "paths": {},
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,

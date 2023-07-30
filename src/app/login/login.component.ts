@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { SpotifyClientService } from '../spotify-client/spotify-client.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +7,10 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class LoginComponent {
 
-  constructor(private oauthService: OAuthService) {
+  constructor(private spotifyClient: SpotifyClientService) {
   }
 
   login() {
-    this.oauthService.initCodeFlow();
+    this.spotifyClient.login();
   }
 }
