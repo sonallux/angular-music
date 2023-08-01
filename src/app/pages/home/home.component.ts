@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { map, shareReplay } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
-import { SpotifyClientService } from '../../spotify-client/spotify-client.service';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { SimplifiedAlbum, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
+import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
+import { SpotifyUserApi } from '../../spotify-client/api/user-api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +11,15 @@ import { SimplifiedAlbum, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 })
 export class HomeComponent {
 
-  userName$ = fromPromise(this.spotifyClient.currentUser.profile()).pipe(
+  userName$ = this.userApi.getCurrentUser().pipe(
     map(user => user.display_name)
   );
 
-  private featuredPlaylists$ = fromPromise(this.spotifyClient.browse.getFeaturedPlaylists('DE', 'en_US', undefined, 8)).pipe(
+  private featuredPlaylists$ = this.browseApi.getFeaturedPlaylists({
+    country: 'DE',
+    locale: 'en_US',
+    limit: 8
+  }).pipe(
     shareReplay({refCount: true})
   );
 
@@ -28,12 +32,15 @@ export class HomeComponent {
     map(playlists => playlists.map(playlistToCardItem))
   );
 
-  newReleases$ = fromPromise(this.spotifyClient.browse.getNewReleases('US', 8)).pipe(
+  newReleases$ = this.browseApi.getNewReleases({country: 'US', limit: 8}).pipe(
     map(newReleases => newReleases.albums.items),
     map(albums => albums.map(albumToCardItem))
   );
 
-  constructor(private spotifyClient: SpotifyClientService) {
+  constructor(
+    private userApi: SpotifyUserApi,
+    private browseApi: SpotifyBrowseApi
+  ) {
   }
 }
 

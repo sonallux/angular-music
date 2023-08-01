@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EMPTY, map, Observable, shareReplay } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
-import { SpotifyClientService } from '../../spotify-client/spotify-client.service';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Playlist } from '@spotify/web-api-ts-sdk';
+import { SpotifyPlaylistApi } from '../../spotify-client/api/playlist-api.service';
 
 @Component({
   selector: 'app-playlist',
@@ -18,11 +17,11 @@ export class PlaylistComponent implements OnInit {
 
   playlistHeroData$: Observable<HeroData> = EMPTY;
 
-  constructor(private spotifyClient: SpotifyClientService) {
+  constructor(private playlistApi: SpotifyPlaylistApi) {
   }
 
   ngOnInit(): void {
-    this.playlist$ = fromPromise(this.spotifyClient.playlists.getPlaylist(this.playlistId)).pipe(
+    this.playlist$ = this.playlistApi.getPlaylist(this.playlistId).pipe(
       shareReplay({refCount: true})
     );
 

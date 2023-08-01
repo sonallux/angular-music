@@ -1,11 +1,4 @@
-import {
-  AccessToken,
-  emptyAccessToken,
-  IAuthStrategy,
-  ICachable,
-  ICachingStrategy,
-  SdkConfiguration
-} from '@spotify/web-api-ts-sdk';
+import { AccessToken, GenericCache, ICachable, ICacheStore, ICachingStrategy } from '@spotify/web-api-ts-sdk';
 import { AccessTokenHelpers } from './access-token-helpers';
 
 interface CachedVerifier extends ICachable {
@@ -13,38 +6,34 @@ interface CachedVerifier extends ICachable {
   expiresOnAccess: boolean;
 }
 
-export class CustomAuthStrategy implements IAuthStrategy {
-  private static readonly cacheKey = "spotify-sdk:CustomAuthStrategy:token";
+export class SpotifyAuthentication {
+  private static readonly tokenCacheKey = 'spotify-authentication-token';
+  private static readonly verifierCacheKey = 'spotify-authentication-verifier';
 
-  private configuration: SdkConfiguration | null = null;
-  protected get cache(): ICachingStrategy { return this.configuration!.cachingStrategy; }
+  protected cache: ICachingStrategy;
 
   constructor(
     protected clientId: string,
     protected redirectUri: string,
-    protected scopes: string[]
+    protected scopes: string[],
+    cacheStore: ICacheStore
   ) {
-  }
-
-  public setConfiguration(configuration: SdkConfiguration): void {
-    this.configuration = configuration;
+    this.cache = new GenericCache(cacheStore, this.cacheUpdateFunctions())
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
-    return await this.cache.get<AccessToken>(CustomAuthStrategy.cacheKey);
-  }
-
-  public async getOrCreateAccessToken(): Promise<AccessToken> {
-    return await this.cache.getOrCreate<AccessToken>(CustomAuthStrategy.cacheKey, async () => {
-      await this.redirect();
-      return emptyAccessToken;
-    }, async (expiring) => {
-      return AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring);
-    });
+    return await this.cache.get<AccessToken>(SpotifyAuthentication.tokenCacheKey);
   }
 
   public removeAccessToken(): void {
-    this.cache.remove(CustomAuthStrategy.cacheKey);
+    this.cache.remove(SpotifyAuthentication.tokenCacheKey);
+  }
+
+  public cacheUpdateFunctions(): Map<string, (item: any) => Promise<ICachable>> {
+    const updateFunctions = new Map<string, (item: any) => Promise<ICachable>>();
+    updateFunctions.set(SpotifyAuthentication.tokenCacheKey, expiring =>
+      AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring))
+    return updateFunctions;
   }
 
   public async redirect(): Promise<void> {
@@ -52,32 +41,22 @@ export class CustomAuthStrategy implements IAuthStrategy {
     const challenge = await AccessTokenHelpers.generateCodeChallenge(verifier);
 
     const singleUseVerifier: CachedVerifier = { verifier, expiresOnAccess: true };
-    this.cache.setCacheItem("spotify-sdk:verifier", singleUseVerifier);
+    this.cache.setCacheItem(SpotifyAuthentication.verifierCacheKey, singleUseVerifier);
 
-    const redirectTarget = await this.generateRedirectUrlForUser(this.scopes, challenge);
-    await this.configuration!.redirectionStrategy.redirect(redirectTarget);
+    document.location = await this.generateRedirectUrlForUser(this.scopes, challenge);
   }
 
-  public async exchangeCode(code: string): Promise<AccessToken> {
-    const cachedItem = await this.cache.get<CachedVerifier>("spotify-sdk:verifier");
+  public async exchangeCode(code: string): Promise<void> {
+    const cachedItem = await this.cache.get<CachedVerifier>(SpotifyAuthentication.verifierCacheKey);
     const verifier = cachedItem?.verifier;
 
     if (!verifier) {
       throw new Error("No verifier found in cache - can't validate query string callback parameters.");
     }
 
-    await this.configuration!.redirectionStrategy.onReturnFromRedirect();
     const accessToken = await this.exchangeCodeForToken(code, verifier);
 
-    // add AccessToken to cache
-    this.cache.setCacheItem(CustomAuthStrategy.cacheKey, AccessTokenHelpers.toCachable(accessToken));
-
-    // just call getOrCreate to add the update function
-    return await this.cache.getOrCreate<AccessToken>(CustomAuthStrategy.cacheKey, async () => {
-      throw new Error('AccessToken not found, use redirect() and exchangeCode() to get an AccessToken')
-    }, async (expiring) => {
-      return AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring);
-    });
+    this.cache.setCacheItem(SpotifyAuthentication.tokenCacheKey, AccessTokenHelpers.toCachable(accessToken));
   }
 
   protected async generateRedirectUrlForUser(scopes: string[], challenge: string) {

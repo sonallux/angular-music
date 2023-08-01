@@ -2,9 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EMPTY, map, Observable } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
-import { SpotifyClientService } from '../../spotify-client/spotify-client.service';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
+import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
 
 @Component({
   selector: 'app-category',
@@ -19,19 +18,19 @@ export class CategoryComponent implements OnInit {
 
   playlists$: Observable<CardItem[]> = EMPTY;
 
-  constructor(private spotifyClient: SpotifyClientService) {
+  constructor(private browseApi: SpotifyBrowseApi) {
   }
 
   ngOnInit(): void {
-    this.categoryHeroData$ = fromPromise(this.spotifyClient.browse.getCategory(this.categoryId, 'DE', 'en_US')).pipe(
+    this.categoryHeroData$ = this.browseApi.getCategory(this.categoryId, {country: 'DE', locale: 'en_US'}).pipe(
       map(category => ({
         title: category.name,
         type: 'Category',
         imageUrl: category.icons[0].url,
       }))
     );
-    // TODO fix limit
-    this.playlists$ = fromPromise(this.spotifyClient.browse.getPlaylistsForCategory(this.categoryId, 'DE', 49)).pipe(
+
+    this.playlists$ = this.browseApi.getCategoriesPlaylist(this.categoryId, {country: 'DE', limit: 50}).pipe(
       map(response => response.playlists.items),
       map(playlists => playlists.map(playlistToCardItem))
     );

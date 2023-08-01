@@ -1,37 +1,29 @@
-import { Injectable } from '@angular/core';
-import { SpotifyApi } from '@spotify/web-api-ts-sdk';
-import { CustomAuthStrategy } from './custom-auth-strategy';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { SpotifyAuthentication } from './spotify-authentication';
+import { ICacheStore } from '@spotify/web-api-ts-sdk';
 
 const CLIENT_ID = 'eda234756aae490988e32cb92412225d';
 const REDIRECT_URI = 'http://localhost:4200/callback';
+
+export const CACHE_STORE_TOKEN = new InjectionToken<ICacheStore>("spotifyCacheStoreToken")
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyClientService {
 
-  private readonly customAuthStrategy: CustomAuthStrategy;
-  private readonly spotifyApi: SpotifyApi;
+  private readonly spotifyAuthentication: SpotifyAuthentication;
 
-  constructor() {
-    this.customAuthStrategy = new CustomAuthStrategy(CLIENT_ID, REDIRECT_URI, [ 'user-top-read']);
-    this.spotifyApi = new SpotifyApi(this.customAuthStrategy, {});
+  constructor(@Inject(CACHE_STORE_TOKEN) cacheStore: ICacheStore) {
+    this.spotifyAuthentication = new SpotifyAuthentication(CLIENT_ID, REDIRECT_URI, ['user-top-read'], cacheStore);
   }
 
-  public get browse() {
-    return this.spotifyApi.browse;
-  }
-
-  public get currentUser() {
-    return this.spotifyApi.currentUser
-  }
-
-  public get playlists() {
-    return this.spotifyApi.playlists
+  public async getAccessToken() {
+    return this.spotifyAuthentication.getAccessToken();
   }
 
   public async isAuthenticated() {
-    return this.customAuthStrategy.getAccessToken()
+    return this.spotifyAuthentication.getAccessToken()
       .then(accessToken => !!accessToken)
   }
 
@@ -41,10 +33,10 @@ export class SpotifyClientService {
     if (!code) {
       throw new Error("Missing code in url");
     }
-    await this.customAuthStrategy.exchangeCode(code);
+    await this.spotifyAuthentication.exchangeCode(code);
   }
 
   public login() {
-    this.customAuthStrategy.redirect().catch(console.log);
+    this.spotifyAuthentication.redirect().catch(console.log);
   }
 }

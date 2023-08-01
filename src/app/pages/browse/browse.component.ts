@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
-import { SpotifyClientService } from '../../spotify-client/spotify-client.service';
-import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Category } from '@spotify/web-api-ts-sdk';
+import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
 
 @Component({
   selector: 'app-browse',
   templateUrl: './browse.component.html'
 })
 export class BrowseComponent {
-  // TODO fix limit
-  categories$ = fromPromise(this.spotifyClient.browse.getCategories('DE', 'en_US', 49)).pipe(
+  categories$ = this.browseApi.getCategories({country: 'DE', locale: 'en_US', limit: 50}).pipe(
     map(response => response.categories.items),
     map(categories => categories.map(categoryToCardItem))
   );
 
-  constructor(private spotifyClient: SpotifyClientService) {
+  constructor(private browseApi: SpotifyBrowseApi) {
   }
 }
 

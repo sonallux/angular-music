@@ -10,6 +10,10 @@ import { BrowseModule } from './pages/browse/browse.module';
 import { NotFoundModule } from './pages/not-found/not-found.module';
 import { CategoryModule } from './pages/category/category.module';
 import { PlaylistModule } from './pages/playlist/playlist.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthenticationInterceptor } from './spotify-client/authentication.interceptor';
+import { CACHE_STORE_TOKEN } from './spotify-client/spotify-client.service';
+import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,7 @@ import { PlaylistModule } from './pages/playlist/playlist.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MainLayoutModule,
     LoginModule,
     HomeModule,
@@ -27,7 +32,17 @@ import { PlaylistModule } from './pages/playlist/playlist.module';
     CategoryModule,
     PlaylistModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: CACHE_STORE_TOKEN,
+      useClass: BrowserCacheStoreService
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
