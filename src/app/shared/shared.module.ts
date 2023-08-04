@@ -11,9 +11,18 @@ import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { CardListComponent } from './card-list/card-list.component';
 import { HeroHeaderComponent } from './hero-header/hero-header.component';
+import { AlbumLinkComponent } from './album-link/album-link.component';
+import { ArtistLinkComponent } from './artist-link/artist-link.component';
 
 @NgModule({
-  declarations: [NavbarComponent, ClickableCardComponent, CardListComponent, HeroHeaderComponent],
+  declarations: [
+    NavbarComponent,
+    ClickableCardComponent,
+    CardListComponent,
+    HeroHeaderComponent,
+    AlbumLinkComponent,
+    ArtistLinkComponent
+  ],
   imports: [
     CommonModule,
 
@@ -25,7 +34,14 @@ import { HeroHeaderComponent } from './hero-header/hero-header.component';
     MatRippleModule,
     RouterLink,
   ],
-  exports: [NavbarComponent, ClickableCardComponent, CardListComponent, HeroHeaderComponent]
+  exports: [
+    NavbarComponent,
+    ClickableCardComponent,
+    CardListComponent,
+    HeroHeaderComponent,
+    AlbumLinkComponent,
+    ArtistLinkComponent
+  ]
 })
 export class SharedModule {
 

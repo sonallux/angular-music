@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PlaylistComponent } from './playlist.component';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterLink } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { RouterLink } from '@angular/router';
   imports: [
     CommonModule,
     SharedModule,
-    RouterLink
+    RouterLink,
+    MatTableModule
   ]
 })
 export class PlaylistModule {
