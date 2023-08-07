@@ -3,6 +3,8 @@ import { EMPTY, map, Observable, shareReplay } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Page, Playlist, PlaylistedTrack, Track } from '@spotify/web-api-ts-sdk';
 import { SpotifyPlaylistApi } from '../../spotify-client/api/playlist-api.service';
+import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface PlaylistTrack extends PlaylistedTrack {
   track: Track
@@ -17,7 +19,7 @@ export class PlaylistComponent implements OnInit {
   @Input({required: true})
   playlistId!: string
 
-  displayedColumns: string[] = ['name', 'artist', 'album', 'added_at'];
+  displayedColumns: string[] = ['name', 'artist', 'album'];
 
   playlist$: Observable<Playlist> = EMPTY;
 
@@ -25,7 +27,13 @@ export class PlaylistComponent implements OnInit {
 
   playlistTracks$: Observable<Page<PlaylistTrack>> = EMPTY;
 
-  constructor(private playlistApi: SpotifyPlaylistApi) {
+  constructor(private playlistApi: SpotifyPlaylistApi,
+              private breakpointObserver: TailwindBreakpointObserver) {
+    this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
+      this.displayedColumns = breakpoint >= Breakpoint.LG
+        ? ['name', 'artist', 'album', 'added_at']
+        : ['name', 'artist', 'album'];
+    });
   }
 
   ngOnInit(): void {
