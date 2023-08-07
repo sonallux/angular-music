@@ -30,9 +30,13 @@ export class PlaylistComponent implements OnInit {
   constructor(private playlistApi: SpotifyPlaylistApi,
               private breakpointObserver: TailwindBreakpointObserver) {
     this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
-      this.displayedColumns = breakpoint >= Breakpoint.LG
-        ? ['name', 'artist', 'album', 'added_at']
-        : ['name', 'artist', 'album'];
+      if (breakpoint >= Breakpoint.XL) {
+        this.displayedColumns = ['name', 'artist', 'album', 'added_at', 'duration'];
+      } else if (breakpoint >= Breakpoint.LG) {
+        this.displayedColumns = ['name', 'artist', 'album', 'duration'];
+      } else {
+        this.displayedColumns = ['name', 'artist', 'album'];
+      }
     });
   }
 

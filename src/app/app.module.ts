@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthenticationInterceptor } from './spotify-client/authentication.interceptor';
 import { CACHE_STORE_TOKEN } from './spotify-client/spotify-client.service';
 import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.service';
+import { AlbumModule } from './pages/album/album.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.s
     BrowseModule,
     NotFoundModule,
     CategoryModule,
-    PlaylistModule
+    PlaylistModule,
+    AlbumModule
   ],
   providers: [
     {
