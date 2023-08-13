@@ -10,6 +10,7 @@ import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { authCallbackHandler } from './spotify-client/auth-callback-handler';
 import { SpotifyClientService } from './spotify-client/spotify-client.service';
 import { AlbumComponent } from './pages/album/album.component';
+import { ArtistComponent } from './pages/artist/artist.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
       },{
         path: 'album/:albumId',
         component: AlbumComponent
+      },{
+        path: 'artist/:artistId',
+        component: ArtistComponent
       }, {
         path: '**',
         component: NotFoundComponent
