@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EMPTY, map, Observable, shareReplay } from 'rxjs';
+import { Component } from '@angular/core';
+import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Page, Playlist, PlaylistedTrack, Track } from '@spotify/web-api-ts-sdk';
 import { SpotifyPlaylistApi } from '../../spotify-client/api/playlist-api.service';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 export interface PlaylistTrack extends PlaylistedTrack {
   track: Track
@@ -14,21 +15,21 @@ export interface PlaylistTrack extends PlaylistedTrack {
   selector: 'app-playlist',
   templateUrl: './playlist.component.html'
 })
-export class PlaylistComponent implements OnInit {
-
-  @Input({required: true})
-  playlistId!: string
+export class PlaylistComponent {
 
   displayedColumns: string[] = ['name', 'artist', 'album'];
 
-  playlist$: Observable<Playlist> = EMPTY;
+  playlist$: Observable<Playlist>;
 
-  playlistHeroData$: Observable<HeroData> = EMPTY;
+  playlistHeroData$: Observable<HeroData>;
 
-  playlistTracks$: Observable<Page<PlaylistTrack>> = EMPTY;
+  playlistTracks$: Observable<Page<PlaylistTrack>>;
 
-  constructor(private playlistApi: SpotifyPlaylistApi,
-              private breakpointObserver: TailwindBreakpointObserver) {
+  constructor(
+    private playlistApi: SpotifyPlaylistApi,
+    private breakpointObserver: TailwindBreakpointObserver,
+    activatedRoute: ActivatedRoute
+  ) {
     this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
       if (breakpoint >= Breakpoint.XL) {
         this.displayedColumns = ['name', 'artist', 'album', 'added_at', 'duration'];
@@ -38,10 +39,10 @@ export class PlaylistComponent implements OnInit {
         this.displayedColumns = ['name', 'artist', 'album'];
       }
     });
-  }
 
-  ngOnInit(): void {
-    this.playlist$ = this.playlistApi.getPlaylist(this.playlistId).pipe(
+    this.playlist$ = activatedRoute.params.pipe(
+      map(params => params['playlistId']),
+      switchMap(playlistId => this.playlistApi.getPlaylist(playlistId)),
       shareReplay({refCount: true})
     );
 

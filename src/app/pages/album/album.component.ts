@@ -1,39 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EMPTY, map, Observable, shareReplay } from 'rxjs';
+import { Component } from '@angular/core';
+import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Album, Page, SimplifiedTrack } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyAlbumApi } from '../../spotify-client/api/album-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html'
 })
-export class AlbumComponent implements OnInit {
-
-  @Input({required: true})
-  albumId!: string
-
+export class AlbumComponent {
   displayedColumns: string[] = ['name', 'artist'];
 
-  album$: Observable<Album> = EMPTY;
+  album$: Observable<Album>;
 
-  albumHeroData$: Observable<HeroData> = EMPTY;
+  albumHeroData$: Observable<HeroData>;
 
-  albumTracks$: Observable<Page<SimplifiedTrack>> = EMPTY;
+  albumTracks$: Observable<Page<SimplifiedTrack>>;
 
   constructor(private albumApi: SpotifyAlbumApi,
-              private breakpointObserver: TailwindBreakpointObserver) {
+              private breakpointObserver: TailwindBreakpointObserver,
+              activatedRoute: ActivatedRoute
+  ) {
     this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
       this.displayedColumns = breakpoint >= Breakpoint.MD
         ? ['name', 'artist', 'duration']
         : ['name', 'artist'];
     });
-  }
 
-  ngOnInit(): void {
-    this.album$ = this.albumApi.getAlbum(this.albumId).pipe(
+    this.album$ = activatedRoute.params.pipe(map(params => params['albumId'])).pipe(
+      switchMap(albumId => this.albumApi.getAlbum(albumId)),
       shareReplay({refCount: true})
     );
 

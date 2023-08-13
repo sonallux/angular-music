@@ -1,30 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EMPTY, map, Observable, shareReplay } from 'rxjs';
+import { Component } from '@angular/core';
+import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Artist, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html'
 })
-export class ArtistComponent implements OnInit {
-
-  @Input({required: true})
-  artistId!: string
+export class ArtistComponent {
 
   displayedColumns: string[] = ['name', 'artist', 'album'];
 
-  artist$: Observable<Artist> = EMPTY;
+  artist$: Observable<Artist>;
 
-  artistHeroData$: Observable<HeroData> = EMPTY;
+  artistHeroData$: Observable<HeroData>;
 
-  topTracks$: Observable<Track[]> = EMPTY;
+  topTracks$: Observable<Track[]>;
 
   constructor(private artistApi: SpotifyArtistApi,
-              private breakpointObserver: TailwindBreakpointObserver) {
+              private breakpointObserver: TailwindBreakpointObserver,
+              activatedRoute: ActivatedRoute
+  ) {
     this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
       if (breakpoint >= Breakpoint.LG) {
         this.displayedColumns = ['name', 'artist', 'album', 'duration'];
@@ -32,10 +32,11 @@ export class ArtistComponent implements OnInit {
         this.displayedColumns = ['name', 'artist', 'album'];
       }
     });
-  }
 
-  ngOnInit(): void {
-    this.artist$ = this.artistApi.getArtist(this.artistId).pipe(
+    const artistId$ = activatedRoute.params.pipe(map(params => params['artistId']));
+
+    this.artist$ = artistId$.pipe(
+      switchMap(artistId => this.artistApi.getArtist(artistId)),
       shareReplay({refCount: true})
     );
 
@@ -43,7 +44,8 @@ export class ArtistComponent implements OnInit {
       map(mapArtistToHeroData)
     );
 
-    this.topTracks$ = this.artistApi.getArtistsTopTracks(this.artistId, {market: 'DE'}).pipe(
+    this.topTracks$ = artistId$.pipe(
+      switchMap(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'})),
       map(result => result.tracks)
     )
   }
