@@ -1,4 +1,4 @@
-<ng-container *ngIf="(album$ | async) as album">
+<div class="flex flex-col gap-6" *ngIf="(album$ | async) as album">
   <app-hero-header [heroData]="albumHeroData$ | async">
     <p class="mt-auto">
       <app-artist-link [artist]="album.artists" /> -
@@ -26,4 +26,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</ng-container>
+</div>

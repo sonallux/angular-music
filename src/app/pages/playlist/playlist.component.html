@@ -1,4 +1,4 @@
-<ng-container *ngIf="(playlist$ | async) as playlist">
+<div class="flex flex-col gap-6" *ngIf="(playlist$ | async) as playlist">
   <app-hero-header [heroData]="playlistHeroData$ | async">
     <p class="truncate mt-auto" *ngIf="playlist.description">{{playlist.description}}</p>
 
@@ -38,4 +38,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</ng-container>
+</div>

@@ -1,6 +1,6 @@
 <h1 class="mat-headline-2">Hello {{userName$ | async}}</h1>
 
-<app-card-list [cardItems]="(playlists$ | async) ?? []">
+<app-card-list class="block mb-6" [cardItems]="(playlists$ | async) ?? []">
   <h2 title>{{featuredPlaylistsMessage$ | async}}</h2>
 </app-card-list>
 

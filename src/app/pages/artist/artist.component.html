@@ -1,4 +1,4 @@
-<ng-container *ngIf="(artist$ | async) as artist">
+<div class="flex flex-col gap-6" *ngIf="(artist$ | async) as artist">
   <app-hero-header [heroData]="artistHeroData$ | async">
     <p class="mt-auto">
       {{artist.followers.total | number}} Followers -
@@ -6,30 +6,41 @@
     </p>
   </app-hero-header>
 
-  <table mat-table [dataSource]="(topTracks$ | async) ?? []">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
+  <div>
+    <h2 class="text-4xl font-normal">Popular</h2>
 
-    <ng-container matColumnDef="artist">
-      <th mat-header-cell *matHeaderCellDef>Artists</th>
-      <td mat-cell *matCellDef="let element">
-        <app-artist-link [artist]="element.artists"/>
-      </td>
-    </ng-container>
+    <table mat-table [dataSource]="(topTracks$ | async) ?? []">
+      <ng-container matColumnDef="name">
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="album">
-      <th mat-header-cell *matHeaderCellDef>Album</th>
-      <td mat-cell *matCellDef="let element"><app-album-link [album]="element.album" /></td>
-    </ng-container>
+      <ng-container matColumnDef="artist">
+        <td mat-cell *matCellDef="let element">
+          <app-artist-link [artist]="element.artists"/>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef>Duration</th>
-      <td mat-cell *matCellDef="let element">{{element.duration_ms / 1000}}s</td>
-    </ng-container>
+      <ng-container matColumnDef="album">
+        <td mat-cell *matCellDef="let element">
+          <app-album-link [album]="element.album"/>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</ng-container>
+      <ng-container matColumnDef="duration">
+        <td mat-cell *matCellDef="let element">{{element.duration_ms / 1000}}s</td>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- TODO add button to show more all of artists top tracks -->
+  </div>
+
+  <app-card-list [cardItems]="(albums$ | async) ?? []">
+    <h2 title>Discography</h2>
+  </app-card-list>
+
+  <app-card-list [cardItems]="(relatedArtists$ | async) ?? []">
+    <h2 title>Fans also like</h2>
+  </app-card-list>
+
+</div>
