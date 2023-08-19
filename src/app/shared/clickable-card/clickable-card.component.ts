@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./clickable-card.component.scss']
 })
 export class ClickableCardComponent {
-  @Input({required: true}) item!: CardItem
+  @Input({required: true}) item!: CardItem | null
 }
 
 export interface CardItem {

@@ -2,6 +2,13 @@
   <ng-content select="[title]"></ng-content>
 
   <div class="card-list-container">
-    <app-clickable-card *ngFor="let item of cardItems" [item]="item" />
+    <ng-container *ngIf="cardItems else loadingSkeleton">
+      <app-clickable-card *ngFor="let item of cardItems" [item]="item" />
+    </ng-container>
+    <ng-template #loadingSkeleton>
+      <app-clickable-card [item]="null"></app-clickable-card>
+      <app-clickable-card [item]="null"></app-clickable-card>
+      <app-clickable-card [item]="null"></app-clickable-card>
+    </ng-template>
   </div>
 </section>

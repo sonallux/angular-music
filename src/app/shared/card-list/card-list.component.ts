@@ -8,6 +8,6 @@ import { CardItem } from '../clickable-card/clickable-card.component';
   encapsulation: ViewEncapsulation.None
 })
 export class CardListComponent {
-  @Input({required: true}) cardItems!: CardItem[];
+  @Input({required: true}) cardItems!: CardItem[] | null;
 
 }

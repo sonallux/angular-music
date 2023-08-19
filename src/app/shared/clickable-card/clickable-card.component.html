@@ -1,9 +1,19 @@
-<a [routerLink]="item.link">
-  <mat-card class="clickable-card" mat-ripple tabindex="0">
+<ng-container *ngIf="item else loadingSkeleton">
+  <a [routerLink]="item.link">
+    <mat-card class="clickable-card" mat-ripple tabindex="0">
+      <mat-card-content>
+        <img [src]="item.imageUrl" alt="image" aria-hidden="true"/>
+        <p class="clickable-card-title">{{item.title}}</p>
+        <p class="clickable-card-subtitle" *ngIf="item.subtitle !== undefined">{{item.subtitle}}</p>
+      </mat-card-content>
+    </mat-card>
+  </a>
+</ng-container>
+<ng-template #loadingSkeleton>
+  <mat-card class="w-44">
     <mat-card-content>
-      <img [src]="item.imageUrl" alt="image" aria-hidden="true"/>
-      <p class="clickable-card-title">{{item.title}}</p>
-      <p class="clickable-card-subtitle" *ngIf="item.subtitle !== undefined">{{item.subtitle}}</p>
+      <div class="w-36 h-36 skeleton-wave"></div>
+      <p class="my-2 text-base rounded w-2/3 skeleton-wave">&nbsp;</p>
     </mat-card-content>
   </mat-card>
-</a>
+</ng-template>
