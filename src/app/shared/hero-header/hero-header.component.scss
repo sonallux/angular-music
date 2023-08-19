@@ -4,6 +4,10 @@ app-hero-header {
   .hero-header-card {
     @apply overflow-hidden flex-row h-48 lg:h-56;
 
+    .hero-header-image {
+      @apply h-48 w-48 lg:h-56 lg:w-56 bg-gray-500;
+    }
+
     .info-container {
       @apply flex flex-col flex-grow p-4 overflow-hidden;
 

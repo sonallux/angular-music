@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
-import { Album, Artist, Page, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
+import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';

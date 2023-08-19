@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-6" *ngIf="(album$ | async) as album">
+<div class="flex flex-col gap-6">
   <app-hero-header [heroData]="albumHeroData$ | async">
-    <p class="mt-auto">
+    <p class="mt-auto" *ngIf="(album$ | async) as album">
       <app-artist-link [artist]="album.artists" /> -
       {{album.release_date}} -
       {{album.tracks.total | number}} Tracks

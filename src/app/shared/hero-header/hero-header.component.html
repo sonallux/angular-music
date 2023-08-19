@@ -1,4 +1,5 @@
 <mat-card class="hero-header-card">
+  <ng-container *ngIf="heroData else loadingSkeleton">
     <img class="hero-header-image" [src]="heroData?.imageUrl" alt="icon" aria-hidden="true">
 
     <div class="info-container">
@@ -6,6 +7,15 @@
 
       <h1 class="info-container-title">{{heroData?.title}}</h1>
 
-      <ng-content />
+      <ng-content/>
     </div>
+  </ng-container>
 </mat-card>
+
+<ng-template #loadingSkeleton>
+  <div class="hero-header-image animate-pulse"></div>
+  <div class="info-container animate-pulse">
+    <p class="info-container-type bg-gray-500 w-1/3 rounded">&nbsp;</p>
+    <h1 class="info-container-title bg-gray-500 w-2/3 rounded">&nbsp;</h1>
+  </div>
+</ng-template>

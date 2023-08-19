@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-6" *ngIf="(artist$ | async) as artist">
+<div class="flex flex-col gap-6">
   <app-hero-header [heroData]="artistHeroData$ | async">
-    <p class="mt-auto">
+    <p class="mt-auto" *ngIf="(artist$ | async) as artist">
       {{artist.followers.total | number}} Followers -
       {{artist.genres.join(', ')}}
     </p>
