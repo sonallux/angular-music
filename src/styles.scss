@@ -1,6 +1,18 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import './theme.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// Setup theming for @angular/material
+@include mat.core();
+
+// Include all theme styles for the components.
+@include mat.all-component-themes($angular-spotify-theme);
+
+@include mat.typography-hierarchy($angular-spotify-theme);
 
 html, body { height: 100vh; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -13,12 +25,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .skeleton-wave {
-  @apply bg-gray-500 relative overflow-hidden;
+  $accent-palette: map.get(mat.get-color-config($angular-spotify-theme), accent);
+
+  @apply relative overflow-hidden;
+  background-color: mat.get-color-from-palette($accent-palette, 700);
 
   &:after {
     @apply content-[''] absolute inset-0;
-    // color is gray-400
-    background-image: linear-gradient(90deg,transparent,rgba(156, 163, 175, 0.2),transparent);
+    background-image: linear-gradient(90deg, transparent, mat.get-color-from-palette($accent-palette, 600), transparent);
     animation: skeleton-wave-keyframes 1.75s linear infinite;
     @keyframes skeleton-wave-keyframes {
       0% { transform: translateX(-100%) }

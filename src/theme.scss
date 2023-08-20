@@ -1,0 +1,39 @@
+@use '@angular/material' as mat;
+
+$spotify-green-palette: (
+  50: #e6f7ae,
+  100: #c3eacb,
+  200: #9cdcaa,
+  300: #71cf88,
+  400: #4cc46e,
+  500: #1db954,
+  600: #10aa4a,
+  700: #00973e,
+  800: #006833,
+  900: #00671e,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+// Define a theme.
+$primary: mat.define-palette($spotify-green-palette);
+$accent:  mat.define-palette(mat.$grey-palette, A200, A100, A400);
+
+$angular-spotify-theme: mat.define-dark-theme((
+  color: (
+    primary: $primary,
+    accent: $accent
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
