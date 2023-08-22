@@ -55,13 +55,13 @@ export class ArtistComponent {
     );
 
     this.albums$ = artistId$.pipe(
-      switchMap(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE'})),
-      map(page => page.items.slice(0, 5).map(mapAlbumToCardItem))
+      switchMap(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10})),
+      map(page => page.items.map(mapAlbumToCardItem))
     );
 
     this.relatedArtists$ = artistId$.pipe(
       switchMap(artistId => this.artistApi.getArtistsRelatedArtists(artistId)),
-      map(artists => artists.artists.slice(0, 5).map(mapArtistToCardItem))
+      map(artists => artists.artists.map(mapArtistToCardItem))
     );
   }
 }

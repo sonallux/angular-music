@@ -3,7 +3,7 @@
 
   <div class="card-list-container">
     <ng-container *ngIf="cardItems else loadingSkeleton">
-      <app-clickable-card *ngFor="let item of cardItems" [item]="item" />
+      <app-clickable-card *ngFor="let item of (oneRow ? cardItems.slice(0, maxItemsForOneLine) : cardItems)" [item]="item" />
     </ng-container>
     <ng-template #loadingSkeleton>
       <app-clickable-card [item]="null"></app-clickable-card>

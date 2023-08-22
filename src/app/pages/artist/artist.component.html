@@ -35,11 +35,11 @@
     <!-- TODO add button to show more all of artists top tracks -->
   </div>
 
-  <app-card-list [cardItems]="albums$ | async">
+  <app-card-list [cardItems]="albums$ | async" oneRow>
     <h2 title>Discography</h2>
   </app-card-list>
 
-  <app-card-list [cardItems]="relatedArtists$ | async">
+  <app-card-list [cardItems]="relatedArtists$ | async" oneRow>
     <h2 title>Fans also like</h2>
   </app-card-list>
 

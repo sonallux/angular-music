@@ -18,7 +18,7 @@ export class HomeComponent {
   private featuredPlaylists$ = this.browseApi.getFeaturedPlaylists({
     country: 'DE',
     locale: 'en_US',
-    limit: 8
+    limit: 10
   }).pipe(
     shareReplay({refCount: true})
   );
@@ -32,7 +32,7 @@ export class HomeComponent {
     map(playlists => playlists.map(playlistToCardItem))
   );
 
-  newReleases$ = this.browseApi.getNewReleases({country: 'US', limit: 8}).pipe(
+  newReleases$ = this.browseApi.getNewReleases({country: 'US', limit: 10}).pipe(
     map(newReleases => newReleases.albums.items),
     map(albums => albums.map(albumToCardItem))
   );
