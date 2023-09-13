@@ -1,5 +1,5 @@
 <ng-container *ngIf="item else loadingSkeleton">
-  <a [routerLink]="item.link" class="group focus-visible:outline-none">
+  <a [routerLink]="item.link" (click)="itemClick.emit(item)" class="group focus-visible:outline-none">
     <mat-card class="w-44 group-hover:bg-white/[0.15] group-focus-visible:bg-white/[0.25]" mat-ripple>
       <!-- add p-4 to restore card padding, because matRipple causes removal of padding on click -->
       <mat-card-content class="p-4 space-y-2">

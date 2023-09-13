@@ -1,0 +1,13 @@
+<div class="flex items-center text-gray-800 text-base/8 font-normal">
+  <input #searchBox type="search" placeholder="Search"
+         class="w-56 rounded-full px-4 focus:outline-none placeholder-gray-600 clear-button:hidden"
+         (input)="doSearch()"
+         (keyup)="doSearch()"
+         (focus)="doFocus()"
+         (click)="doSearch()">
+  <mat-icon class="relative right-8 cursor-pointer"
+            *ngIf="searchBox.value"
+            (click)="searchBox.value = ''; searchBox.focus()">
+    close
+  </mat-icon>
+</div>

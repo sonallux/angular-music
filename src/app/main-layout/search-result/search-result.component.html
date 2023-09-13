@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-6">
+  <app-card-list *ngIf="(artistResults?.length ?? 1) > 0" oneRow [cardItems]="artistResults" (itemClick)="resultSelected.emit()">
+    <h2 title>Artists</h2>
+  </app-card-list>
+
+  <app-card-list oneRow [cardItems]="albumResults" (itemClick)="resultSelected.emit()">
+    <h2 title>Albums</h2>
+  </app-card-list>
+
+  <app-card-list oneRow [cardItems]="playlistResults" (itemClick)="resultSelected.emit()">
+    <h2 title>Playlists</h2>
+  </app-card-list>
+
+  <!-- TODO display track results -->
+</div>

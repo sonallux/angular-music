@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-clickable-card',
@@ -6,6 +6,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ClickableCardComponent {
   @Input({required: true}) item!: CardItem | null
+
+  @Output() itemClick = new EventEmitter<CardItem>();
 }
 
 export interface CardItem {

@@ -1,20 +1,32 @@
-<app-navbar class="z-50 mat-elevation-z6" [showBurgerMenu]="!(alwaysShowSideNav$ | async)"
+<app-navbar class="z-50 mat-elevation-z6"
+            [showBurgerMenu]="!(alwaysShowSideNav$ | async)"
             (burgerMenuClicked)="sidenav.toggle()"
-/>
+>
+  <app-search-box #searchBox
+                  (onSearch)="doSearch($event)"
+                  (onSearchFocus)="doSearch($event, true)"/>
+</app-navbar>
 
 <mat-sidenav-container class="flex-grow">
   <mat-sidenav #sidenav
                class="w-60 z-10"
                [opened]="alwaysShowSideNav$ | async"
-               [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'" >
-    <app-sidenav />
+               [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'">
+    <app-sidenav/>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <main class="p-6">
-      <router-outlet />
+      <app-search-result *ngIf="showSearchResults else content"
+                         #searchResultsView
+                         [searchResults]="searchResults$ | async"
+                         (resultSelected)="hideSearchResults()"
+                         (closeButtonClick)="hideSearchResults()"
+      />
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-
+<ng-template #content>
+  <router-outlet/>
+</ng-template>

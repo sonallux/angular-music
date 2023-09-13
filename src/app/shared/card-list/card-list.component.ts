@@ -4,8 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnDestroy,
+  Output,
   ViewEncapsulation
 } from '@angular/core';
 import { CardItem } from '../clickable-card/clickable-card.component';
@@ -23,6 +25,8 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({required: true}) cardItems!: CardItem[] | null;
 
   @Input({transform: booleanAttribute}) oneRow = false;
+
+  @Output() itemClick = new EventEmitter<CardItem>();
 
   maxItemsForOneLine = 10;
 

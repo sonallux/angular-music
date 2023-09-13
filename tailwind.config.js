@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -22,7 +24,12 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    // TODO: maybe contribute to TailwindCSS
+    plugin(function ({addVariant}){
+      addVariant('clear-button', ['&::-webkit-search-cancel-button', '&::-ms-clear'])
+    })
+  ],
   important: true, // TailwindCSS classes should take precedent over Angular Material theme
 }
 
