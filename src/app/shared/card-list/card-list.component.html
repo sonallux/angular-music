@@ -1,7 +1,7 @@
-<section class="card-list-section">
+<section>
   <ng-content select="[title]"></ng-content>
 
-  <div class="card-list-container">
+  <div class="flex flex-wrap gap-6">
     <ng-container *ngIf="cardItems else loadingSkeleton">
       <app-clickable-card *ngFor="let item of (oneRow ? cardItems.slice(0, maxItemsForOneLine) : cardItems)"
                           [item]="item"

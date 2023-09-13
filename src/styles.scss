@@ -11,11 +11,25 @@
 
 // Include all theme styles for the components.
 @include mat.all-component-themes($angular-spotify-theme);
-
 @include mat.typography-hierarchy($angular-spotify-theme);
 
-html, body { height: 100vh; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@layer base {
+  html, body {
+    @apply h-screen;
+  }
+
+  body {
+    @apply m-0 text-sm font-normal;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  h1 {
+    @apply text-4xl mb-4;
+  }
+  h2 {
+    @apply text-2xl mb-4;
+  }
+}
 
 .mat-mdc-button-base {
   img {

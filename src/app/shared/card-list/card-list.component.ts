@@ -7,8 +7,7 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
-  Output,
-  ViewEncapsulation
+  Output
 } from '@angular/core';
 import { CardItem } from '../clickable-card/clickable-card.component';
 
@@ -17,9 +16,7 @@ const GAB_WIDTH = 24;
 
 @Component({
   selector: 'app-card-list',
-  templateUrl: './card-list.component.html',
-  styleUrls: ['./card-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './card-list.component.html'
 })
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({required: true}) cardItems!: CardItem[] | null;
