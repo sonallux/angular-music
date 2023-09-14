@@ -6,7 +6,7 @@
     </p>
   </app-hero-header>
 
-  <div>
+  <div class="space-y-2">
     <h2 class="text-4xl font-normal">Popular</h2>
 
     <table mat-table [dataSource]="(topTracks$ | async) ?? []">
@@ -27,12 +27,17 @@
       </ng-container>
 
       <ng-container matColumnDef="duration">
+        <!-- TODO format duration -->
         <td mat-cell *matCellDef="let element">{{element.duration_ms / 1000}}s</td>
       </ng-container>
 
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <!-- TODO add button to show more all of artists top tracks -->
+
+    <button mat-button (click)="toggleShowAllTopTracks()">
+      {{(showAllTopTracks$ | async) ? 'Show less' : 'See more'}}
+    </button>
+
   </div>
 
   <app-card-list [cardItems]="albums$ | async" oneRow>

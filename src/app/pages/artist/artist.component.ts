@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { map, Observable, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
@@ -15,6 +15,8 @@ import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 export class ArtistComponent {
 
   displayedColumns: string[] = ['name', 'artist', 'album'];
+
+  showAllTopTracks$ = new BehaviorSubject(false);
 
   artist$: Observable<Artist>;
 
@@ -51,7 +53,8 @@ export class ArtistComponent {
 
     this.topTracks$ = artistId$.pipe(
       switchMap(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'})),
-      map(result => result.tracks.slice(0, 5))
+      combineLatestWith(this.showAllTopTracks$),
+      map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
     );
 
     this.albums$ = artistId$.pipe(
@@ -63,6 +66,10 @@ export class ArtistComponent {
       switchMap(artistId => this.artistApi.getArtistsRelatedArtists(artistId)),
       map(artists => artists.artists.map(mapArtistToCardItem))
     );
+  }
+
+  public toggleShowAllTopTracks() {
+    this.showAllTopTracks$.next(!this.showAllTopTracks$.getValue())
   }
 }
 
@@ -78,6 +85,7 @@ function mapAlbumToCardItem(album: SimplifiedAlbum): CardItem {
   return {
     title: album.name,
     imageUrl: album.images[0].url,
+    // TODO: format release_date and album_type
     subtitle: `${album.release_date} ${album.album_type}`,
     link: `/album/${album.id}`
   }

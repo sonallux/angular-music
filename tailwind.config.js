@@ -25,10 +25,8 @@ module.exports = {
     },
   },
   plugins: [
-    // TODO: maybe contribute to TailwindCSS
-    plugin(function ({addVariant}){
-      addVariant('clear-button', ['&::-webkit-search-cancel-button', '&::-ms-clear'])
-    })
+    // https://github.com/tailwindlabs/tailwindcss/discussions/10190
+    plugin(({addVariant}) => addVariant('search-cancel-button', '&::-webkit-search-cancel-button'))
   ],
   important: true, // TailwindCSS classes should take precedent over Angular Material theme
 }

@@ -34,6 +34,7 @@ function mapAlbumToCardItem(album: SimplifiedAlbum): CardItem {
   return {
     title: album.name,
     imageUrl: album.images[0].url,
+    // TODO: format release_date and album_type
     subtitle: `${album.release_date} ${album.album_type}`,
     link: `/album/${album.id}`
   }

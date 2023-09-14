@@ -4,6 +4,7 @@ import { ArtistComponent } from './artist.component';
 import { SharedModule } from '../../shared/shared.module';
 import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     SharedModule,
     RouterLink,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ]
 })
 export class ArtistModule {

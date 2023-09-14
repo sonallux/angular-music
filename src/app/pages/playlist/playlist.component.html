@@ -38,6 +38,7 @@
 
     <ng-container matColumnDef="duration">
       <th mat-header-cell *matHeaderCellDef>Duration</th>
+      <!-- TODO format duration -->
       <td mat-cell *matCellDef="let element">{{element.track.duration_ms / 1000}}s</td>
     </ng-container>
 
