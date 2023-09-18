@@ -3,7 +3,8 @@ import { SpotifyClientService } from '../spotify-client/spotify-client.service';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
 
