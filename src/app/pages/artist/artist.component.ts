@@ -5,8 +5,9 @@ import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
+import { State, withLoadingState } from '../../shared/loading-state';
 
 @Component({
   selector: 'app-artist',
@@ -18,15 +19,13 @@ export class ArtistComponent {
 
   showAllTopTracks$ = new BehaviorSubject(false);
 
-  artist$: Observable<Artist>;
+  artistHeroData$: Observable<State<HeroData & Pick<Artist, 'followers' | 'genres'>>>;
 
-  artistHeroData$: Observable<HeroData>;
+  topTracks$: Observable<State<Track[]>>;
 
-  topTracks$: Observable<Track[]>;
+  albums$: Observable<State<CardItem[]>>;
 
-  albums$: Observable<CardItem[]>;
-
-  relatedArtists$: Observable<CardItem[]>
+  relatedArtists$: Observable<State<CardItem[]>>
 
   constructor(private artistApi: SpotifyArtistApi,
               private breakpointObserver: TailwindBreakpointObserver,
@@ -40,31 +39,29 @@ export class ArtistComponent {
       }
     });
 
-    const artistId$ = activatedRoute.params.pipe(map(params => params['artistId']));
+    const artistId$ = activatedRoute.params.pipe(map<Params, string>(params => params['artistId']));
 
-    this.artist$ = artistId$.pipe(
-      switchMap(artistId => this.artistApi.getArtist(artistId)),
-      shareReplay({refCount: true})
-    );
-
-    this.artistHeroData$ = this.artist$.pipe(
-      map(mapArtistToHeroData)
+    this.artistHeroData$ = artistId$.pipe(
+      withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(mapArtistToHeroData))),
     );
 
     this.topTracks$ = artistId$.pipe(
-      switchMap(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'})),
-      combineLatestWith(this.showAllTopTracks$),
-      map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
+      withLoadingState(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'}).pipe(
+        combineLatestWith(this.showAllTopTracks$),
+        map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
+      ))
     );
 
     this.albums$ = artistId$.pipe(
-      switchMap(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10})),
-      map(page => page.items.map(mapAlbumToCardItem))
+      withLoadingState(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10}).pipe(
+        map(page => page.items.map(mapAlbumToCardItem))
+      )),
     );
 
     this.relatedArtists$ = artistId$.pipe(
-      switchMap(artistId => this.artistApi.getArtistsRelatedArtists(artistId)),
-      map(artists => artists.artists.map(mapArtistToCardItem))
+      withLoadingState(artistId => this.artistApi.getArtistsRelatedArtists(artistId).pipe(
+        map(artists => artists.artists.map(mapArtistToCardItem))
+      )),
     );
   }
 
@@ -77,7 +74,9 @@ function mapArtistToHeroData(artist: Artist) {
   return {
     type: 'Artist',
     title: artist.name,
-    imageUrl: artist.images[0].url ?? ''
+    imageUrl: artist.images[0].url ?? '',
+    followers: artist.followers,
+    genres: artist.genres,
   };
 }
 
