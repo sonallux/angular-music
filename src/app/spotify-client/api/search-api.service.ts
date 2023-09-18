@@ -26,4 +26,4 @@ export type SearchParams = {
   include_external?: string
 }
 
-export type SearchResults = Pick<SpotifySearchResults, 'albums'|'artists'|'playlists'|'tracks'>;
+export type SearchResults = SpotifySearchResults<['album'|'artist'|'playlist'|'track']>
