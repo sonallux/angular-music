@@ -8,7 +8,7 @@
     </app-hero-header>
   </ng-container>
 
-  <div class="space-y-2" *ngIf="topTracks$ | async as topTracks" >
+  <div class="space-y-2" *ngIf="topTracks$ | async as topTracks">
     <h2>Popular</h2>
 
     <table mat-table *ngIf="topTracks.state === 'SUCCESS'" [dataSource]="topTracks.data">
@@ -29,8 +29,7 @@
       </ng-container>
 
       <ng-container matColumnDef="duration">
-        <!-- TODO format duration -->
-        <td mat-cell *matCellDef="let element">{{element.duration_ms / 1000}}s</td>
+        <td mat-cell *matCellDef="let element">{{element.duration_ms | trackDuration}}</td>
       </ng-container>
 
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -50,16 +49,14 @@
 
   </div>
 
-  <ng-container *ngIf="albums$ | async as albums">
-    <app-card-list [cardItems]="albums.state === 'SUCCESS' ? albums.data : null" oneRow>
-      <h2 title>Discography</h2>
-    </app-card-list>
-  </ng-container>
+  <section *ngIf="albums$ | async as albums" aria-label="Discography">
+    <h2>Discography</h2>
+    <app-card-list [cardItems]="albums.state === 'SUCCESS' ? albums.data : null" overflow="scroll"/>
+  </section>
 
-  <ng-container *ngIf="relatedArtists$ | async as relatedArtists">
-    <app-card-list [cardItems]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null" oneRow>
-      <h2 title>Fans also like</h2>
-    </app-card-list>
-  </ng-container>
+  <section *ngIf="relatedArtists$ | async as relatedArtists" aria-label="Fans also like">
+    <h2>Fans also like</h2>
+    <app-card-list [cardItems]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null" overflow="scroll"/>
+  </section>
 
 </div>

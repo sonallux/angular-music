@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatestWith, map, Observable, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, map, Observable } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
@@ -8,6 +8,13 @@ import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { State, withLoadingState } from '../../shared/loading-state';
+import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
+
+const albumTypeNames: Record<string, string> = {
+  album: 'Album',
+  compilation: 'Compilation',
+  single: 'Single'
+}
 
 @Component({
   selector: 'app-artist',
@@ -29,6 +36,7 @@ export class ArtistComponent {
 
   constructor(private artistApi: SpotifyArtistApi,
               private breakpointObserver: TailwindBreakpointObserver,
+              private releaseDatePipe: ReleaseDatePipe,
               activatedRoute: ActivatedRoute
   ) {
     this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
@@ -42,7 +50,7 @@ export class ArtistComponent {
     const artistId$ = activatedRoute.params.pipe(map<Params, string>(params => params['artistId']));
 
     this.artistHeroData$ = artistId$.pipe(
-      withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(mapArtistToHeroData))),
+      withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(this.mapArtistToHeroData))),
     );
 
     this.topTracks$ = artistId$.pipe(
@@ -54,13 +62,13 @@ export class ArtistComponent {
 
     this.albums$ = artistId$.pipe(
       withLoadingState(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10}).pipe(
-        map(page => page.items.map(mapAlbumToCardItem))
+        map(page => page.items.map(this.mapAlbumToCardItem))
       )),
     );
 
     this.relatedArtists$ = artistId$.pipe(
       withLoadingState(artistId => this.artistApi.getArtistsRelatedArtists(artistId).pipe(
-        map(artists => artists.artists.map(mapArtistToCardItem))
+        map(artists => artists.artists.map(this.mapArtistToCardItem))
       )),
     );
   }
@@ -68,33 +76,32 @@ export class ArtistComponent {
   public toggleShowAllTopTracks() {
     this.showAllTopTracks$.next(!this.showAllTopTracks$.getValue())
   }
-}
 
-function mapArtistToHeroData(artist: Artist) {
-  return {
-    type: 'Artist',
-    title: artist.name,
-    imageUrl: artist.images[0].url ?? '',
-    followers: artist.followers,
-    genres: artist.genres,
-  };
-}
-
-function mapAlbumToCardItem(album: SimplifiedAlbum): CardItem {
-  return {
-    title: album.name,
-    imageUrl: album.images[0].url,
-    // TODO: format release_date and album_type
-    subtitle: `${album.release_date} ${album.album_type}`,
-    link: `/album/${album.id}`
+  private mapArtistToHeroData = (artist: Artist) => {
+    return {
+      type: 'Artist',
+      title: artist.name,
+      imageUrl: artist.images[0].url ?? '',
+      followers: artist.followers,
+      genres: artist.genres,
+    };
   }
-}
 
-function mapArtistToCardItem(artist: Artist): CardItem {
-  return {
-    title: artist.name,
-    imageUrl: artist.images[0].url,
-    subtitle: 'Artist',
-    link: `/artist/${artist.id}`
+  private mapAlbumToCardItem = (album: SimplifiedAlbum): CardItem => {
+    return {
+      title: album.name,
+      imageUrl: album.images[0].url,
+      subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${albumTypeNames[album.album_type]}`,
+      link: `/album/${album.id}`
+    }
+  }
+
+  private mapArtistToCardItem = (artist: Artist): CardItem => {
+    return {
+      title: artist.name,
+      imageUrl: artist.images[0].url,
+      subtitle: 'Artist',
+      link: `/artist/${artist.id}`
+    }
   }
 }

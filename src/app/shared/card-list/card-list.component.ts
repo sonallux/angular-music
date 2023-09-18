@@ -1,13 +1,13 @@
 import {
   AfterViewInit,
-  booleanAttribute,
   ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
-  Output
+  Output,
+  ViewChild
 } from '@angular/core';
 import { CardItem } from '../clickable-card/clickable-card.component';
 
@@ -21,23 +21,24 @@ const GAB_WIDTH = 24;
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({required: true}) cardItems!: CardItem[] | null;
 
-  @Input({transform: booleanAttribute}) oneRow = false;
+  @Input() overflow: 'wrap' | 'scroll' | 'truncate' = 'wrap';
 
   @Output() itemClick = new EventEmitter<CardItem>();
+
+  @ViewChild('container') containerElement!: ElementRef<HTMLElement>;
 
   maxItemsForOneLine = 10;
 
   private resizeObserver: ResizeObserver;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>,
     private cdr: ChangeDetectorRef
   ) {
     this.resizeObserver = new ResizeObserver(this.onResize);
   }
 
   ngAfterViewInit(): void {
-    this.resizeObserver.observe(this.elementRef.nativeElement);
+    this.resizeObserver.observe(this.containerElement.nativeElement);
   }
 
   ngOnDestroy(): void {
@@ -45,7 +46,7 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   }
 
   private onResize: ResizeObserverCallback = ([entry]) => {
-    if (!this.oneRow || this.cardItems === null) {
+    if (this.overflow !== 'truncate' || this.cardItems === null) {
       return;
     }
 

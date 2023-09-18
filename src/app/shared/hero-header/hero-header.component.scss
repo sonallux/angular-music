@@ -9,14 +9,14 @@ app-hero-header {
     }
 
     .info-container {
-      @apply flex flex-col flex-grow p-4 overflow-hidden;
+      @apply flex flex-col flex-grow gap-2 p-4 overflow-hidden;
 
       &-type {
-        @apply font-medium truncate;
+        @apply truncate;
       }
 
       &-title {
-        @apply text-4xl lg:text-5xl truncate;
+        @apply truncate;
       }
     }
   }

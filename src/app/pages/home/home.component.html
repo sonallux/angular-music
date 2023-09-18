@@ -1,9 +1,12 @@
 <h1>Hello {{userName$ | async}}</h1>
 
-<app-card-list class="block mb-6" [cardItems]="playlists$ | async" oneRow>
-  <h2 title>{{featuredPlaylistsMessage$ | async}}</h2>
-</app-card-list>
+<section class="mb-6">
+  <h2>{{featuredPlaylistsMessage$ | async}}</h2>
+  <app-card-list [cardItems]="playlists$ | async" overflow="truncate"/>
+</section>
 
-<app-card-list class="block" [cardItems]="newReleases$ | async" oneRow>
+<section>
   <h2 title>New releases</h2>
-</app-card-list>
+  <app-card-list [cardItems]="newReleases$ | async" overflow="truncate"/>
+</section>
+

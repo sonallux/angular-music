@@ -1,15 +1,18 @@
 <div class="flex flex-col gap-6">
-  <app-card-list *ngIf="(artistResults?.length ?? 1) > 0" oneRow [cardItems]="artistResults" (itemClick)="resultSelected.emit()">
-    <h2 title>Artists</h2>
-  </app-card-list>
+  <section *ngIf="(artistResults?.length ?? 1) > 0" aria-label="Artists">
+    <h2>Artists</h2>
+    <app-card-list [cardItems]="artistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+  </section>
 
-  <app-card-list oneRow [cardItems]="albumResults" (itemClick)="resultSelected.emit()">
-    <h2 title>Albums</h2>
-  </app-card-list>
+  <section *ngIf="(albumResults?.length ?? 1) > 0" aria-label="Albums">
+    <h2>Albums</h2>
+    <app-card-list [cardItems]="albumResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+  </section>
 
-  <app-card-list oneRow [cardItems]="playlistResults" (itemClick)="resultSelected.emit()">
-    <h2 title>Playlists</h2>
-  </app-card-list>
+  <section *ngIf="(playlistResults?.length ?? 1) > 0" aria-label="Playlists">
+    <h2>Playlists</h2>
+    <app-card-list [cardItems]="playlistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+  </section>
 
   <!-- TODO display track results -->
 </div>

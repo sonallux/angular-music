@@ -34,17 +34,16 @@ export class CategoryComponent {
     this.playlists$ = categoryId$.pipe(
       switchMap(categoryId => this.browseApi.getCategoriesPlaylist(categoryId, {country: 'DE', limit: 50})),
       map(response => response.playlists.items),
-      map(playlists => playlists.map(playlistToCardItem))
+      map(playlists => playlists.map(this.playlistToCardItem))
     );
   }
-}
 
-// TODO: remove duplication, as this is copied from home.component.ts
-function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
-  return {
-    title: playlist.name,
-    subtitle: playlist.description,
-    imageUrl: playlist.images[0].url,
-    link: `/playlist/${playlist.id}`
-  };
+  private playlistToCardItem = (playlist: SimplifiedPlaylist): CardItem => {
+    return {
+      title: playlist.name,
+      subtitle: playlist.description,
+      imageUrl: playlist.images[0].url,
+      link: `/playlist/${playlist.id}`
+    };
+  }
 }

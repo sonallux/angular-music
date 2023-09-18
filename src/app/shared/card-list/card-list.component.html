@@ -1,17 +1,15 @@
-<section>
-  <ng-content select="[title]"></ng-content>
-
-  <div class="flex flex-wrap gap-6">
-    <ng-container *ngIf="cardItems else loadingSkeleton">
-      <app-clickable-card *ngFor="let item of (oneRow ? cardItems.slice(0, maxItemsForOneLine) : cardItems)"
-                          [item]="item"
-                          (itemClick)="itemClick.emit($event)"
-      />
-    </ng-container>
-    <ng-template #loadingSkeleton>
-      <app-clickable-card [item]="null"></app-clickable-card>
-      <app-clickable-card [item]="null"></app-clickable-card>
-      <app-clickable-card [item]="null"></app-clickable-card>
-    </ng-template>
-  </div>
-</section>
+<div #container class="flex gap-6"
+     [ngClass]="{'overflow-x-auto': overflow === 'scroll', 'flex-wrap': overflow === 'wrap'}">
+  <ng-container *ngIf="cardItems else loadingSkeleton">
+    <app-clickable-card
+      *ngFor="let item of (overflow === 'truncate' ? cardItems.slice(0, maxItemsForOneLine) : cardItems)"
+      [item]="item"
+      (itemClick)="itemClick.emit($event)"
+    />
+  </ng-container>
+  <ng-template #loadingSkeleton>
+    <app-clickable-card [item]="null"></app-clickable-card>
+    <app-clickable-card [item]="null"></app-clickable-card>
+    <app-clickable-card [item]="null"></app-clickable-card>
+  </ng-template>
+</div>
