@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PlaylistComponent } from './playlist.component';
+import { render, screen } from '@testing-library/angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PlaylistModule } from './playlist.module';
 
 describe('PlaylistComponent', () => {
-  let component: PlaylistComponent;
-  let fixture: ComponentFixture<PlaylistComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [PlaylistComponent]
+  it('should render', async () => {
+    await render(PlaylistComponent, {
+      imports: [PlaylistModule, HttpClientTestingModule],
     });
-    fixture = TestBed.createComponent(PlaylistComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('table')).toBeDefined();
   });
 });

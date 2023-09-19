@@ -1,21 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginComponent } from './login.component';
+import { render, screen } from '@testing-library/angular';
+import { LoginModule } from './login.module';
+import { CACHE_STORE_TOKEN } from '../spotify-client/spotify-client.service';
+import { BrowserCacheStoreService } from '../spotify-client/browser-cache-store.service';
 
 describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [LoginComponent]
+  it('should render', async () => {
+    await render(LoginComponent, {
+      imports: [LoginModule],
+      providers: [ { provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }]
     });
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('heading', {name: 'Angular Spotify Client'})).toBeDefined();
+    expect(await screen.findByRole('button', {name: 'Login'})).toBeDefined();
   });
 });

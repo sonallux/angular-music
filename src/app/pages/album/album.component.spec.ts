@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AlbumComponent } from './album.component';
+import { render, screen } from '@testing-library/angular';
+import { AlbumModule } from './album.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AlbumComponent', () => {
-  let component: AlbumComponent;
-  let fixture: ComponentFixture<AlbumComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AlbumComponent]
+  it('should render', async () => {
+    await render(AlbumComponent, {
+      imports: [AlbumModule, HttpClientTestingModule],
     });
-    fixture = TestBed.createComponent(AlbumComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('table')).toBeDefined();
   });
 });

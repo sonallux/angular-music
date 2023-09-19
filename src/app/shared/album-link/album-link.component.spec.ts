@@ -1,21 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AlbumLinkComponent } from './album-link.component';
+import { render, screen } from '@testing-library/angular';
 
 describe('AlbumLinkComponent', () => {
-  let component: AlbumLinkComponent;
-  let fixture: ComponentFixture<AlbumLinkComponent>;
+  it('should render', async () => {
+    await render(AlbumLinkComponent, {componentInputs: {album: {id: '42', name: 'Test Album'}}});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AlbumLinkComponent]
-    });
-    fixture = TestBed.createComponent(AlbumLinkComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('link', {name: 'Test Album'})).toBeDefined();
   });
 });

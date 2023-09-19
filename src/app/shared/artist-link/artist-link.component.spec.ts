@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ArtistLinkComponent } from './artist-link.component';
+import { render, screen } from '@testing-library/angular';
 
 describe('ArtistLinkComponent', () => {
-  let component: ArtistLinkComponent;
-  let fixture: ComponentFixture<ArtistLinkComponent>;
+  it('should render on link', async () => {
+    await render(ArtistLinkComponent, {componentInputs: {artist: {id: '42', name: 'Test Artist'}}});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ArtistLinkComponent]
-    });
-    fixture = TestBed.createComponent(ArtistLinkComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    expect(await screen.findByRole('link', {name: 'Test Artist'})).toBeDefined();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render two links', async () => {
+    await render(ArtistLinkComponent, {componentInputs: {artist: [
+      {id: '42', name: 'Test Artist'},
+      {id: '4711', name: 'Cool Artist'}
+    ]}});
+
+    expect(await screen.findByRole('link', {name: 'Test Artist'})).toBeDefined();
+    expect(await screen.findByRole('link', {name: 'Cool Artist'})).toBeDefined();
   });
 });

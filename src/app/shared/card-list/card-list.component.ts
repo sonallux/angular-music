@@ -19,7 +19,7 @@ const GAB_WIDTH = 24;
   templateUrl: './card-list.component.html'
 })
 export class CardListComponent implements AfterViewInit, OnDestroy {
-  @Input({required: true}) cardItems!: CardItem[] | null;
+  @Input({required: true}) items!: CardItem[] | null;
 
   @Input() overflow: 'wrap' | 'scroll' | 'truncate' = 'wrap';
 
@@ -46,7 +46,7 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   }
 
   private onResize: ResizeObserverCallback = ([entry]) => {
-    if (this.overflow !== 'truncate' || this.cardItems === null) {
+    if (this.overflow !== 'truncate' || this.items === null) {
       return;
     }
 

@@ -1,8 +1,8 @@
 <div #container class="flex gap-6"
      [ngClass]="{'overflow-x-auto': overflow === 'scroll', 'flex-wrap': overflow === 'wrap'}">
-  <ng-container *ngIf="cardItems else loadingSkeleton">
+  <ng-container *ngIf="items else loadingSkeleton">
     <app-clickable-card
-      *ngFor="let item of (overflow === 'truncate' ? cardItems.slice(0, maxItemsForOneLine) : cardItems)"
+      *ngFor="let item of (overflow === 'truncate' ? items.slice(0, maxItemsForOneLine) : items)"
       [item]="item"
       (itemClick)="itemClick.emit($event)"
     />

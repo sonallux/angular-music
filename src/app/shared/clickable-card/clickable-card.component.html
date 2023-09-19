@@ -4,7 +4,7 @@
       <!-- add p-4 to restore card padding, because matRipple causes removal of padding on click -->
       <mat-card-content class="p-4 space-y-2">
         <img [src]="item.imageUrl" class="w-36 h-36 object-cover bg-gray-700" alt="image" aria-hidden="true"/>
-        <p class="text-base truncate">{{item.title}}</p>
+        <h3 class="text-base truncate">{{item.title}}</h3>
         <p class="h-10 line-clamp-2" *ngIf="item.subtitle">{{item.subtitle}}</p>
       </mat-card-content>
     </mat-card>

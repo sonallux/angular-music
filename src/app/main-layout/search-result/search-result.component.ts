@@ -42,7 +42,7 @@ export class SearchResultComponent {
   private mapAlbumToCardItem = (album: SimplifiedAlbum): CardItem => {
     return {
       title: album.name,
-      imageUrl: album.images[0].url,
+      imageUrl: album.images[0]?.url,
       subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${album.artists.map(a => a.name).join(', ')}`,
       link: `/album/${album.id}`
     }
@@ -63,7 +63,7 @@ export class SearchResultComponent {
     return {
       title: playlist.name,
       subtitle: playlist.description,
-      imageUrl: playlist.images[0].url,
+      imageUrl: playlist.images[0]?.url,
       link: `/playlist/${playlist.id}`
     };
   }

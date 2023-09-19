@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ArtistComponent } from './artist.component';
+import { render, screen } from '@testing-library/angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ArtistModule } from './artist.module';
 
 describe('ArtistComponent', () => {
-  let component: ArtistComponent;
-  let fixture: ComponentFixture<ArtistComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ArtistComponent]
+  it('should render', async () => {
+    await render(ArtistComponent, {
+      imports: [ArtistModule, HttpClientTestingModule],
     });
-    fixture = TestBed.createComponent(ArtistComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('button')).toBeDefined();
   });
 });

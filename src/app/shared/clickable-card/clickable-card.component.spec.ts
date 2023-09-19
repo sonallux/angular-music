@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ClickableCardComponent } from './clickable-card.component';
+import { render, screen } from '@testing-library/angular';
+import { SharedModule } from '../shared.module';
 
 describe('ClickableCardComponent', () => {
-  let component: ClickableCardComponent;
-  let fixture: ComponentFixture<ClickableCardComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ClickableCardComponent]
+  it('should render', async () => {
+    await render(ClickableCardComponent, {
+      imports: [SharedModule],
+      componentInputs: {item: {
+        title: 'Test Hero',
+        subtitle: 'Fancy sub title',
+        imageUrl: 'https://hero.image',
+        link: '/hero'
+      }}
     });
-    fixture = TestBed.createComponent(ClickableCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('heading', {name: 'Test Hero'})).toBeDefined();
+    expect(await screen.findByText('Fancy sub title')).toBeDefined();
   });
 });

@@ -2,11 +2,11 @@
 
 <section class="mb-6">
   <h2>{{featuredPlaylistsMessage$ | async}}</h2>
-  <app-card-list [cardItems]="playlists$ | async" overflow="truncate"/>
+  <app-card-list [items]="playlists$ | async" overflow="truncate"/>
 </section>
 
 <section>
-  <h2 title>New releases</h2>
-  <app-card-list [cardItems]="newReleases$ | async" overflow="truncate"/>
+  <h2>New releases</h2>
+  <app-card-list [items]="newReleases$ | async" overflow="truncate"/>
 </section>
 

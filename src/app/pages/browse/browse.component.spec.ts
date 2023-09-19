@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BrowseComponent } from './browse.component';
+import { render, screen } from '@testing-library/angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowseModule } from './browse.module';
 
 describe('BrowseComponent', () => {
-  let component: BrowseComponent;
-  let fixture: ComponentFixture<BrowseComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [BrowseComponent]
+  it('should render', async () => {
+    await render(BrowseComponent, {
+      imports: [BrowseModule, HttpClientTestingModule],
     });
-    fixture = TestBed.createComponent(BrowseComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('heading', {name: 'Browse'})).toBeDefined();
   });
 });

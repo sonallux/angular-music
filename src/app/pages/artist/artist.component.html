@@ -51,12 +51,12 @@
 
   <section *ngIf="albums$ | async as albums" aria-label="Discography">
     <h2>Discography</h2>
-    <app-card-list [cardItems]="albums.state === 'SUCCESS' ? albums.data : null" overflow="scroll"/>
+    <app-card-list [items]="albums.state === 'SUCCESS' ? albums.data : null" overflow="scroll"/>
   </section>
 
   <section *ngIf="relatedArtists$ | async as relatedArtists" aria-label="Fans also like">
     <h2>Fans also like</h2>
-    <app-card-list [cardItems]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null" overflow="scroll"/>
+    <app-card-list [items]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null" overflow="scroll"/>
   </section>
 
 </div>

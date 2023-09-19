@@ -1,21 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeroHeaderComponent } from './hero-header.component';
+import { render, screen } from '@testing-library/angular';
+import { SharedModule } from '../shared.module';
 
 describe('HeroHeaderComponent', () => {
-  let component: HeroHeaderComponent;
-  let fixture: ComponentFixture<HeroHeaderComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [HeroHeaderComponent]
+  it('should render', async () => {
+    await render(HeroHeaderComponent, {
+      imports: [SharedModule],
+      componentInputs: {heroData: {
+        title: 'Hero Tester',
+        type: 'unknown',
+        imageUrl: 'https://image.url'
+      }}
     });
-    fixture = TestBed.createComponent(HeroHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('heading', {name: 'Hero Tester'})).toBeDefined();
+    expect(await screen.findByText('unknown')).toBeDefined();
   });
 });

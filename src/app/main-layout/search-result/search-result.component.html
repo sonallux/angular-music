@@ -1,17 +1,17 @@
 <div class="flex flex-col gap-6">
   <section *ngIf="(artistResults?.length ?? 1) > 0" aria-label="Artists">
     <h2>Artists</h2>
-    <app-card-list [cardItems]="artistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+    <app-card-list [items]="artistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
   </section>
 
   <section *ngIf="(albumResults?.length ?? 1) > 0" aria-label="Albums">
     <h2>Albums</h2>
-    <app-card-list [cardItems]="albumResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+    <app-card-list [items]="albumResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
   </section>
 
   <section *ngIf="(playlistResults?.length ?? 1) > 0" aria-label="Playlists">
     <h2>Playlists</h2>
-    <app-card-list [cardItems]="playlistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
+    <app-card-list [items]="playlistResults" (itemClick)="resultSelected.emit()" overflow="truncate"/>
   </section>
 
   <!-- TODO display track results -->

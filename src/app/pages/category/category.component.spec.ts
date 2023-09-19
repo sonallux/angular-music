@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CategoryComponent } from './category.component';
+import { render, screen } from '@testing-library/angular';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CategoryModule } from './category.module';
 
 describe('CategoryComponent', () => {
-  let component: CategoryComponent;
-  let fixture: ComponentFixture<CategoryComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [CategoryComponent]
+  it('should render', async () => {
+    await render(CategoryComponent, {
+      imports: [CategoryModule, HttpClientTestingModule],
     });
-    fixture = TestBed.createComponent(CategoryComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('heading')).toBeDefined();
   });
 });

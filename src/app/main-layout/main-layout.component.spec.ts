@@ -1,21 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MainLayoutComponent } from './main-layout.component';
+import { render, screen } from '@testing-library/angular';
+import { MainLayoutModule } from './main-layout.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MainLayoutComponent', () => {
-  let component: MainLayoutComponent;
-  let fixture: ComponentFixture<MainLayoutComponent>;
+  it('should render', async () => {
+    await render(MainLayoutComponent, {imports: [MainLayoutModule, HttpClientTestingModule]});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [MainLayoutComponent]
-    });
-    fixture = TestBed.createComponent(MainLayoutComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(await screen.findByRole('main')).toBeDefined();
   });
 });

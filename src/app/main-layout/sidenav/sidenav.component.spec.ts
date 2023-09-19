@@ -1,21 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SidenavComponent } from './sidenav.component';
+import { findByRole, render, screen } from '@testing-library/angular';
+import { MainLayoutModule } from '../main-layout.module';
 
 describe('SidenavComponent', () => {
-  let component: SidenavComponent;
-  let fixture: ComponentFixture<SidenavComponent>;
+  it('should render', async () => {
+    await render(SidenavComponent, {imports: [MainLayoutModule]});
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [SidenavComponent]
-    });
-    fixture = TestBed.createComponent(SidenavComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const navigation = await screen.findByRole('navigation');
+    expect(await findByRole(navigation, 'link', {name: 'Home'})).toBeDefined();
+    expect(await findByRole(navigation, 'link', {name: 'Browse'})).toBeDefined();
+    expect(await findByRole(navigation, 'link', {name: 'Open Spotify'})).toBeDefined();
   });
 });
