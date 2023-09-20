@@ -11,8 +11,13 @@ updates:
     groups:
       angular-dependencies:
         patterns:
-          - "@angular/"
-          - "@angular-devkit/"
+          - "@angular/*"
+          - "@angular-devkit/*"
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "@angular-devkit/*"
+        update-types: [ "version-update:semver-major" ]
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
