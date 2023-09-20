@@ -3,15 +3,20 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: weekly
+      interval: daily
       time: '01:00'
     open-pull-requests-limit: 10
     reviewers:
       - sonallux
+    groups:
+      angular-dependencies:
+        patterns:
+          - "@angular/"
+          - "@angular-devkit/"
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: weekly
+      interval: daily
       time: '02:00'
     reviewers:
       - sonallux
