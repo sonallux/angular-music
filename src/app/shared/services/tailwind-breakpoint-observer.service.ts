@@ -24,7 +24,7 @@ export class TailwindBreakpointObserver {
 
   public readonly breakpoint$: Observable<Breakpoint>;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(breakpointObserver: BreakpointObserver) {
     this.breakpoint$ = breakpointObserver.observe([
       BREAKPOINT_SM, BREAKPOINT_MD, BREAKPOINT_LG, BREAKPOINT_XL, BREAKPOINT_2XL
     ]).pipe(

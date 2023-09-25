@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Breakpoint, TailwindBreakpointObserver } from '../services/tailwind-breakpoint-observer.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,4 +10,7 @@ export class NavbarComponent {
   @Input() showBurgerMenu = false;
 
   @Output() burgerMenuClicked = new EventEmitter<MouseEvent>();
+
+  protected currentBreakpoint$ = inject(TailwindBreakpointObserver).breakpoint$;
+  protected readonly Breakpoint = Breakpoint;
 }
