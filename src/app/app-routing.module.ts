@@ -11,11 +11,16 @@ import { authCallbackHandler } from './spotify-client/auth-callback-handler';
 import { SpotifyClientService } from './spotify-client/spotify-client.service';
 import { AlbumComponent } from './pages/album/album.component';
 import { ArtistComponent } from './pages/artist/artist.component';
+import { logoutHandler } from './spotify-client/logout-handler';
 
 const routes: Routes = [
   {
     path: 'callback',
     canActivate: [authCallbackHandler],
+    children: []
+  },{
+    path: 'logout',
+    canActivate: [logoutHandler],
     children: []
   }, {
     path: '',
@@ -57,7 +62,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

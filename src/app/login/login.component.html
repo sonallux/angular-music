@@ -3,5 +3,11 @@
 <main class="h-full p-6 mat-app-background">
   <h1>Angular Spotify Client</h1>
 
-  <button mat-raised-button color="primary" (click)="login()">Login</button>
+  <button mat-raised-button color="primary" class="h-12" (click)="login()">
+    <img matButtonIcon
+         src="../../../assets/img/Spotify_Icon_RGB_White.png"
+         aria-hidden="true"
+    >
+    <span class="text-white">Login with Spotify</span>
+  </button>
 </main>

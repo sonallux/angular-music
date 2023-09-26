@@ -39,4 +39,8 @@ export class SpotifyClientService {
   public login() {
     this.spotifyAuthentication.redirect().catch(console.log);
   }
+
+  public logout() {
+    this.spotifyAuthentication.removeAccessToken();
+  }
 }
