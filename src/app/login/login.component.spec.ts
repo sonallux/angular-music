@@ -12,6 +12,6 @@ describe('LoginComponent', () => {
     });
 
     expect(await screen.findByRole('heading', {name: 'Angular Spotify Client'})).toBeDefined();
-    expect(await screen.findByRole('button', {name: 'Login'})).toBeDefined();
+    expect(await screen.findByRole('button', {name: 'Login with Spotify'})).toBeDefined();
   });
 });

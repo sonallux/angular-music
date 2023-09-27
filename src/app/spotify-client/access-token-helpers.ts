@@ -4,6 +4,9 @@ import type { AccessToken, ICachable } from "@spotify/web-api-ts-sdk";
 // https://github.com/spotify/spotify-web-api-ts-sdk/blob/53c487a0fab3994e298dcd051e88162d19954bf9/src/auth/AccessTokenHelpers.ts
 export class AccessTokenHelpers {
     public static async refreshCachedAccessToken(clientId: string, item: AccessToken) {
+        if (!item.refresh_token) {
+          return item;
+        }
         const updated = await AccessTokenHelpers.refreshToken(clientId, item.refresh_token);
         return AccessTokenHelpers.toCachable(updated);
     }
