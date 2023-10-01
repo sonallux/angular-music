@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: main
-      url: https://angular-spotify-client-d93b7.firebaseapp.com/
+      url: https://angular-spotify-client-d93b7.firebaseapp.com
     steps:
       - name: Checkout
         uses: actions/checkout@v4
