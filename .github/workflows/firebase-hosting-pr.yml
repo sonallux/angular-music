@@ -22,7 +22,7 @@ jobs:
       - name: Create channel id
         id: channel
         run: |
-          escapedBranchName=$("${{github.event.pull_request.head.ref}}" | tr "/_" -)
+          escapedBranchName=$(echo "${{github.event.pull_request.head.ref}}" | tr "/_" -)
           channelId="pr${{github.event.pull_request.number}}-$escapedBranchName"
           echo $channelId
           echo "channel_id=$channelId" >> $GITHUB_OUTPUT
@@ -34,7 +34,7 @@ jobs:
         with:
           credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_SPOTIFY_CLIENT_D93B7 }}'
       - name: Deploy
-        run: npx firebase hosting:channel:deploy ${{ steps.channel.outputs.channel_id }} --expires 2w --json
+        run: npx firebase hosting:channel:deploy ${{ steps.channel.outputs.channel_id }} --expires 14d --json
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
