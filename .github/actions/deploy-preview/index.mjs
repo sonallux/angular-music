@@ -35,7 +35,7 @@ async function run() {
   }
 
   const urls = Object.values(output.result).map(site => site.url);
-  setOutput("urls", urls);
+  setOutput("url", urls[0]);
 }
 
 // Channel ID should only contain letters, numbers and hyphens

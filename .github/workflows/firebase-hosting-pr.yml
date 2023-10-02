@@ -41,6 +41,6 @@ jobs:
           body: |
             Visit the preview of this PR:
 
-            ${{ steps.deploy-preview.outputs.urls[0] }}
+            ${{ steps.deploy-preview.outputs.url }}
           body-includes: "Visit the preview of this PR:"
           comment-author: 'github-actions[bot]'

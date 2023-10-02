@@ -10,8 +10,8 @@ inputs:
     default: 7d
     required: false
 outputs:
-  urls:
-    description: The urls deployed to
+  url:
+    description: The url deployed to
 
 runs:
   using: node20
