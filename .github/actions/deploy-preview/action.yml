@@ -2,7 +2,7 @@ name: Deploy to Firebase preview channel
 description: Deploy to Firebase preview channel
 
 inputs:
-  channelId:
+  channel-id:
     description: the name of the channel to deploy to
     required: true
   expires:

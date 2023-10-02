@@ -2,7 +2,7 @@ import {getInput, setOutput} from "@actions/core";
 import {exec} from "@actions/exec";
 
 const expires = getInput("expires");
-const configuredChannelId = getInput("channelId");
+const configuredChannelId = getInput("channel-id");
 
 async function run() {
   const channelId = escapeChannelId(configuredChannelId);
