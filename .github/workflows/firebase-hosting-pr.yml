@@ -1,4 +1,4 @@
-name: Deploy preview on PR
+name: Deploy preview
 
 on: pull_request
 
@@ -6,13 +6,15 @@ permissions:
   pull-requests: write
 
 jobs:
-  deploy_preview:
+  deploy-preview:
     if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    name: Deploy preview on PR
+    name: Deploy preview
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
     environment:
       name: features
-      url: ${{ steps.deploy-preview.outputs.url }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +31,7 @@ jobs:
         with:
           credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_SPOTIFY_CLIENT_D93B7 }}'
       - name: Deploy preview
-        id: deploy-preview
+        id: deploy
         uses: ./.github/actions/deploy-preview
         with:
           channelId: pr${{github.event.pull_request.number}}-${{github.event.pull_request.head.ref}}
@@ -37,13 +39,26 @@ jobs:
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-      - name: Comment on PR
-        uses: ./.github/actions/upsert-comment
+
+  comment:
+    name: Comment on PR
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: find-comment
         with:
           issue-number: ${{github.event.pull_request.number}}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Visit the preview of this PR:'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{github.event.pull_request.number}}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
           body: |
             Visit the preview of this PR:
 
-            ${{ steps.deploy-preview.outputs.url }}
-          body-includes: "Visit the preview of this PR:"
-          comment-author: 'github-actions[bot]'
+            ${{ needs.deploy-preview.outputs.url }}
+          edit-mode: replace
