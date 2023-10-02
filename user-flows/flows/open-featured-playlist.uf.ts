@@ -4,7 +4,7 @@ import { createSpotifyTokenCookie } from '../support';
 const userFlowProvider: UserFlowProvider = {
   flowOptions: { name: 'Open featured playlist' },
   interactions: async ({ page, flow, collectOptions }) => {
-    await page.setCookie(await createSpotifyTokenCookie())
+    await page.setCookie(await createSpotifyTokenCookie(collectOptions.url))
 
     await flow.navigate(collectOptions.url, {stepName: 'Navigate to Home'});
 

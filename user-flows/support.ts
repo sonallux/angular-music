@@ -21,13 +21,14 @@ async function getSpotifyToken() {
   return response.json();
 }
 
-export async function createSpotifyTokenCookie() {
+export async function createSpotifyTokenCookie(url: string) {
+  const domain = new URL(url).hostname;
   const spotifyToken = await getSpotifyToken();
   spotifyToken.expires = Date.now() + (spotifyToken.expires_in * 1000);
 
   return {
     name: 'spotify-authentication-token',
-    domain: 'localhost',
+    domain,
     path: '/',
     value: JSON.stringify(spotifyToken),
     expires: spotifyToken.expires

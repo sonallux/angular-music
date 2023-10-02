@@ -1,6 +1,6 @@
 {
   "collect": {
-    "url": "http://localhost:4200",
+    "url": "https://angular-spotify-client-d93b7.web.app",
     "ufPath": "./user-flows/flows",
     "config": {
       "extends": "lighthouse:default",
