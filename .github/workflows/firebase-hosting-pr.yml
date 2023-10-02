@@ -1,16 +1,20 @@
-name: Deploy preview on PR
+name: Deploy preview
 
 on: pull_request
 
 permissions:
-  checks: write
   pull-requests: write
 
 jobs:
-  deploy_preview:
+  deploy-preview:
     if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    name: Deploy preview on PR
+    name: Deploy preview
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    environment:
+      name: features
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,12 +25,40 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Build
-        run: npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_SPOTIFY_CLIENT_D93B7 }}'
+      - name: Deploy preview
+        id: deploy
+        uses: ./.github/actions/deploy-preview
+        with:
+          channel-id: pr${{github.event.pull_request.number}}-${{github.event.pull_request.head.ref}}
+          expires: 14d
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+
+  comment:
+    name: Comment on PR
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: find-comment
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_SPOTIFY_CLIENT_D93B7 }}'
-          projectId: angular-spotify-client-d93b7
+          issue-number: ${{github.event.pull_request.number}}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Visit the preview of this PR:'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{github.event.pull_request.number}}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body: |
+            Visit the preview of this PR:
+
+            ${{ needs.deploy-preview.outputs.url }}
+          edit-mode: replace
