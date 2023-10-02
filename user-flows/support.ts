@@ -14,7 +14,8 @@ async function getSpotifyToken() {
   });
 
   if (response.status !== 200) {
-    throw new Error('Failed to get spotify token: ' + response.body);
+    const body = await response.text();
+    throw new Error(`Failed to get spotify token: ${body}`);
   }
 
   return response.json();

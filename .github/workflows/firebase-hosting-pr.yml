@@ -47,6 +47,9 @@ jobs:
         uses: push-based/user-flow-gh-action@v0.1.0
         with:
           url: ${{ needs.deploy-preview.outputs.url }}
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
       - name: Upload user flow measurements
         uses: actions/upload-artifact@v3
         with:
