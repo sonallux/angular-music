@@ -19,13 +19,6 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - name: Create channel id
-        id: channel
-        run: |
-          escapedBranchName=$(echo "${{github.event.pull_request.head.ref}}" | tr "/_" -)
-          channelId="pr${{github.event.pull_request.number}}-$escapedBranchName"
-          echo $channelId
-          echo "channel_id=$channelId" >> $GITHUB_OUTPUT
       - name: Install dependencies
         run: npm ci
       - name: Authenticate to Google Cloud
@@ -33,13 +26,14 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_SPOTIFY_CLIENT_D93B7 }}'
-      - name: Deploy
-        id: deploy
-        run: |
-          output=$(npx firebase hosting:channel:deploy ${{ steps.channel.outputs.channel_id }} --expires 14d --json)
-          echo "result=$output" >> $GITHUB_OUTPUT
+      - name: Deploy preview
+        id: deploy-preview
+        uses: ./.github/actions/deploy-preview
+        with:
+          channelId: pr${{github.event.pull_request.number}}-${{github.event.pull_request.head.ref}}
+          expires: 14d
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
       - name: Deploy output
-        run: echo "${{steps.deploy.outputs.result}}"
+        run: echo "${{steps.deploy-preview.outputs.urls}}"
