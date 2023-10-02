@@ -49,9 +49,7 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Measure user flows
-        uses: push-based/user-flow-gh-action@v0.4.1
-        with:
-          url: ${{ needs.deploy-preview.outputs.url }}
+        run: npx @push-based/user-flow collect --url ${{ needs.deploy-preview.outputs.url }} --format json html md
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
