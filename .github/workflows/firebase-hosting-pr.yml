@@ -43,8 +43,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
       - name: Measure user flows
-        uses: push-based/user-flow-gh-action@v0.1.0
+        uses: push-based/user-flow-gh-action@v0.4.1
         with:
           url: ${{ needs.deploy-preview.outputs.url }}
         env:
