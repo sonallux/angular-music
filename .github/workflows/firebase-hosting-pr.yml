@@ -3,7 +3,6 @@ name: Deploy preview on PR
 on: pull_request
 
 permissions:
-  checks: write
   pull-requests: write
 
 jobs:
@@ -35,5 +34,13 @@ jobs:
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-      - name: Deploy output
-        run: echo "${{steps.deploy-preview.outputs.urls}}"
+      - name: Comment on PR
+        uses: ./.github/actions/upsert-comment
+        with:
+          issue-number: ${{github.event.pull_request.number}}
+          body: |
+            Visit the preview of this PR:
+
+            ${{ steps.deploy-preview.outputs.urls[0] }}
+          body-includes: "Visit the preview of this PR:"
+          comment-author: 'github-actions[bot]'
