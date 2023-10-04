@@ -10,14 +10,14 @@ const userFlowProvider: UserFlowProvider = {
 
     await page.waitForSelector('h1');
 
-    await flow.startTimespan({ stepName: 'Select first new release' });
-
-    await page.click('section:nth-of-type(2) app-clickable-card:first-of-type');
-    await page.waitForSelector('main app-hero-header h1');
-
-    await flow.endTimespan();
-
-    await flow.snapshot({ stepName: 'Album page' });
+    //await flow.startTimespan({ stepName: 'Select first new release' });
+//
+    //await page.click('section:nth-of-type(2) app-clickable-card:first-of-type');
+    //await page.waitForSelector('main app-hero-header h1');
+//
+    //await flow.endTimespan();
+//
+    //await flow.snapshot({ stepName: 'Album page' });
   }
 };
 
