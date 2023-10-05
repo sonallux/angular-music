@@ -49,7 +49,10 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Measure user flows
-        run: npx @push-based/user-flow collect --url ${{ needs.deploy-preview.outputs.url }} --format json html md
+        # TODO: use push-based/user-flow-gh-action@v0.4.1 when my PR is merged
+        uses: sonallux/user-flow-gh-action@fix/121-keep-measurements
+        with:
+          url: ${{ needs.deploy-preview.outputs.url }}
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
