@@ -53,6 +53,7 @@ jobs:
         uses: sonallux/user-flow-gh-action@fix/121-keep-measurements
         with:
           url: ${{ needs.deploy-preview.outputs.url }}
+          format: html,md,json
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
