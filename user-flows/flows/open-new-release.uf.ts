@@ -8,16 +8,16 @@ const userFlowProvider: UserFlowProvider = {
 
     await flow.navigate(collectOptions.url, {stepName: 'Navigate to Home'});
 
-    await page.waitForSelector('h1');
+    await page.waitForSelector('#section-new-releases app-clickable-card');
 
-    //await flow.startTimespan({ stepName: 'Select first new release' });
-//
-    //await page.click('section:nth-of-type(2) app-clickable-card:first-of-type');
-    //await page.waitForSelector('main app-hero-header h1');
-//
-    //await flow.endTimespan();
-//
-    //await flow.snapshot({ stepName: 'Album page' });
+    await flow.startTimespan({ stepName: 'Select first new release' });
+
+    await page.click('#section-new-releases app-clickable-card:first-of-type');
+    await page.waitForSelector('app-album h1');
+
+    await flow.endTimespan();
+
+    await flow.snapshot({ stepName: 'Album page' });
   }
 };
 
