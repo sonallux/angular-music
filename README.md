@@ -1,4 +1,4 @@
-# Angular Spotify Client
+# Angular Music
 
 🚧 This project is still WIP 🚧
 

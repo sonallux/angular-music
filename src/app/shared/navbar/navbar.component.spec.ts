@@ -8,6 +8,6 @@ describe('NavbarComponent', () => {
       imports: [SharedModule]
     });
 
-    expect(await screen.findByRole('link', {name: 'Angular Spotify'})).toBeDefined();
+    expect(await screen.findByRole('link', {name: 'Angular Music'})).toBeDefined();
   });
 });

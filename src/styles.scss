@@ -10,8 +10,8 @@
 @include mat.core();
 
 // Include all theme styles for the components.
-@include mat.all-component-themes($angular-spotify-theme);
-@include mat.typography-hierarchy($angular-spotify-theme);
+@include mat.all-component-themes($angular-music-theme);
+@include mat.typography-hierarchy($angular-music-theme);
 
 @layer base {
   html, body {
@@ -45,7 +45,7 @@
 }
 
 .skeleton-wave {
-  $accent-palette: map.get(mat.get-color-config($angular-spotify-theme), accent);
+  $accent-palette: map.get(mat.get-color-config($angular-music-theme), accent);
 
   @apply relative overflow-hidden;
   background-color: mat.get-color-from-palette($accent-palette, 700);

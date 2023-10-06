@@ -29,7 +29,7 @@ $spotify-green-palette: (
 $primary: mat.define-palette($spotify-green-palette);
 $accent:  mat.define-palette(mat.$grey-palette, A200, A100, A400);
 
-$angular-spotify-theme: mat.define-dark-theme((
+$angular-music-theme: mat.define-dark-theme((
   color: (
     primary: $primary,
     accent: $accent
