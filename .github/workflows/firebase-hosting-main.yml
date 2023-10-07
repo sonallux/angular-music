@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: main
-      url: https://angular-music-7f2ba.web.app
+      url: ${{ steps.deploy.outputs.details_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,13 +22,12 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_MUSIC_7F2BA }}'
       - name: Deploy
-        run: npx firebase deploy
+        id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_MUSIC_7F2BA }}'
+          channelId: live
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
