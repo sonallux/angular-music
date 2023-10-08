@@ -1,0 +1,34 @@
+[
+  {
+    "path": "/*",
+    "resourceSizes": [
+      { "resourceType": "document", "budget": 3 },
+      { "resourceType": "font", "budget": 151 },
+      { "resourceType": "image", "budget": 2000 },
+      { "resourceType": "media", "budget": 143 },
+      { "resourceType": "script", "budget": 143 },
+      { "resourceType": "stylesheet", "budget": 10 },
+      { "resourceType": "third-party", "budget": 2000 },
+      { "resourceType": "total", "budget": 3000 }
+    ],
+    "resourceCounts": [
+      { "resourceType": "document", "budget": 1 },
+      { "resourceType": "font", "budget": 1 },
+      { "resourceType": "image", "budget": 20 },
+      { "resourceType": "media", "budget": 0 },
+      { "resourceType": "script", "budget": 3 },
+      { "resourceType": "stylesheet", "budget": 1 },
+      { "resourceType": "third-party", "budget": 20  },
+      { "resourceType": "total", "budget": 30 }
+    ],
+    "timings": [
+      { "metric": "cumulative-layout-shift", "budget": 0.04 },
+      { "metric": "largest-contentful-paint", "budget": 9000 },
+      { "metric": "interactive", "budget": 4000 },
+      { "metric": "first-meaningful-paint", "budget": 3000 },
+      { "metric": "first-contentful-paint", "budget": 3000 },
+      { "metric": "total-blocking-time", "budget": 400 },
+      { "metric": "speed-index", "budget": 3000 }
+    ]
+  }
+]

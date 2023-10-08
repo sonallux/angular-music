@@ -35,3 +35,30 @@ jobs:
           expires: 14d
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
+
+  user-flow:
+    name: Run user flows
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Measure user flows
+        # TODO: use push-based/user-flow-gh-action@v0.4.1 when my PR is merged
+        uses: sonallux/user-flow-gh-action@fix/121-keep-measurements
+        with:
+          url: ${{ needs.deploy-preview.outputs.url }}
+          format: html,md,json
+          budgetPath: ./budget.json
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      - name: Upload user flow measurements
+        uses: actions/upload-artifact@v3
+        with:
+          path: measures/
