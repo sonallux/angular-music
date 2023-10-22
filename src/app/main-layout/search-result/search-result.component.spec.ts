@@ -8,9 +8,9 @@ describe('SearchResultComponent', () => {
       imports: [SharedModule],
       componentInputs: {
         searchResults: {
-          albums: {items: [{images: [], artists: []}]},
-          artists: {items: [{images: []}]},
-          playlists: {items: [{images: []}]}
+          albums: {items: [{images: [{url: 'https://search-result.image'}], artists: []}]},
+          artists: {items: [{images: [{url: 'https://search-result.image'}]}]},
+          playlists: {items: [{images: [{url: 'https://search-result.image'}]}]}
         }
       }
     });
