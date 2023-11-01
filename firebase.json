@@ -1,13 +1,30 @@
 {
   "hosting": {
-    "source": ".",
+    "public": "dist/angular-music",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "frameworksBackend": {
-      "region": "europe-west1"
-    }
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    }],
+    "headers": [
+      {
+        "regex": "^.*\/[^\/.]*$",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }]
+      },
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "max-age=604800"
+        }]
+      }
+    ]
   }
 }

@@ -33,8 +33,6 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_MUSIC_7F2BA }}'
           expires: 14d
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
 
   user-flow:
     name: Run user flows
