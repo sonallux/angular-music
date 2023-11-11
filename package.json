@@ -37,7 +37,7 @@
     "@push-based/user-flow": "0.20.1",
     "@testing-library/angular": "14.3.0",
     "@types/jasmine": "~4.3.6",
-    "@types/js-cookie": "3.0.5",
+    "@types/js-cookie": "3.0.6",
     "firebase-tools": "12.8.1",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
