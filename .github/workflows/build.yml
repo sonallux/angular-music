@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '18', '20' ]
+        node: [ '18' ]
     name: Build on NodeJS ${{ matrix.node }}
     steps:
       - name: Checkout
