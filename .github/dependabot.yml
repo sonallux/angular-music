@@ -13,11 +13,23 @@ updates:
         patterns:
           - "@angular/*"
           - "@angular-devkit/*"
+      type-definitions:
+        patterns:
+          - "@types/*"
     ignore:
       - dependency-name: "@angular/*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "@angular-devkit/*"
         update-types: [ "version-update:semver-major" ]
+      - dependency-name: "@types/node"
+        versions:
+          - '>=20.0.0'
+      - dependency-name: "jasmine-core"
+        versions:
+          - '>=5.0.0'
+      - dependency-name: "@types/jasmine"
+        versions:
+          - '>=5.0.0'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
