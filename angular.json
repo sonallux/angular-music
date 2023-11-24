@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-music",
+            "outputPath": "dist/angular-music/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [

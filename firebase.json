@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/angular-music",
+    "public": "dist/angular-music/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
