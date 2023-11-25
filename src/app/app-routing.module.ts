@@ -30,22 +30,28 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        component: HomeComponent
+        component: HomeComponent,
+        title: 'Home - Angular Music'
       }, {
         path: 'browse',
-        component: BrowseComponent
+        component: BrowseComponent,
+        title: 'Browse - Angular Music'
       }, {
         path: 'category/:categoryId',
-        component: CategoryComponent
+        component: CategoryComponent,
+        title: 'Category - Angular Music'
       }, {
         path: 'playlist/:playlistId',
-        component: PlaylistComponent
+        component: PlaylistComponent,
+        title: 'Playlist - Angular Music'
       },{
         path: 'album/:albumId',
-        component: AlbumComponent
+        component: AlbumComponent,
+        title: 'Album - Angular Music'
       },{
         path: 'artist/:artistId',
-        component: ArtistComponent
+        component: ArtistComponent,
+        title: 'Artist - Angular Music'
       }, {
         path: '**',
         component: NotFoundComponent
@@ -55,6 +61,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: LoginComponent,
+    title: 'Login - Angular Music'
   }, {
     path: '**',
     redirectTo: ''
