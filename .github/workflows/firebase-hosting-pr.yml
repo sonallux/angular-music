@@ -3,7 +3,6 @@ name: Deploy preview
 on: pull_request
 
 permissions:
-  checks: write
   pull-requests: write
 
 jobs:
@@ -12,10 +11,10 @@ jobs:
     name: Deploy preview to firebase
     runs-on: ubuntu-latest
     outputs:
-      url: ${{ steps.deploy.outputs.details_url }}
+      url: ${{ steps.deploy.outputs.url }}
     environment:
       name: features
-      url: ${{ steps.deploy.outputs.details_url }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,15 +25,35 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Deploy preview to firebase
-        id: deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_MUSIC_7F2BA }}'
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANGULAR_MUSIC_7F2BA }}'
+      - name: Deploy preview
+        id: deploy
+        uses: ./.github/actions/deploy-preview
+        with:
+          channel-id: pr${{github.event.pull_request.number}}-${{github.event.pull_request.head.ref}}
           expires: 14d
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+
+
+  comment:
+    name: Comment on PR
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: deployment-preview-url
+          message: |
+            Visit the preview of this PR:
+
+            ${{ needs.deploy-preview.outputs.url }}
 
   user-flow:
     name: Run user flows

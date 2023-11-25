@@ -1,15 +1,11 @@
 {
   "hosting": {
-    "public": "dist/angular-music/browser",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [ {
-      "source": "**",
-      "destination": "/index.html"
-    }],
     "headers": [
       {
         "regex": "^(.*\/)?[^\/.]*$",
@@ -25,6 +21,9 @@
           "value": "max-age=604800"
         }]
       }
-    ]
+    ],
+    "frameworksBackend": {
+      "region": "europe-west1"
+    }
   }
 }

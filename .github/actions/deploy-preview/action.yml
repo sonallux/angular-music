@@ -1,0 +1,18 @@
+name: Deploy to Firebase preview channel
+description: Deploy to Firebase preview channel
+
+inputs:
+  channel-id:
+    description: the name of the channel to deploy to
+    required: true
+  expires:
+    description: duration for channel expiration
+    default: 7d
+    required: false
+outputs:
+  url:
+    description: The url deployed to
+
+runs:
+  using: node20
+  main: index.mjs

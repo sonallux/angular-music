@@ -34,6 +34,9 @@
     "zone.js": "0.14.2"
   },
   "devDependencies": {
+    "@actions/core": "1.10.1",
+    "@actions/exec": "1.1.1",
+    "@actions/github": "6.0.0",
     "@angular-devkit/build-angular": "17.0.2",
     "@angular/cli": "17.0.2",
     "@angular/compiler-cli": "17.0.4",
@@ -44,8 +47,7 @@
     "@types/jasmine": "4.6.3",
     "@types/js-cookie": "3.0.6",
     "@types/node": "18.18.11",
-    "firebase-functions": "4.5.0",
-    "firebase-tools": "12.8.1",
+    "firebase-tools": "firebase/firebase-tools#master",
     "jasmine-core": "4.6.0",
     "karma": "6.4.2",
     "karma-chrome-launcher": "3.2.0",
