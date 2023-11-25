@@ -2,6 +2,9 @@ name: Deploy preview
 
 on: pull_request
 
+concurrency:
+  group: deploy-preview-${{ github.ref }}
+
 permissions:
   pull-requests: write
 
