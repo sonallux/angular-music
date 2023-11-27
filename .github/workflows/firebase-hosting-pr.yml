@@ -74,7 +74,7 @@ jobs:
         # TODO: use push-based/user-flow-gh-action@v0.4.1 when my PR is merged
         uses: sonallux/user-flow-gh-action@fix/121-keep-measurements
         with:
-          url: ${{ needs.deploy-preview.outputs.url }}
+          url: ${{ needs.deploy-preview.outputs.url }}/home
           format: html,md,json
           budgetPath: ./budget.json
         env:

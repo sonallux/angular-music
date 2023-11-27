@@ -1,6 +1,6 @@
 {
   "collect": {
-    "url": "https://angular-music-7f2ba.web.app",
+    "url": "https://angular-music-7f2ba.web.app/home",
     "ufPath": "./user-flows/flows",
     "config": {
       "extends": "lighthouse:default",

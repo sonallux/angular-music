@@ -1,50 +1,49 @@
 <mat-nav-list>
-  <a mat-list-item routerLink="" routerLinkActive="mdc-list-item--activated" [routerLinkActiveOptions]="{exact: true}">
+  <a mat-list-item routerLink="home" routerLinkActive="mdc-list-item--activated">
     <mat-icon matListItemIcon>home</mat-icon>
-    Home
+    <span matListItemTitle>Home</span>
   </a>
-  <a mat-list-item routerLink="browse" routerLinkActive="mdc-list-item--activated"
-     [routerLinkActiveOptions]="{exact: true}">
+  <a mat-list-item routerLink="browse" routerLinkActive="mdc-list-item--activated">
     <mat-icon matListItemIcon>explore</mat-icon>
-    Browse
+    <span matListItemTitle>Browse</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>recommend</mat-icon>
-    Recommendations
+    <span matListItemTitle>Recommendations</span>
   </a>
   <a mat-list-item href="https://open.spotify.com" target="_blank">
     <img matListItemIcon src="../../../assets/img/Spotify_Icon_RGB_White.png" alt="spotify" aria-hidden="true">
-    Open Spotify
+    <span matListItemTitle>Open Spotify</span>
   </a>
   <mat-divider></mat-divider>
   <div mat-subheader>Library</div>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>person</mat-icon>
-    Artists
+    <span matListItemTitle>Artists</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>album</mat-icon>
-    Albums
+    <span matListItemTitle>Albums</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>music_note</mat-icon>
-    Tracks
+    <span matListItemTitle>Tracks</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>library_music</mat-icon>
-    Playlists
+    <span matListItemTitle>Playlists</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>podcasts</mat-icon>
-    Podcasts & Shows
+    <span matListItemTitle>Podcasts & Shows</span>
   </a>
-  <a mat-list-item>
+  <a mat-list-item disabled>
     <mat-icon matListItemIcon>headphones</mat-icon>
-    Audiobooks
+    <span matListItemTitle>Audiobooks</span>
   </a>
   <mat-divider></mat-divider>
   <a mat-list-item routerLink="logout">
     <mat-icon matListItemIcon>logout</mat-icon>
-    Logout
+    <span matListItemTitle>Logout</span>
   </a>
 </mat-nav-list>
