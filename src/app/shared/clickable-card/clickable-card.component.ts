@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { booleanAttribute, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-clickable-card',
@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ClickableCardComponent {
   @Input({required: true}) item!: CardItem | null
+  @Input({transform: booleanAttribute}) fixedWidth = false;
 
   @Output() itemClick = new EventEmitter<CardItem>();
 }

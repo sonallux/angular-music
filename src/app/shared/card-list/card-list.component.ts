@@ -27,7 +27,8 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('container') containerElement!: ElementRef<HTMLElement>;
 
-  maxItemsForOneLine = 10;
+  maxItemsForOneLine = 3;
+  gridColsClass = 'grid-cols-3';
 
   private resizeObserver: ResizeObserver;
 
@@ -46,12 +47,13 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   }
 
   private onResize: ResizeObserverCallback = ([entry]) => {
-    if (this.overflow !== 'truncate' || this.items === null) {
+    if (this.overflow === 'scroll') {
       return;
     }
 
     const oldMaxItemsForOneLine = this.maxItemsForOneLine;
     this.maxItemsForOneLine = Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH));
+    this.gridColsClass = `grid-cols-${this.maxItemsForOneLine}`;
 
     // ResizeObserver does not run in Angular Zone, so trigger change detection if value has changed
     if (oldMaxItemsForOneLine !== this.maxItemsForOneLine) {

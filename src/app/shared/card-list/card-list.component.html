@@ -1,15 +1,15 @@
-<div #container class="flex gap-6 justify-between"
-     [ngClass]="{'overflow-x-auto': overflow === 'scroll', 'flex-wrap': overflow === 'wrap'}">
+<div #container class="gap-6"
+     [ngClass]="overflow === 'scroll' ? 'flex overflow-x-auto' : 'grid ' + gridColsClass">
   <ng-container *ngIf="items else loadingSkeleton">
     <app-clickable-card
       *ngFor="let item of (overflow === 'truncate' ? items.slice(0, maxItemsForOneLine) : items)"
       [item]="item"
+      [fixedWidth]="overflow === 'scroll'"
       (itemClick)="itemClick.emit($event)"
     />
   </ng-container>
   <ng-template #loadingSkeleton>
-    <app-clickable-card [item]="null"></app-clickable-card>
-    <app-clickable-card [item]="null"></app-clickable-card>
-    <app-clickable-card [item]="null"></app-clickable-card>
+
+    <app-clickable-card *ngFor="let i; repeat: maxItemsForOneLine" [item]="null" />
   </ng-template>
 </div>

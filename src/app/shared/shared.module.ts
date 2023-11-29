@@ -15,6 +15,7 @@ import { AlbumLinkComponent } from './album-link/album-link.component';
 import { ArtistLinkComponent } from './artist-link/artist-link.component';
 import { ReleaseDatePipe } from './pipes/release-date.pipe';
 import { TrackDurationPipe } from './pipes/track-duration.pipe';
+import { Repeat } from 'ngxtension/repeat';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TrackDurationPipe } from './pipes/track-duration.pipe';
     MatCardModule,
     MatRippleModule,
     RouterLink,
+    Repeat
   ],
   exports: [
     NavbarComponent,

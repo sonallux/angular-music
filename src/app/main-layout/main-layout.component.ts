@@ -1,7 +1,9 @@
-import { Component, ElementRef, HostListener, inject, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Breakpoint, TailwindBreakpointObserver } from '../shared/services/tailwind-breakpoint-observer.service';
 import { SearchResults, SpotifySearchApi } from '../spotify-client/api/search-api.service';
+import { injectNavigationEnd } from 'ngxtension/navigation-end';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-main-layout',
@@ -16,10 +18,20 @@ export class MainLayoutComponent {
 
   public searchResults$: Observable<SearchResults> | undefined;
 
+  @ViewChild('scrollContainer', {read: ElementRef})
+  public scrollContainer?: ElementRef<HTMLElement>;
+
   @ViewChildren('searchResultsView, searchBox', {read: ElementRef})
   public searchElements!: QueryList<ElementRef>;
 
   private readonly searchApi = inject(SpotifySearchApi);
+
+  constructor() {
+    // Navigating to same page, does not scroll to top, so do it manually after navigation
+    injectNavigationEnd().pipe(takeUntilDestroyed()).subscribe(() => {
+      this.scrollContainer?.nativeElement.scrollTo({top: 0, left: 0})
+    })
+  }
 
   @HostListener('click', ['$event.target'])
   onClick(eventTarget: HTMLElement) {

@@ -1,9 +1,9 @@
 <ng-container *ngIf="item else loadingSkeleton">
   <a [routerLink]="item.link" (click)="itemClick.emit(item)" class="group focus-visible:outline-none">
-    <mat-card class="w-44 group-hover:bg-white/[0.15] group-focus-visible:bg-white/[0.25]" mat-ripple>
+    <mat-card class="group-hover:bg-white/[0.15] group-focus-visible:bg-white/[0.25]" [class.w-44]="fixedWidth" mat-ripple>
       <!-- add p-4 to restore card padding, because matRipple causes removal of padding on click -->
       <mat-card-content class="p-4 space-y-2">
-        <img [src]="item.imageUrl" class="w-36 h-36 object-cover bg-gray-700" alt="image" aria-hidden="true"/>
+        <img [src]="item.imageUrl" class="object-cover bg-gray-700" [class.w-36]="fixedWidth" [class.h-36]="fixedWidth" alt="image" aria-hidden="true"/>
         <h3 class="text-base truncate">{{item.title}}</h3>
         <p class="h-10 line-clamp-2" *ngIf="item.subtitle">{{item.subtitle}}</p>
       </mat-card-content>
@@ -11,7 +11,7 @@
   </a>
 </ng-container>
 <ng-template #loadingSkeleton>
-  <mat-card class="w-44">
+  <mat-card [class.w-44]="fixedWidth">
     <mat-card-content class="p-4 space-y-2">
       <div class="w-36 h-36 skeleton-wave"></div>
       <p class="text-base rounded w-2/3 skeleton-wave">&nbsp;</p>

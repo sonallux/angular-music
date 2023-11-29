@@ -5,6 +5,9 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
+  safelist: [
+    {pattern: /grid-cols-[0-9]+/}
+  ],
   theme: {
     extend: {
       colors: {

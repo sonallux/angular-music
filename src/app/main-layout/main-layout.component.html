@@ -15,7 +15,7 @@
     <app-sidenav/>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content #scrollContainer>
     <main class="p-6">
       <app-search-result *ngIf="showSearchResults else content"
                          #searchResultsView
