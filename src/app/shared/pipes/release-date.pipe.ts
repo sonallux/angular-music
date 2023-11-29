@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 export interface ReleaseDate {
@@ -10,9 +10,7 @@ export interface ReleaseDate {
   name: 'releaseDate'
 })
 export class ReleaseDatePipe implements PipeTransform {
-
-  constructor(private datePipe: DatePipe) {
-  }
+  private readonly datePipe = inject(DatePipe);
 
   transform(value: ReleaseDate, precision: 'year' | 'day' = 'day'): string | null {
     if (value.release_date_precision === 'year') {

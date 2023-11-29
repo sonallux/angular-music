@@ -1,13 +1,15 @@
 <mat-card class="hero-header-card">
   <ng-container *ngIf="heroData else loadingSkeleton">
-    <img class="hero-header-image" [src]="heroData.imageUrl" alt="icon" aria-hidden="true">
+    <img class="hero-header-image" [src]="heroData.imageUrl" width="192" height="192" alt="icon" aria-hidden="true">
 
     <div class="info-container">
       <p class="info-container-type">{{heroData.type}}</p>
 
       <h1 class="info-container-title">{{heroData.title}}</h1>
 
-      <ng-content/>
+      <div class="info-container-content mt-auto">
+        <ng-content/>
+      </div>
     </div>
   </ng-container>
 </mat-card>

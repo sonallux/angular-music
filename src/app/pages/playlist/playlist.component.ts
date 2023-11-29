@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Page, Playlist, PlaylistedTrack, Track } from '@spotify/web-api-ts-sdk';
 import { SpotifyPlaylistApi } from '../../spotify-client/api/playlist-api.service';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { injectParams } from '../../shared/injectors/inject-params';
+import { filterNil } from 'ngxtension/filter-nil';
 
 export interface PlaylistTrack extends PlaylistedTrack {
   track: Track
@@ -17,20 +18,29 @@ export interface PlaylistTrack extends PlaylistedTrack {
 })
 export class PlaylistComponent {
 
-  displayedColumns: string[] = ['name', 'artist', 'album'];
+  public displayedColumns: string[] = ['name', 'artist', 'album'];
 
-  playlist$: Observable<Playlist>;
+  private readonly playlistApi = inject(SpotifyPlaylistApi);
 
-  playlistHeroData$: Observable<HeroData>;
+  public readonly playlist$: Observable<Playlist> = injectParams('playlistId').pipe(
+    filterNil(),
+    switchMap(playlistId => this.playlistApi.getPlaylist(playlistId)),
+    shareReplay({refCount: true})
+  );
 
-  playlistTracks$: Observable<Page<PlaylistTrack>>;
+  public readonly playlistHeroData$: Observable<HeroData> = this.playlist$.pipe(
+    map(mapPlaylistToHeroData)
+  );
 
-  constructor(
-    private playlistApi: SpotifyPlaylistApi,
-    private breakpointObserver: TailwindBreakpointObserver,
-    activatedRoute: ActivatedRoute
-  ) {
-    this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
+  public readonly playlistTracks$: Observable<Page<PlaylistTrack>> = this.playlist$.pipe(
+    map(playlist => ({
+      ...playlist.tracks,
+      items: playlist.tracks.items.filter(isPlaylistTrackItem)
+    }))
+  );
+
+  constructor() {
+    inject(TailwindBreakpointObserver).breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
       if (breakpoint >= Breakpoint.XL) {
         this.displayedColumns = ['name', 'artist', 'album', 'added_at', 'duration'];
       } else if (breakpoint >= Breakpoint.LG) {
@@ -39,23 +49,6 @@ export class PlaylistComponent {
         this.displayedColumns = ['name', 'artist', 'album'];
       }
     });
-
-    this.playlist$ = activatedRoute.params.pipe(
-      map(params => params['playlistId']),
-      switchMap(playlistId => this.playlistApi.getPlaylist(playlistId)),
-      shareReplay({refCount: true})
-    );
-
-    this.playlistHeroData$ = this.playlist$.pipe(
-      map(mapPlaylistToHeroData)
-    );
-
-    this.playlistTracks$ = this.playlist$.pipe(
-      map(playlist => ({
-        ...playlist.tracks,
-        items: playlist.tracks.items.filter(isPlaylistTrackItem)
-      }))
-    );
   }
 }
 

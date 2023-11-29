@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { defaultIfEmpty, filter, map, Observable, switchMap } from 'rxjs';
+import { defaultIfEmpty, map, Observable, switchMap } from 'rxjs';
 import { SpotifyClientService } from './spotify-client.service';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { AccessToken } from '@spotify/web-api-ts-sdk';
+import { filterNil } from 'ngxtension/filter-nil';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
@@ -16,7 +16,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     }
 
     return fromPromise(this.spotifyClient.getAccessToken()).pipe(
-      filter(isNotNull),
+      filterNil(),
       map(accessToken =>
         request.clone({
           setHeaders: {
@@ -27,8 +27,4 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       switchMap(req => next.handle(req))
     );
   }
-}
-
-function isNotNull(token: AccessToken | null): token is AccessToken {
-  return token !== null;
 }

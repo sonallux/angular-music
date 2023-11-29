@@ -4,12 +4,6 @@ import { Artist, SimplifiedAlbum } from '@spotify/web-api-ts-sdk';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
 
-const albumTypeNames: Record<string, string> = {
-  album: 'Album',
-  compilation: 'Compilation',
-  single: 'Single'
-}
-
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html'

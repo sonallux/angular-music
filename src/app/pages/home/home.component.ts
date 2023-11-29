@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { map, shareReplay } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { SimplifiedAlbum, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
@@ -10,12 +10,11 @@ import { SpotifyUserApi } from '../../spotify-client/api/user-api.service';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-
-  userName$ = this.userApi.getCurrentUser().pipe(
+  public readonly userName$ = inject(SpotifyUserApi).getCurrentUser().pipe(
     map(user => user.display_name)
   );
 
-  private featuredPlaylists$ = this.browseApi.getFeaturedPlaylists({
+  private readonly featuredPlaylists$ = inject(SpotifyBrowseApi).getFeaturedPlaylists({
     country: 'DE',
     locale: 'en_US',
     limit: 10
@@ -23,25 +22,19 @@ export class HomeComponent {
     shareReplay({refCount: true})
   );
 
-  featuredPlaylistsMessage$ = this.featuredPlaylists$.pipe(
+  public readonly featuredPlaylistsMessage$ = this.featuredPlaylists$.pipe(
     map(featuredPlaylists => featuredPlaylists.message)
   );
 
-  playlists$ = this.featuredPlaylists$.pipe(
+  public readonly playlists$ = this.featuredPlaylists$.pipe(
     map(featuredPlaylists => featuredPlaylists.playlists.items),
     map(playlists => playlists.map(playlistToCardItem))
   );
 
-  newReleases$ = this.browseApi.getNewReleases({country: 'US', limit: 10}).pipe(
+  public readonly newReleases$ = inject(SpotifyBrowseApi).getNewReleases({country: 'US', limit: 10}).pipe(
     map(newReleases => newReleases.albums.items),
     map(albums => albums.map(albumToCardItem))
   );
-
-  constructor(
-    private userApi: SpotifyUserApi,
-    private browseApi: SpotifyBrowseApi
-  ) {
-  }
 }
 
 function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {

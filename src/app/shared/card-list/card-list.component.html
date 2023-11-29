@@ -1,4 +1,4 @@
-<div #container class="flex gap-6"
+<div #container class="flex gap-6 justify-between"
      [ngClass]="{'overflow-x-auto': overflow === 'scroll', 'flex-wrap': overflow === 'wrap'}">
   <ng-container *ngIf="items else loadingSkeleton">
     <app-clickable-card

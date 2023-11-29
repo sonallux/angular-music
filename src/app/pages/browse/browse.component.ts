@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { map } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { Category } from '@spotify/web-api-ts-sdk';
@@ -9,13 +9,12 @@ import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
   templateUrl: './browse.component.html'
 })
 export class BrowseComponent {
-  categories$ = this.browseApi.getCategories({country: 'DE', locale: 'en_US', limit: 50}).pipe(
-    map(response => response.categories.items),
-    map(categories => categories.map(categoryToCardItem))
-  );
-
-  constructor(private browseApi: SpotifyBrowseApi) {
-  }
+  public readonly categories$ = inject(SpotifyBrowseApi)
+    .getCategories({country: 'DE', locale: 'en_US', limit: 50})
+    .pipe(
+      map(response => response.categories.items),
+      map(categories => categories.map(categoryToCardItem))
+    );
 }
 
 function categoryToCardItem(category: Category): CardItem {

@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-6">
   <app-hero-header [heroData]="playlistHeroData$ | async">
     <ng-container *ngIf="(playlist$ | async) as playlist">
-      <p class="truncate mt-auto" *ngIf="playlist.description">{{playlist.description}}</p>
+      <p class="truncate" *ngIf="playlist.description">{{playlist.description}}</p>
 
-      <p class="m-0">
+      <p>
         <a routerLink="/user/{{playlist.owner.id}}">{{playlist.owner.display_name}}</a> -
         {{playlist.followers.total | number}} Followers -
         {{playlist.tracks.total | number}} Tracks

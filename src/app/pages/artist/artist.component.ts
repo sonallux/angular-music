@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatestWith, map, Observable } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';
-import { ActivatedRoute, Params } from '@angular/router';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { State, withLoadingState } from '../../shared/loading-state';
 import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
+import { injectParams } from '../../shared/injectors/inject-params';
+import { filterNil } from 'ngxtension/filter-nil';
 
 const albumTypeNames: Record<string, string> = {
   album: 'Album',
@@ -21,56 +22,44 @@ const albumTypeNames: Record<string, string> = {
   templateUrl: './artist.component.html'
 })
 export class ArtistComponent {
+  public displayedColumns: string[] = ['name', 'artist', 'album'];
 
-  displayedColumns: string[] = ['name', 'artist', 'album'];
+  private readonly artistApi = inject(SpotifyArtistApi);
+  private readonly releaseDatePipe = inject(ReleaseDatePipe);
+  private readonly artistId$ = injectParams('artistId').pipe(filterNil());
 
-  showAllTopTracks$ = new BehaviorSubject(false);
+  public readonly showAllTopTracks$ = new BehaviorSubject(false);
+  public readonly artistHeroData$: Observable<State<HeroData & Pick<Artist, 'followers' | 'genres'>>> = this.artistId$.pipe(
+    withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(this.mapArtistToHeroData))),
+  );
 
-  artistHeroData$: Observable<State<HeroData & Pick<Artist, 'followers' | 'genres'>>>;
+  public readonly topTracks$: Observable<State<Track[]>> = this.artistId$.pipe(
+    withLoadingState(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'}).pipe(
+      combineLatestWith(this.showAllTopTracks$),
+      map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
+    ))
+  );
 
-  topTracks$: Observable<State<Track[]>>;
+  public readonly albums$: Observable<State<CardItem[]>> = this.artistId$.pipe(
+    withLoadingState(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10}).pipe(
+      map(page => page.items.map(this.mapAlbumToCardItem))
+    )),
+  );
 
-  albums$: Observable<State<CardItem[]>>;
+  public readonly relatedArtists$: Observable<State<CardItem[]>> = this.artistId$.pipe(
+    withLoadingState(artistId => this.artistApi.getArtistsRelatedArtists(artistId).pipe(
+      map(artists => artists.artists.map(this.mapArtistToCardItem))
+    )),
+  );
 
-  relatedArtists$: Observable<State<CardItem[]>>
-
-  constructor(private artistApi: SpotifyArtistApi,
-              private breakpointObserver: TailwindBreakpointObserver,
-              private releaseDatePipe: ReleaseDatePipe,
-              activatedRoute: ActivatedRoute
-  ) {
-    this.breakpointObserver.breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
+  constructor() {
+    inject(TailwindBreakpointObserver).breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
       if (breakpoint >= Breakpoint.LG) {
         this.displayedColumns = ['name', 'artist', 'album', 'duration'];
       } else {
         this.displayedColumns = ['name', 'artist', 'album'];
       }
     });
-
-    const artistId$ = activatedRoute.params.pipe(map<Params, string>(params => params['artistId']));
-
-    this.artistHeroData$ = artistId$.pipe(
-      withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(this.mapArtistToHeroData))),
-    );
-
-    this.topTracks$ = artistId$.pipe(
-      withLoadingState(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'}).pipe(
-        combineLatestWith(this.showAllTopTracks$),
-        map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
-      ))
-    );
-
-    this.albums$ = artistId$.pipe(
-      withLoadingState(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10}).pipe(
-        map(page => page.items.map(this.mapAlbumToCardItem))
-      )),
-    );
-
-    this.relatedArtists$ = artistId$.pipe(
-      withLoadingState(artistId => this.artistApi.getArtistsRelatedArtists(artistId).pipe(
-        map(artists => artists.artists.map(this.mapArtistToCardItem))
-      )),
-    );
   }
 
   public toggleShowAllTopTracks() {

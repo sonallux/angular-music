@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-6">
   <ng-container *ngIf="artistHeroData$ | async as artist">
     <app-hero-header [heroData]="artist.state === 'SUCCESS' ? artist.data : null">
-      <p class="mt-auto" *ngIf="artist.state === 'SUCCESS'">
+      <p *ngIf="artist.state === 'SUCCESS'">
         {{artist.data.followers.total | number}} Followers -
         {{artist.data.genres.join(', ')}}
       </p>
