@@ -5,5 +5,5 @@ import { SpotifyClientService } from './spotify-client.service';
 export function authCallbackHandler(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
   return inject(SpotifyClientService).exchangeToken(state.url)
     .catch(console.error)
-    .then(() => createUrlTreeFromSnapshot(route, ['home']));
+    .then(() => createUrlTreeFromSnapshot(route, ['../home']));
 }
