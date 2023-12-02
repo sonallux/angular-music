@@ -49,7 +49,7 @@
     "@types/jasmine": "4.6.4",
     "@types/js-cookie": "3.0.6",
     "@types/node": "18.18.13",
-    "firebase-tools": "sonallux/firebase-tools#fix/6543-angular-ssr-windows",
+    "firebase-tools": "firebase/firebase-tools#master",
     "jasmine-core": "4.6.0",
     "karma": "6.4.2",
     "karma-chrome-launcher": "3.2.0",
