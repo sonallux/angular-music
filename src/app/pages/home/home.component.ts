@@ -31,7 +31,7 @@ export class HomeComponent {
     map(playlists => playlists.map(playlistToCardItem))
   );
 
-  public readonly newReleases$ = inject(SpotifyBrowseApi).getNewReleases({country: 'US', limit: 10}).pipe(
+  public readonly newReleases$ = inject(SpotifyBrowseApi).getNewReleases({country: 'DE', limit: 10}).pipe(
     map(newReleases => newReleases.albums.items),
     map(albums => albums.map(albumToCardItem))
   );
