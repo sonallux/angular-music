@@ -5,7 +5,7 @@ app-hero-header {
     @apply overflow-hidden flex-row h-48;
 
     .hero-header-image {
-      @apply bg-gray-700;
+      @apply bg-gray-700 aspect-square;
     }
 
     .info-container {
