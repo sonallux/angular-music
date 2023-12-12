@@ -12,7 +12,7 @@
                class="w-60 z-10"
                [opened]="alwaysShowSideNav$ | async"
                [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'">
-    <app-sidenav/>
+    <app-sidenav (itemClick)="sidenav.toggle(sidenav.mode === 'side')"/>
   </mat-sidenav>
 
   <mat-sidenav-content #scrollContainer>

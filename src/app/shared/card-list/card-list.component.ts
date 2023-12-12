@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { CardItem } from '../clickable-card/clickable-card.component';
 
-const CARD_WIDTH = 176;
+const CARD_WIDTH = 128;
 const GAB_WIDTH = 24;
 
 @Component({
@@ -52,7 +52,7 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
     }
 
     const oldMaxItemsForOneLine = this.maxItemsForOneLine;
-    this.maxItemsForOneLine = Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH));
+    this.maxItemsForOneLine = Math.max(2, Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH)));
     this.gridColsClass = `grid-cols-${this.maxItemsForOneLine}`;
 
     // ResizeObserver does not run in Angular Zone, so trigger change detection if value has changed
