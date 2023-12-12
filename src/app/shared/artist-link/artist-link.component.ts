@@ -3,7 +3,8 @@ import { SimplifiedArtist } from '@spotify/web-api-ts-sdk';
 
 @Component({
   selector: 'app-artist-link',
-  templateUrl: './artist-link.component.html'
+  templateUrl: './artist-link.component.html',
+  styleUrl: './artist-link.component.scss'
 })
 export class ArtistLinkComponent {
   @Input({required: true})
