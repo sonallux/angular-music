@@ -9,6 +9,6 @@ describe('BrowseComponent', () => {
       imports: [BrowseModule, HttpClientTestingModule],
     });
 
-    expect(await screen.findByRole('heading', {name: 'Browse'})).toBeDefined();
+    expect(await screen.findByRole('heading', { name: 'Browse' })).toBeDefined();
   });
 });

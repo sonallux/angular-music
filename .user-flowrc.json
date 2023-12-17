@@ -17,10 +17,7 @@
     }
   },
   "persist": {
-    "format": [
-      "html",
-      "json"
-    ],
+    "format": ["html", "json"],
     "outPath": "./measures"
   },
   "assert": {}

@@ -18,7 +18,7 @@
       { "resourceType": "media", "budget": 0 },
       { "resourceType": "script", "budget": 3 },
       { "resourceType": "stylesheet", "budget": 1 },
-      { "resourceType": "third-party", "budget": 20  },
+      { "resourceType": "third-party", "budget": 20 },
       { "resourceType": "total", "budget": 30 }
     ],
     "timings": [

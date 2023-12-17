@@ -7,9 +7,9 @@ describe('SpotifyClientService', () => {
   let service: SpotifyClientService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({providers: [
-      { provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }
-    ]});
+    TestBed.configureTestingModule({
+      providers: [{ provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }],
+    });
     service = TestBed.inject(SpotifyClientService);
   });
 

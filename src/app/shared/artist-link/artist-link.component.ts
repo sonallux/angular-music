@@ -4,13 +4,13 @@ import { SimplifiedArtist } from '@spotify/web-api-ts-sdk';
 @Component({
   selector: 'app-artist-link',
   templateUrl: './artist-link.component.html',
-  styleUrl: './artist-link.component.scss'
+  styleUrl: './artist-link.component.scss',
 })
 export class ArtistLinkComponent {
-  @Input({required: true})
+  @Input({ required: true })
   set artist(artist: SimplifiedArtist | SimplifiedArtist[]) {
     this.artists = Array.isArray(artist) ? artist : [artist];
   }
 
-  artists: SimplifiedArtist[] = []
+  artists: SimplifiedArtist[] = [];
 }

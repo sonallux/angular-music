@@ -13,14 +13,14 @@ describe('withLoadingState', () => {
   });
 
   it('switches to loading state for second input value', () => {
-    testScheduler.run(({expectObservable, expectSubscriptions}) => {
+    testScheduler.run(({ expectObservable, expectSubscriptions }) => {
       const [input, result] = createTestObservables('--a---b----|');
 
       expectObservable(result).toBe('a--b--cd---|', {
-        a: {state: 'LOADING'},
-        b: {state: 'SUCCESS', data: 'ax'},
-        c: {state: 'LOADING'},
-        d: {state: 'SUCCESS', data: 'bx'}
+        a: { state: 'LOADING' },
+        b: { state: 'SUCCESS', data: 'ax' },
+        c: { state: 'LOADING' },
+        d: { state: 'SUCCESS', data: 'bx' },
       });
 
       expectSubscriptions(input.subscriptions).toBe('^----------!');
@@ -28,12 +28,12 @@ describe('withLoadingState', () => {
   });
 
   it('emits error', () => {
-    testScheduler.run(({expectObservable, expectSubscriptions}) => {
+    testScheduler.run(({ expectObservable, expectSubscriptions }) => {
       const [input, result] = createTestObservables('--a--|', '-#');
 
       expectObservable(result).toBe('a--b-|', {
-        a: {state: 'LOADING'},
-        b: {state: 'ERROR', error: 'error'},
+        a: { state: 'LOADING' },
+        b: { state: 'ERROR', error: 'error' },
       });
 
       expectSubscriptions(input.subscriptions).toBe('^----!');
@@ -41,32 +41,37 @@ describe('withLoadingState', () => {
   });
 
   it('restore after error', () => {
-    testScheduler.run(({expectObservable, expectSubscriptions}) => {
+    testScheduler.run(({ expectObservable, expectSubscriptions }) => {
       const input = testScheduler.createColdObservable('--a---b----|');
       const result = input.pipe(
-        withLoadingState(input => {
+        withLoadingState((input) => {
           if (input === 'a') {
-            return testScheduler.createColdObservable('-#')
+            return testScheduler.createColdObservable('-#');
           }
-          return testScheduler.createColdObservable('-a|', {a: `${input}x`})
-        })
+          return testScheduler.createColdObservable('-a|', { a: `${input}x` });
+        }),
       );
 
       expectObservable(result).toBe('a--b--cd---|', {
-        a: {state: 'LOADING'},
-        b: {state: 'ERROR', error: 'error'},
-        c: {state: 'LOADING'},
-        d: {state: 'SUCCESS', data: 'bx'}
+        a: { state: 'LOADING' },
+        b: { state: 'ERROR', error: 'error' },
+        c: { state: 'LOADING' },
+        d: { state: 'SUCCESS', data: 'bx' },
       });
 
       expectSubscriptions(input.subscriptions).toBe('^----------!');
     });
   });
 
-  function createTestObservables(inputMarbles: string, loaderMarbles = '-a|'): [ColdObservable, Observable<State<string>>] {
+  function createTestObservables(
+    inputMarbles: string,
+    loaderMarbles = '-a|',
+  ): [ColdObservable, Observable<State<string>>] {
     const input = testScheduler.createColdObservable(inputMarbles);
     const result = input.pipe(
-      withLoadingState(input => testScheduler.createColdObservable(loaderMarbles, {a: `${input}x`}))
+      withLoadingState((input) =>
+        testScheduler.createColdObservable(loaderMarbles, { a: `${input}x` }),
+      ),
     );
 
     return [input, result];

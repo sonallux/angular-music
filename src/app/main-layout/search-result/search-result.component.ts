@@ -6,10 +6,10 @@ import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
 
 @Component({
   selector: 'app-search-result',
-  templateUrl: './search-result.component.html'
+  templateUrl: './search-result.component.html',
 })
 export class SearchResultComponent {
-  @Input({required: true})
+  @Input({ required: true })
   public set searchResults(results: SearchResults | null) {
     if (!results) {
       this.albumResults = null;
@@ -17,7 +17,7 @@ export class SearchResultComponent {
       return;
     }
 
-    const {albums, artists, playlists} = results;
+    const { albums, artists, playlists } = results;
     this.albumResults = albums.items.map(this.mapAlbumToCardItem);
     this.artistResults = artists.items.map(this.mapArtistToCardItem);
     this.playlistResults = playlists.items.map(this.mapPlaylistToCardItem);
@@ -26,8 +26,7 @@ export class SearchResultComponent {
   @Output() public resultSelected = new EventEmitter();
   @Output() public closeButtonClick = new EventEmitter();
 
-  constructor(private releaseDatePipe: ReleaseDatePipe) {
-  }
+  constructor(private releaseDatePipe: ReleaseDatePipe) {}
 
   public albumResults: CardItem[] | null = null;
   public artistResults: CardItem[] | null = null;
@@ -37,19 +36,21 @@ export class SearchResultComponent {
     return {
       title: album.name,
       imageUrl: album.images[0]?.url,
-      subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${album.artists.map(a => a.name).join(', ')}`,
-      link: `/album/${album.id}`
-    }
-  }
+      subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${album.artists
+        .map((a) => a.name)
+        .join(', ')}`,
+      link: `/album/${album.id}`,
+    };
+  };
 
   private mapArtistToCardItem = (artist: Artist): CardItem => {
     return {
       title: artist.name,
       imageUrl: artist.images[0]?.url,
       subtitle: 'Artist',
-      link: `/artist/${artist.id}`
-    }
-  }
+      link: `/artist/${artist.id}`,
+    };
+  };
 
   // TODO: SearchResult uses not exported type PlaylistBase, therefore use any.
   // It should actually be SimplifiedPlaylistBase
@@ -58,7 +59,7 @@ export class SearchResultComponent {
       title: playlist.name,
       subtitle: playlist.description,
       imageUrl: playlist.images[0]?.url,
-      link: `/playlist/${playlist.id}`
+      link: `/playlist/${playlist.id}`,
     };
-  }
+  };
 }

@@ -1,12 +1,12 @@
 <div class="flex flex-col gap-6">
   <app-hero-header [heroData]="playlistHeroData$ | async">
-    <ng-container *ngIf="(playlist$ | async) as playlist">
-      <p class="truncate" *ngIf="playlist.description">{{playlist.description}}</p>
+    <ng-container *ngIf="playlist$ | async as playlist">
+      <p class="truncate" *ngIf="playlist.description">{{ playlist.description }}</p>
 
       <p>
-        <a routerLink="/user/{{playlist.owner.id}}">{{playlist.owner.display_name}}</a> -
-        {{playlist.followers.total | number}} Followers -
-        {{playlist.tracks.total | number}} Tracks
+        <a routerLink="/user/{{ playlist.owner.id }}">{{ playlist.owner.display_name }}</a> -
+        {{ playlist.followers.total | number }} Followers -
+        {{ playlist.tracks.total | number }} Tracks
       </p>
     </ng-container>
   </app-hero-header>
@@ -14,34 +14,40 @@
   <mat-table [dataSource]="(playlistTracks$ | async)?.items ?? []">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let element"><span class="truncate">{{ element.track.name }}</span></mat-cell>
+      <mat-cell *matCellDef="let element"
+        ><span class="truncate">{{ element.track.name }}</span></mat-cell
+      >
     </ng-container>
 
     <ng-container matColumnDef="artist">
       <mat-header-cell *matHeaderCellDef>Artists</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <app-artist-link [artist]="element.track.artists"/>
+        <app-artist-link [artist]="element.track.artists" />
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="album">
       <mat-header-cell *matHeaderCellDef>Album</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <app-album-link [album]="element.track.album"/>
+        <app-album-link [album]="element.track.album" />
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="added_at">
-      <mat-header-cell *matHeaderCellDef class="basis-32 grow-0">Added at</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="basis-32 grow-0">{{ element.added_at | date }}</mat-cell>
+      <mat-header-cell *matHeaderCellDef class="grow-0 basis-32">Added at</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="grow-0 basis-32">{{
+        element.added_at | date
+      }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="duration">
-      <mat-header-cell *matHeaderCellDef class="basis-32 grow-0">Duration</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="basis-32 grow-0">{{element.track.duration_ms | trackDuration}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef class="grow-0 basis-32">Duration</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="grow-0 basis-32"
+        >{{ element.track.duration_ms | trackDuration }}
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 </div>

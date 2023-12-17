@@ -1,9 +1,19 @@
 <mat-nav-list>
-  <a mat-list-item routerLink="home" routerLinkActive="mdc-list-item--activated" (click)="itemClick.emit($event)">
+  <a
+    mat-list-item
+    routerLink="home"
+    routerLinkActive="mdc-list-item--activated"
+    (click)="itemClick.emit($event)"
+  >
     <mat-icon matListItemIcon>home</mat-icon>
     <span matListItemTitle>Home</span>
   </a>
-  <a mat-list-item routerLink="browse" routerLinkActive="mdc-list-item--activated" (click)="itemClick.emit($event)">
+  <a
+    mat-list-item
+    routerLink="browse"
+    routerLinkActive="mdc-list-item--activated"
+    (click)="itemClick.emit($event)"
+  >
     <mat-icon matListItemIcon>explore</mat-icon>
     <span matListItemTitle>Browse</span>
   </a>
@@ -12,7 +22,12 @@
     <span matListItemTitle>Recommendations</span>
   </a>
   <a mat-list-item href="https://open.spotify.com" target="_blank" (click)="itemClick.emit($event)">
-    <img matListItemIcon src="../../../assets/img/Spotify_Icon_RGB_White.png" alt="spotify" aria-hidden="true">
+    <img
+      matListItemIcon
+      src="../../../assets/img/Spotify_Icon_RGB_White.png"
+      alt="spotify"
+      aria-hidden="true"
+    />
     <span matListItemTitle>Open Spotify</span>
   </a>
   <mat-divider></mat-divider>

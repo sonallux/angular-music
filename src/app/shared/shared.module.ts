@@ -26,7 +26,7 @@ import { Repeat } from 'ngxtension/repeat';
     AlbumLinkComponent,
     ArtistLinkComponent,
     ReleaseDatePipe,
-    TrackDurationPipe
+    TrackDurationPipe,
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,7 @@ import { Repeat } from 'ngxtension/repeat';
     MatCardModule,
     MatRippleModule,
     RouterLink,
-    Repeat
+    Repeat,
   ],
   exports: [
     NavbarComponent,
@@ -48,13 +48,8 @@ import { Repeat } from 'ngxtension/repeat';
     AlbumLinkComponent,
     ArtistLinkComponent,
     ReleaseDatePipe,
-    TrackDurationPipe
+    TrackDurationPipe,
   ],
-  providers: [
-    DatePipe,
-    ReleaseDatePipe,
-  ]
+  providers: [DatePipe, ReleaseDatePipe],
 })
-export class SharedModule {
-
-}
+export class SharedModule {}

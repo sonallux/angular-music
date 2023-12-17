@@ -5,13 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [
-    CategoryComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MatCardModule
-  ]
+  declarations: [CategoryComponent],
+  imports: [CommonModule, SharedModule, MatCardModule],
 })
-export class CategoryModule { }
+export class CategoryModule {}

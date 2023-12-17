@@ -1,4 +1,4 @@
 <ng-container *ngFor="let artist of artists; let i = index">
   <span *ngIf="i > 0">, </span>
-  <a class="hover:underline" [routerLink]="['/artist', artist.id]">{{artist.name}}</a>
+  <a class="hover:underline" [routerLink]="['/artist', artist.id]">{{ artist.name }}</a>
 </ng-container>

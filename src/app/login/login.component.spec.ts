@@ -8,10 +8,10 @@ describe('LoginComponent', () => {
   it('should render', async () => {
     await render(LoginComponent, {
       imports: [LoginModule],
-      providers: [ { provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }]
+      providers: [{ provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }],
     });
 
-    expect(await screen.findByRole('heading', {name: 'Angular Music'})).toBeDefined();
-    expect(await screen.findByRole('button', {name: 'Login with Spotify'})).toBeDefined();
+    expect(await screen.findByRole('heading', { name: 'Angular Music' })).toBeDefined();
+    expect(await screen.findByRole('button', { name: 'Login with Spotify' })).toBeDefined();
   });
 });

@@ -8,11 +8,11 @@ describe('SearchResultComponent', () => {
       imports: [SharedModule],
       componentInputs: {
         searchResults: {
-          albums: {items: [{images: [{url: 'https://search-result.image'}], artists: []}]},
-          artists: {items: [{images: [{url: 'https://search-result.image'}]}]},
-          playlists: {items: [{images: [{url: 'https://search-result.image'}]}]}
-        }
-      }
+          albums: { items: [{ images: [{ url: 'https://search-result.image' }], artists: [] }] },
+          artists: { items: [{ images: [{ url: 'https://search-result.image' }] }] },
+          playlists: { items: [{ images: [{ url: 'https://search-result.image' }] }] },
+        },
+      },
     });
 
     await expectRegion('Artists', 1);
@@ -25,11 +25,11 @@ describe('SearchResultComponent', () => {
       imports: [SharedModule],
       componentInputs: {
         searchResults: {
-          albums: {items: []},
-          artists: {items: []},
-          playlists: {items: []}
-        }
-      }
+          albums: { items: [] },
+          artists: { items: [] },
+          playlists: { items: [] },
+        },
+      },
     });
 
     await expectNoRegion('Artists');
@@ -39,12 +39,12 @@ describe('SearchResultComponent', () => {
 });
 
 async function expectRegion(name: string, itemCount: number) {
-  const region = await screen.findByRole('region', {name});
+  const region = await screen.findByRole('region', { name });
   expect(region).toBeDefined();
-  expect(await findByRole(region, 'heading', {name})).toBeDefined();
+  expect(await findByRole(region, 'heading', { name })).toBeDefined();
   expect(await findAllByRole(region, 'link')).toHaveSize(itemCount);
 }
 
 async function expectNoRegion(name: string) {
-  expect(screen.queryByRole('region', {name})).toBeNull();
+  expect(screen.queryByRole('region', { name })).toBeNull();
 }

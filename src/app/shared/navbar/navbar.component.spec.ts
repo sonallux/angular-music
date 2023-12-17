@@ -5,9 +5,9 @@ import { SharedModule } from '../shared.module';
 describe('NavbarComponent', () => {
   it('should render', async () => {
     await render(NavbarComponent, {
-      imports: [SharedModule]
+      imports: [SharedModule],
     });
 
-    expect(await screen.findByRole('link', {name: 'Angular Music'})).toBeDefined();
+    expect(await screen.findByRole('link', { name: 'Angular Music' })).toBeDefined();
   });
 });

@@ -7,16 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [
-    ArtistComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterLink,
-    MatTableModule,
-    MatButtonModule
-  ]
+  declarations: [ArtistComponent],
+  imports: [CommonModule, SharedModule, RouterLink, MatTableModule, MatButtonModule],
 })
-export class ArtistModule {
-}
+export class ArtistModule {}

@@ -18,9 +18,7 @@ import { AlbumModule } from './pages/album/album.module';
 import { ArtistModule } from './pages/artist/artist.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,20 +32,19 @@ import { ArtistModule } from './pages/artist/artist.module';
     CategoryModule,
     PlaylistModule,
     AlbumModule,
-    ArtistModule
+    ArtistModule,
   ],
   providers: [
     {
       provide: CACHE_STORE_TOKEN,
-      useClass: BrowserCacheStoreService
+      useClass: BrowserCacheStoreService,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

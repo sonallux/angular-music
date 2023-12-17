@@ -2,7 +2,10 @@ import { Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatestWith, map, Observable } from 'rxjs';
 import { HeroData } from '../../shared/hero-header/hero-header.component';
 import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
-import { Breakpoint, TailwindBreakpointObserver } from '../../shared/services/tailwind-breakpoint-observer.service';
+import {
+  Breakpoint,
+  TailwindBreakpointObserver,
+} from '../../shared/services/tailwind-breakpoint-observer.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SpotifyArtistApi } from '../../spotify-client/api/artist-api.service';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
@@ -14,12 +17,12 @@ import { filterNil } from 'ngxtension/filter-nil';
 const albumTypeNames: Record<string, string> = {
   album: 'Album',
   compilation: 'Compilation',
-  single: 'Single'
-}
+  single: 'Single',
+};
 
 @Component({
   selector: 'app-artist',
-  templateUrl: './artist.component.html'
+  templateUrl: './artist.component.html',
 })
 export class ArtistComponent {
   public displayedColumns: string[] = ['name', 'artist', 'album'];
@@ -29,41 +32,55 @@ export class ArtistComponent {
   private readonly artistId$ = injectParams('artistId').pipe(filterNil());
 
   public readonly showAllTopTracks$ = new BehaviorSubject(false);
-  public readonly artistHeroData$: Observable<State<HeroData & Pick<Artist, 'followers' | 'genres'>>> = this.artistId$.pipe(
-    withLoadingState(artistId => this.artistApi.getArtist(artistId).pipe(map(this.mapArtistToHeroData))),
+  public readonly artistHeroData$: Observable<
+    State<HeroData & Pick<Artist, 'followers' | 'genres'>>
+  > = this.artistId$.pipe(
+    withLoadingState((artistId) =>
+      this.artistApi.getArtist(artistId).pipe(map(this.mapArtistToHeroData)),
+    ),
   );
 
   public readonly topTracks$: Observable<State<Track[]>> = this.artistId$.pipe(
-    withLoadingState(artistId => this.artistApi.getArtistsTopTracks(artistId, {market: 'DE'}).pipe(
-      combineLatestWith(this.showAllTopTracks$),
-      map(([result, showAllTopTracks]) => result.tracks.slice(0, showAllTopTracks ? undefined : 5))
-    ))
+    withLoadingState((artistId) =>
+      this.artistApi.getArtistsTopTracks(artistId, { market: 'DE' }).pipe(
+        combineLatestWith(this.showAllTopTracks$),
+        map(([result, showAllTopTracks]) =>
+          result.tracks.slice(0, showAllTopTracks ? undefined : 5),
+        ),
+      ),
+    ),
   );
 
   public readonly albums$: Observable<State<CardItem[]>> = this.artistId$.pipe(
-    withLoadingState(artistId => this.artistApi.getArtistsAlbums(artistId, {market: 'DE', limit: 10}).pipe(
-      map(page => page.items.map(this.mapAlbumToCardItem))
-    )),
+    withLoadingState((artistId) =>
+      this.artistApi
+        .getArtistsAlbums(artistId, { market: 'DE', limit: 10 })
+        .pipe(map((page) => page.items.map(this.mapAlbumToCardItem))),
+    ),
   );
 
   public readonly relatedArtists$: Observable<State<CardItem[]>> = this.artistId$.pipe(
-    withLoadingState(artistId => this.artistApi.getArtistsRelatedArtists(artistId).pipe(
-      map(artists => artists.artists.map(this.mapArtistToCardItem))
-    )),
+    withLoadingState((artistId) =>
+      this.artistApi
+        .getArtistsRelatedArtists(artistId)
+        .pipe(map((artists) => artists.artists.map(this.mapArtistToCardItem))),
+    ),
   );
 
   constructor() {
-    inject(TailwindBreakpointObserver).breakpoint$.pipe(takeUntilDestroyed()).subscribe(breakpoint => {
-      if (breakpoint >= Breakpoint.LG) {
-        this.displayedColumns = ['name', 'artist', 'album', 'duration'];
-      } else {
-        this.displayedColumns = ['name', 'artist', 'album'];
-      }
-    });
+    inject(TailwindBreakpointObserver)
+      .breakpoint$.pipe(takeUntilDestroyed())
+      .subscribe((breakpoint) => {
+        if (breakpoint >= Breakpoint.LG) {
+          this.displayedColumns = ['name', 'artist', 'album', 'duration'];
+        } else {
+          this.displayedColumns = ['name', 'artist', 'album'];
+        }
+      });
   }
 
   public toggleShowAllTopTracks() {
-    this.showAllTopTracks$.next(!this.showAllTopTracks$.getValue())
+    this.showAllTopTracks$.next(!this.showAllTopTracks$.getValue());
   }
 
   private mapArtistToHeroData = (artist: Artist) => {
@@ -74,23 +91,25 @@ export class ArtistComponent {
       followers: artist.followers,
       genres: artist.genres,
     };
-  }
+  };
 
   private mapAlbumToCardItem = (album: SimplifiedAlbum): CardItem => {
     return {
       title: album.name,
       imageUrl: album.images[0].url,
-      subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${albumTypeNames[album.album_type]}`,
-      link: `/album/${album.id}`
-    }
-  }
+      subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${
+        albumTypeNames[album.album_type]
+      }`,
+      link: `/album/${album.id}`,
+    };
+  };
 
   private mapArtistToCardItem = (artist: Artist): CardItem => {
     return {
       title: artist.name,
       imageUrl: artist.images[0].url,
       subtitle: 'Artist',
-      link: `/artist/${artist.id}`
-    }
-  }
+      link: `/artist/${artist.id}`,
+    };
+  };
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { defaultIfEmpty, map, Observable, switchMap } from 'rxjs';
 import { SpotifyClientService } from './spotify-client.service';
@@ -7,8 +7,7 @@ import { filterNil } from 'ngxtension/filter-nil';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-
-  constructor(private spotifyClient: SpotifyClientService) {}
+  private readonly spotifyClient = inject(SpotifyClientService);
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (!request.url.startsWith('https://api.spotify.com/')) {
@@ -17,14 +16,15 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     return fromPromise(this.spotifyClient.getAccessToken()).pipe(
       filterNil(),
-      map(accessToken =>
+      map((accessToken) =>
         request.clone({
           setHeaders: {
-            Authorization: `${accessToken.token_type} ${accessToken.access_token}`
-          }
-        })),
+            Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+          },
+        }),
+      ),
       defaultIfEmpty(request),
-      switchMap(req => next.handle(req))
+      switchMap((req) => next.handle(req)),
     );
   }
 }

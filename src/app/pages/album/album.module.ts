@@ -6,15 +6,7 @@ import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
-  declarations: [
-    AlbumComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterLink,
-    MatTableModule
-  ]
+  declarations: [AlbumComponent],
+  imports: [CommonModule, SharedModule, RouterLink, MatTableModule],
 })
-export class AlbumModule {
-}
+export class AlbumModule {}

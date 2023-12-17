@@ -2,11 +2,11 @@ import { booleanAttribute, Component, EventEmitter, Input, Output } from '@angul
 
 @Component({
   selector: 'app-clickable-card',
-  templateUrl: './clickable-card.component.html'
+  templateUrl: './clickable-card.component.html',
 })
 export class ClickableCardComponent {
-  @Input({required: true}) item!: CardItem | null
-  @Input({transform: booleanAttribute}) fixedWidth = false;
+  @Input({ required: true }) item!: CardItem | null;
+  @Input({ transform: booleanAttribute }) fixedWidth = false;
 
   @Output() itemClick = new EventEmitter<CardItem>();
 }

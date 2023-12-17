@@ -5,7 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MainLayoutComponent', () => {
   it('should render', async () => {
-    await render(MainLayoutComponent, {imports: [MainLayoutModule, HttpClientTestingModule]});
+    await render(MainLayoutComponent, { imports: [MainLayoutModule, HttpClientTestingModule] });
 
     expect(await screen.findByRole('main')).toBeDefined();
   });

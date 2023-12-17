@@ -13,6 +13,6 @@ export class BrowserCacheStoreService implements ICacheStore {
   }
 
   set(key: string, value: string): void {
-    Cookies.set(key, value, {expires: 365})
+    Cookies.set(key, value, { expires: 365 });
   }
 }

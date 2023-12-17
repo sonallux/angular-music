@@ -7,7 +7,7 @@ import {
   Input,
   OnDestroy,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { CardItem } from '../clickable-card/clickable-card.component';
 
@@ -16,10 +16,10 @@ const GAB_WIDTH = 24;
 
 @Component({
   selector: 'app-card-list',
-  templateUrl: './card-list.component.html'
+  templateUrl: './card-list.component.html',
 })
 export class CardListComponent implements AfterViewInit, OnDestroy {
-  @Input({required: true}) items!: CardItem[] | null;
+  @Input({ required: true }) items!: CardItem[] | null;
 
   @Input() overflow: 'wrap' | 'scroll' | 'truncate' = 'wrap';
 
@@ -32,9 +32,7 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
 
   private resizeObserver: ResizeObserver;
 
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(private cdr: ChangeDetectorRef) {
     this.resizeObserver = new ResizeObserver(this.onResize);
   }
 
@@ -52,7 +50,10 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
     }
 
     const oldMaxItemsForOneLine = this.maxItemsForOneLine;
-    this.maxItemsForOneLine = Math.max(2, Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH)));
+    this.maxItemsForOneLine = Math.max(
+      2,
+      Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH)),
+    );
     this.gridColsClass = `grid-cols-${this.maxItemsForOneLine}`;
 
     // ResizeObserver does not run in Angular Zone, so trigger change detection if value has changed

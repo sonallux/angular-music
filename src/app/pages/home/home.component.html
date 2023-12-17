@@ -1,12 +1,11 @@
-<h1>Hello {{userName$ | async}}</h1>
+<h1>Hello {{ userName$ | async }}</h1>
 
 <section class="mb-6" id="section-featured-playlist">
-  <h2>{{featuredPlaylistsMessage$ | async}}</h2>
-  <app-card-list [items]="playlists$ | async" overflow="scroll"/>
+  <h2>{{ featuredPlaylistsMessage$ | async }}</h2>
+  <app-card-list [items]="playlists$ | async" overflow="scroll" />
 </section>
 
 <section id="section-new-releases">
   <h2>New releases</h2>
-  <app-card-list [items]="newReleases$ | async" overflow="scroll"/>
+  <app-card-list [items]="newReleases$ | async" overflow="scroll" />
 </section>
-

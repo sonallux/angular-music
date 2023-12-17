@@ -1,4 +1,10 @@
-import { AccessToken, GenericCache, ICachable, ICacheStore, ICachingStrategy } from '@spotify/web-api-ts-sdk';
+import {
+  AccessToken,
+  GenericCache,
+  ICachable,
+  ICacheStore,
+  ICachingStrategy,
+} from '@spotify/web-api-ts-sdk';
 import { AccessTokenHelpers } from './access-token-helpers';
 
 interface CachedVerifier extends ICachable {
@@ -16,9 +22,9 @@ export class SpotifyAuthentication {
     protected clientId: string,
     protected redirectUri: string,
     protected scopes: string[],
-    cacheStore: ICacheStore
+    cacheStore: ICacheStore,
   ) {
-    this.cache = new GenericCache(cacheStore, this.cacheUpdateFunctions())
+    this.cache = new GenericCache(cacheStore, this.cacheUpdateFunctions());
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
@@ -31,8 +37,9 @@ export class SpotifyAuthentication {
 
   public cacheUpdateFunctions(): Map<string, (item: any) => Promise<ICachable>> {
     const updateFunctions = new Map<string, (item: any) => Promise<ICachable>>();
-    updateFunctions.set(SpotifyAuthentication.tokenCacheKey, expiring =>
-      AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring))
+    updateFunctions.set(SpotifyAuthentication.tokenCacheKey, (expiring) =>
+      AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring),
+    );
     return updateFunctions;
   }
 
@@ -51,12 +58,17 @@ export class SpotifyAuthentication {
     const verifier = cachedItem?.verifier;
 
     if (!verifier) {
-      throw new Error("No verifier found in cache - can't validate query string callback parameters.");
+      throw new Error(
+        "No verifier found in cache - can't validate query string callback parameters.",
+      );
     }
 
     const accessToken = await this.exchangeCodeForToken(code, verifier);
 
-    this.cache.setCacheItem(SpotifyAuthentication.tokenCacheKey, AccessTokenHelpers.toCachable(accessToken));
+    this.cache.setCacheItem(
+      SpotifyAuthentication.tokenCacheKey,
+      AccessTokenHelpers.toCachable(accessToken),
+    );
   }
 
   protected async generateRedirectUrlForUser(scopes: string[], challenge: string) {
@@ -64,28 +76,28 @@ export class SpotifyAuthentication {
     const scope = scopes.join(' ');
 
     const params = new URLSearchParams();
-    params.append("client_id", this.clientId);
-    params.append("response_type", "code");
-    params.append("redirect_uri", this.redirectUri);
-    params.append("scope", scope);
-    params.append("code_challenge_method", "S256");
-    params.append("code_challenge", challenge);
+    params.append('client_id', this.clientId);
+    params.append('response_type', 'code');
+    params.append('redirect_uri', this.redirectUri);
+    params.append('scope', scope);
+    params.append('code_challenge_method', 'S256');
+    params.append('code_challenge', challenge);
 
     return `https://accounts.spotify.com/authorize?${params.toString()}`;
   }
 
   protected async exchangeCodeForToken(code: string, verifier: string): Promise<AccessToken> {
     const params = new URLSearchParams();
-    params.append("client_id", this.clientId);
-    params.append("grant_type", "authorization_code");
-    params.append("code", code);
-    params.append("redirect_uri", this.redirectUri);
-    params.append("code_verifier", verifier!);
+    params.append('client_id', this.clientId);
+    params.append('grant_type', 'authorization_code');
+    params.append('code', code);
+    params.append('redirect_uri', this.redirectUri);
+    params.append('code_verifier', verifier!);
 
-    const result = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params
+    const result = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params,
     });
 
     const text = await result.text();

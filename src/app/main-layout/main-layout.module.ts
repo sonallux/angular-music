@@ -12,12 +12,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
-  declarations: [
-    MainLayoutComponent,
-    SidenavComponent,
-    SearchResultComponent,
-    SearchBoxComponent
-  ],
+  declarations: [MainLayoutComponent, SidenavComponent, SearchResultComponent, SearchBoxComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -27,6 +22,6 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-  ]
+  ],
 })
-export class MainLayoutModule { }
+export class MainLayoutModule {}

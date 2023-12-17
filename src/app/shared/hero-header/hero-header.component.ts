@@ -8,7 +8,7 @@ import {
   OnChanges,
   runInInjectionContext,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import HeroHeaderAnimation from './hero-header-animation.service';
 
@@ -17,10 +17,10 @@ import HeroHeaderAnimation from './hero-header-animation.service';
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [HeroHeaderAnimation]
+  providers: [HeroHeaderAnimation],
 })
 export class HeroHeaderComponent implements OnChanges {
-  @Input({required: true}) heroData!: HeroData | null;
+  @Input({ required: true }) heroData!: HeroData | null;
 
   private readonly injector = inject(Injector);
 
@@ -35,14 +35,14 @@ export class HeroHeaderComponent implements OnChanges {
       const ngZone = inject(NgZone);
       const heroHeaderAnimation = inject(HeroHeaderAnimation);
       afterNextRender(() => {
-        ngZone.runOutsideAngular(heroHeaderAnimation.init)
-      })
+        ngZone.runOutsideAngular(heroHeaderAnimation.init);
+      });
     });
   }
 }
 
 export interface HeroData {
-  title: string,
-  type: string,
-  imageUrl: string,
+  title: string;
+  type: string;
+  imageUrl: string;
 }

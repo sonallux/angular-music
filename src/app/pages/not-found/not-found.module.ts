@@ -6,12 +6,6 @@ import { RouterLink } from '@angular/router';
 
 @NgModule({
   declarations: [NotFoundComponent],
-  imports: [
-    CommonModule,
-
-    MatButtonModule,
-    RouterLink
-  ],
+  imports: [CommonModule, MatButtonModule, RouterLink],
 })
-export class NotFoundModule {
-}
+export class NotFoundModule {}

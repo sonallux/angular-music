@@ -17,12 +17,14 @@ const routes: Routes = [
   {
     path: 'callback',
     canActivate: [authCallbackHandler],
-    children: []
-  },{
+    children: [],
+  },
+  {
     path: 'logout',
     canActivate: [logoutHandler],
-    children: []
-  }, {
+    children: [],
+  },
+  {
     path: '',
     canMatch: [() => inject(SpotifyClientService).isAuthenticated()],
     component: MainLayoutComponent,
@@ -30,49 +32,58 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home'
-      }, {
+        redirectTo: 'home',
+      },
+      {
         path: 'home',
         component: HomeComponent,
-        title: 'Home - Angular Music'
-      }, {
+        title: 'Home - Angular Music',
+      },
+      {
         path: 'browse',
         component: BrowseComponent,
-        title: 'Browse - Angular Music'
-      }, {
+        title: 'Browse - Angular Music',
+      },
+      {
         path: 'category/:categoryId',
         component: CategoryComponent,
-        title: 'Category - Angular Music'
-      }, {
+        title: 'Category - Angular Music',
+      },
+      {
         path: 'playlist/:playlistId',
         component: PlaylistComponent,
-        title: 'Playlist - Angular Music'
-      },{
+        title: 'Playlist - Angular Music',
+      },
+      {
         path: 'album/:albumId',
         component: AlbumComponent,
-        title: 'Album - Angular Music'
-      },{
+        title: 'Album - Angular Music',
+      },
+      {
         path: 'artist/:artistId',
         component: ArtistComponent,
-        title: 'Artist - Angular Music'
-      }, {
-        path: '**',
-        component: NotFoundComponent
+        title: 'Artist - Angular Music',
       },
-    ]
-  }, {
+      {
+        path: '**',
+        component: NotFoundComponent,
+      },
+    ],
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: LoginComponent,
-    title: 'Login - Angular Music'
-  }, {
+    title: 'Login - Angular Music',
+  },
+  {
     path: '**',
-    redirectTo: ''
+    redirectTo: '',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

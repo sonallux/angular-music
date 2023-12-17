@@ -9,7 +9,7 @@ describe('HomeComponent', () => {
       imports: [HomeModule, HttpClientTestingModule],
     });
 
-    expect(await screen.findByRole('heading', {name: 'Hello'})).toBeDefined();
-    expect(await screen.findByRole('heading', {name: 'New releases'})).toBeDefined();
+    expect(await screen.findByRole('heading', { name: 'Hello' })).toBeDefined();
+    expect(await screen.findByRole('heading', { name: 'New releases' })).toBeDefined();
   });
 });

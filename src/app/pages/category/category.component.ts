@@ -16,13 +16,17 @@ export class CategoryComponent {
   private categoryId$ = injectParams('categoryId').pipe(filterNil());
 
   public readonly categoryHeroData$: Observable<HeroData> = this.categoryId$.pipe(
-    switchMap(categoryId => this.browseApi.getCategory(categoryId, {country: 'DE', locale: 'en_US'})),
-    map(mapCategoryToHeroData)
+    switchMap((categoryId) =>
+      this.browseApi.getCategory(categoryId, { country: 'DE', locale: 'en_US' }),
+    ),
+    map(mapCategoryToHeroData),
   );
 
   playlists$: Observable<CardItem[]> = this.categoryId$.pipe(
-    switchMap(categoryId => this.browseApi.getCategoriesPlaylist(categoryId, {country: 'DE', limit: 50})),
-    map(response => response.playlists.items.map(playlistToCardItem)),
+    switchMap((categoryId) =>
+      this.browseApi.getCategoriesPlaylist(categoryId, { country: 'DE', limit: 50 }),
+    ),
+    map((response) => response.playlists.items.map(playlistToCardItem)),
   );
 }
 
@@ -31,7 +35,7 @@ function mapCategoryToHeroData(category: Category): HeroData {
     title: category.name,
     type: 'Category',
     imageUrl: category.icons[0].url,
-  }
+  };
 }
 
 function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
@@ -39,6 +43,6 @@ function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
     title: playlist.name,
     subtitle: playlist.description,
     imageUrl: playlist.images[0].url,
-    link: `/playlist/${playlist.id}`
+    link: `/playlist/${playlist.id}`,
   };
 }

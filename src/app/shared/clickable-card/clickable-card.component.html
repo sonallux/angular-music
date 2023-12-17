@@ -1,12 +1,23 @@
-<ng-container *ngIf="item else loadingSkeleton">
-  <a [routerLink]="item.link" (click)="itemClick.emit(item)" class="group focus-visible:outline-none">
-    <mat-card class="group-hover:bg-white/[0.2] group-focus-visible:bg-white/[0.3] duration-300" [class.w-36]="fixedWidth"
-              mat-ripple>
-      <img [src]="item.imageUrl" class="object-cover aspect-square group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50 duration-300"
-           alt="image" aria-hidden="true"/>
+<ng-container *ngIf="item; else loadingSkeleton">
+  <a
+    [routerLink]="item.link"
+    (click)="itemClick.emit(item)"
+    class="group focus-visible:outline-none"
+  >
+    <mat-card
+      class="duration-300 group-hover:bg-white/[0.2] group-focus-visible:bg-white/[0.3]"
+      [class.w-36]="fixedWidth"
+      mat-ripple
+    >
+      <img
+        [src]="item.imageUrl"
+        class="aspect-square object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+        alt="image"
+        aria-hidden="true"
+      />
       <div class="p-2">
-        <h3 class="text-base truncate" [class.mb-0]="!item.subtitle">{{item.title}}</h3>
-        <p class="h-10 line-clamp-2" *ngIf="item.subtitle">{{item.subtitle}}</p>
+        <h3 class="truncate text-base" [class.mb-0]="!item.subtitle">{{ item.title }}</h3>
+        <p class="line-clamp-2 h-10" *ngIf="item.subtitle">{{ item.subtitle }}</p>
       </div>
     </mat-card>
   </a>
@@ -15,7 +26,7 @@
   <mat-card [class.w-36]="fixedWidth">
     <div class="skeleton-wave aspect-square rounded-[inherit]"></div>
     <div class="p-2">
-      <p class="text-base rounded w-2/3 skeleton-wave">&nbsp;</p>
+      <p class="skeleton-wave w-2/3 rounded text-base">&nbsp;</p>
     </div>
   </mat-card>
 </ng-template>

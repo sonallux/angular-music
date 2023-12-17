@@ -19,25 +19,25 @@ export enum Breakpoint {
   XXL = 5,
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class TailwindBreakpointObserver {
-  public readonly breakpoint$: Observable<Breakpoint> = inject(BreakpointObserver).observe([
-    BREAKPOINT_SM, BREAKPOINT_MD, BREAKPOINT_LG, BREAKPOINT_XL, BREAKPOINT_2XL
-  ]).pipe(
-    map(breakpointState => {
-      if (breakpointState.breakpoints[BREAKPOINT_2XL]) {
-        return Breakpoint.XXL;
-      } else if (breakpointState.breakpoints[BREAKPOINT_XL]) {
-        return Breakpoint.XL;
-      } else if (breakpointState.breakpoints[BREAKPOINT_LG]) {
-        return Breakpoint.LG;
-      } else if (breakpointState.breakpoints[BREAKPOINT_MD]) {
-        return Breakpoint.MD;
-      } else if (breakpointState.breakpoints[BREAKPOINT_SM]) {
-        return Breakpoint.SM;
-      }
-      return Breakpoint.XS;
-    }),
-    shareReplay({bufferSize: 1, refCount: true})
-  );
+  public readonly breakpoint$: Observable<Breakpoint> = inject(BreakpointObserver)
+    .observe([BREAKPOINT_SM, BREAKPOINT_MD, BREAKPOINT_LG, BREAKPOINT_XL, BREAKPOINT_2XL])
+    .pipe(
+      map((breakpointState) => {
+        if (breakpointState.breakpoints[BREAKPOINT_2XL]) {
+          return Breakpoint.XXL;
+        } else if (breakpointState.breakpoints[BREAKPOINT_XL]) {
+          return Breakpoint.XL;
+        } else if (breakpointState.breakpoints[BREAKPOINT_LG]) {
+          return Breakpoint.LG;
+        } else if (breakpointState.breakpoints[BREAKPOINT_MD]) {
+          return Breakpoint.MD;
+        } else if (breakpointState.breakpoints[BREAKPOINT_SM]) {
+          return Breakpoint.SM;
+        }
+        return Breakpoint.XS;
+      }),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    );
 }

@@ -7,12 +7,6 @@ import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-
-    MatCardModule
-  ],
+  imports: [CommonModule, SharedModule, MatCardModule],
 })
-export class HomeModule {
-}
+export class HomeModule {}

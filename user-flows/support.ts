@@ -1,5 +1,7 @@
 async function getSpotifyToken() {
-  const encodedClientData = Buffer.from(`${process.env['SPOTIFY_CLIENT_ID']}:${process.env['SPOTIFY_CLIENT_SECRET']}`).toString('base64');
+  const encodedClientData = Buffer.from(
+    `${process.env['SPOTIFY_CLIENT_ID']}:${process.env['SPOTIFY_CLIENT_SECRET']}`,
+  ).toString('base64');
 
   const body = new URLSearchParams();
   body.set('grant_type', 'client_credentials');
@@ -8,7 +10,7 @@ async function getSpotifyToken() {
     method: 'POST',
     headers: {
       Authorization: `Basic ${encodedClientData}`,
-      ['Content-Type']: 'application/x-www-form-urlencoded;charset=UTF-8'
+      ['Content-Type']: 'application/x-www-form-urlencoded;charset=UTF-8',
     },
     body: body.toString(),
   });
@@ -24,13 +26,13 @@ async function getSpotifyToken() {
 export async function createSpotifyTokenCookie(url: string) {
   const domain = new URL(url).hostname;
   const spotifyToken = await getSpotifyToken();
-  spotifyToken.expires = Date.now() + (spotifyToken.expires_in * 1000);
+  spotifyToken.expires = Date.now() + spotifyToken.expires_in * 1000;
 
   return {
     name: 'spotify-authentication-token',
     domain,
     path: '/',
     value: JSON.stringify(spotifyToken),
-    expires: spotifyToken.expires
+    expires: spotifyToken.expires,
   };
 }

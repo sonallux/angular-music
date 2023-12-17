@@ -7,34 +7,36 @@ import { SpotifyUserApi } from '../../spotify-client/api/user-api.service';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  public readonly userName$ = inject(SpotifyUserApi).getCurrentUser().pipe(
-    map(user => user.display_name)
-  );
+  public readonly userName$ = inject(SpotifyUserApi)
+    .getCurrentUser()
+    .pipe(map((user) => user.display_name));
 
-  private readonly featuredPlaylists$ = inject(SpotifyBrowseApi).getFeaturedPlaylists({
-    country: 'DE',
-    locale: 'en_US',
-    limit: 10
-  }).pipe(
-    shareReplay({refCount: true})
-  );
+  private readonly featuredPlaylists$ = inject(SpotifyBrowseApi)
+    .getFeaturedPlaylists({
+      country: 'DE',
+      locale: 'en_US',
+      limit: 10,
+    })
+    .pipe(shareReplay({ refCount: true }));
 
   public readonly featuredPlaylistsMessage$ = this.featuredPlaylists$.pipe(
-    map(featuredPlaylists => featuredPlaylists.message)
+    map((featuredPlaylists) => featuredPlaylists.message),
   );
 
   public readonly playlists$ = this.featuredPlaylists$.pipe(
-    map(featuredPlaylists => featuredPlaylists.playlists.items),
-    map(playlists => playlists.map(playlistToCardItem))
+    map((featuredPlaylists) => featuredPlaylists.playlists.items),
+    map((playlists) => playlists.map(playlistToCardItem)),
   );
 
-  public readonly newReleases$ = inject(SpotifyBrowseApi).getNewReleases({country: 'DE', limit: 10}).pipe(
-    map(newReleases => newReleases.albums.items),
-    map(albums => albums.map(albumToCardItem))
-  );
+  public readonly newReleases$ = inject(SpotifyBrowseApi)
+    .getNewReleases({ country: 'DE', limit: 10 })
+    .pipe(
+      map((newReleases) => newReleases.albums.items),
+      map((albums) => albums.map(albumToCardItem)),
+    );
 }
 
 function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
@@ -42,15 +44,15 @@ function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
     title: playlist.name,
     subtitle: playlist.description,
     imageUrl: playlist.images[0].url,
-    link: `/playlist/${playlist.id}`
+    link: `/playlist/${playlist.id}`,
   };
 }
 
 function albumToCardItem(album: SimplifiedAlbum): CardItem {
   return {
     title: album.name,
-    subtitle: album.artists.map(artist => artist.name).join(', '),
+    subtitle: album.artists.map((artist) => artist.name).join(', '),
     imageUrl: album.images[0].url,
-    link: `/album/${album.id}`
+    link: `/album/${album.id}`,
   };
 }

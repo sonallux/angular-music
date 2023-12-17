@@ -1,25 +1,25 @@
 {
   "hosting": {
     "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "headers": [
       {
-        "regex": "^(.*\/)?[^\/.]*$",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "no-cache"
-        }]
+        "regex": "^(.*/)?[^/.]*$",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
       },
       {
         "source": "**/*.@(js|css)",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "max-age=604800"
-        }]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
       }
     ],
     "frameworksBackend": {

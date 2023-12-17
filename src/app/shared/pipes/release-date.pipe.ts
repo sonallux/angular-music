@@ -2,12 +2,12 @@ import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 import { formatDate } from '@angular/common';
 
 export interface ReleaseDate {
-  release_date: string
-  release_date_precision: string
+  release_date: string;
+  release_date_precision: string;
 }
 
 @Pipe({
-  name: 'releaseDate'
+  name: 'releaseDate',
 })
 export class ReleaseDatePipe implements PipeTransform {
   private readonly locale = inject(LOCALE_ID);

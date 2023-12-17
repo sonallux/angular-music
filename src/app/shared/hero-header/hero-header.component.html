@@ -1,14 +1,21 @@
 <mat-card class="hero-header-card">
-  <ng-container *ngIf="heroData else loadingSkeleton">
-    <img class="hero-header-image" [src]="heroData.imageUrl" width="192" height="192" alt="icon" aria-hidden="true">
+  <ng-container *ngIf="heroData; else loadingSkeleton">
+    <img
+      class="hero-header-image"
+      [src]="heroData.imageUrl"
+      width="192"
+      height="192"
+      alt="icon"
+      aria-hidden="true"
+    />
 
     <div class="info-container">
-      <p class="info-container-type">{{heroData.type}}</p>
+      <p class="info-container-type">{{ heroData.type }}</p>
 
-      <h1 class="info-container-title">{{heroData.title}}</h1>
+      <h1 class="info-container-title">{{ heroData.title }}</h1>
 
       <div class="info-container-content mt-auto">
-        <ng-content/>
+        <ng-content />
       </div>
     </div>
   </ng-container>
@@ -17,7 +24,7 @@
 <ng-template #loadingSkeleton>
   <div class="hero-header-image skeleton-wave"></div>
   <div class="info-container">
-    <p class="info-container-type w-1/3 rounded skeleton-wave">&nbsp;</p>
-    <h1 class="info-container-title w-2/3 rounded skeleton-wave">&nbsp;</h1>
+    <p class="info-container-type skeleton-wave w-1/3 rounded">&nbsp;</p>
+    <h1 class="info-container-title skeleton-wave w-2/3 rounded">&nbsp;</h1>
   </div>
 </ng-template>

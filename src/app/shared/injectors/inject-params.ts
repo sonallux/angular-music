@@ -7,10 +7,7 @@ export function injectParams(key?: string): Observable<string | null> {
   const route = inject(ActivatedRoute);
   const params = route.snapshot.params || {};
 
-  const getParam = (params: Params) => key ? params?.[key] ?? null : params;
+  const getParam = (params: Params) => (key ? params?.[key] ?? null : params);
 
-  return route.params.pipe(
-    map(getParam),
-    startWith(getParam(params))
-  );
+  return route.params.pipe(map(getParam), startWith(getParam(params)));
 }

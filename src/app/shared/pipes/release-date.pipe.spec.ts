@@ -5,7 +5,7 @@ describe('ReleaseDatePipe', () => {
   let pipe: ReleaseDatePipe;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({providers: [ReleaseDatePipe]});
+    TestBed.configureTestingModule({ providers: [ReleaseDatePipe] });
     pipe = TestBed.inject(ReleaseDatePipe);
   });
 
@@ -14,14 +14,20 @@ describe('ReleaseDatePipe', () => {
   });
 
   it('formats release date with year precision', () => {
-    expect(pipe.transform({release_date: '2023', release_date_precision: 'year'})).toEqual('2023');
+    expect(pipe.transform({ release_date: '2023', release_date_precision: 'year' })).toEqual(
+      '2023',
+    );
   });
 
   it('formats release date with month precision', () => {
-    expect(pipe.transform({release_date: '2023-04', release_date_precision: 'month'})).toEqual('April, 2023');
+    expect(pipe.transform({ release_date: '2023-04', release_date_precision: 'month' })).toEqual(
+      'April, 2023',
+    );
   });
 
   it('formats release date with day precision', () => {
-    expect(pipe.transform({release_date: '2023-04-15', release_date_precision: 'day'})).toEqual('Apr 15, 2023');
+    expect(pipe.transform({ release_date: '2023-04-15', release_date_precision: 'day' })).toEqual(
+      'Apr 15, 2023',
+    );
   });
 });

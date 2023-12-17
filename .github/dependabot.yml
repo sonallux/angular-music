@@ -16,6 +16,11 @@ updates:
       type-definitions:
         patterns:
           - "@types/*"
+      formatting:
+        patterns:
+          - "prettier*"
+          - "lint-staged"
+          - "husky"
     ignore:
       - dependency-name: "@angular/*"
         update-types: [ "version-update:semver-major" ]
