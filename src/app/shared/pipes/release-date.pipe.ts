@@ -1,5 +1,5 @@
-import { inject, Pipe, PipeTransform } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 export interface ReleaseDate {
   release_date: string
@@ -10,7 +10,7 @@ export interface ReleaseDate {
   name: 'releaseDate'
 })
 export class ReleaseDatePipe implements PipeTransform {
-  private readonly datePipe = inject(DatePipe);
+  private readonly locale = inject(LOCALE_ID);
 
   transform(value: ReleaseDate, precision: 'year' | 'day' = 'day'): string | null {
     if (value.release_date_precision === 'year') {
@@ -23,7 +23,7 @@ export class ReleaseDatePipe implements PipeTransform {
         return year;
       }
       const date = new Date(+year, +month - 1, 1);
-      return this.datePipe.transform(date, 'MMMM, y');
+      return formatDate(date, 'MMMM, y', this.locale);
     }
 
     if (value.release_date_precision === 'day') {
@@ -32,7 +32,7 @@ export class ReleaseDatePipe implements PipeTransform {
         return year;
       }
       const date = new Date(+year, +month - 1, +day);
-      return this.datePipe.transform(date, 'mediumDate');
+      return formatDate(date, 'mediumDate', this.locale);
     }
 
     return null;

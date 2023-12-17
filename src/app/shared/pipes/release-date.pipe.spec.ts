@@ -1,12 +1,11 @@
 import { ReleaseDatePipe } from './release-date.pipe';
 import { TestBed } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
 
 describe('ReleaseDatePipe', () => {
   let pipe: ReleaseDatePipe;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({providers: [DatePipe, ReleaseDatePipe]});
+    TestBed.configureTestingModule({providers: [ReleaseDatePipe]});
     pipe = TestBed.inject(ReleaseDatePipe);
   });
 
