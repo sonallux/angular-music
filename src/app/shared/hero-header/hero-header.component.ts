@@ -1,32 +1,22 @@
-import {
-  afterNextRender,
-  Component,
-  inject,
-  Injector,
-  Input,
-  NgZone,
-  OnChanges,
-  runInInjectionContext,
-  SimpleChanges,
-  ViewEncapsulation,
-} from '@angular/core';
-import HeroHeaderAnimation from './hero-header-animation.service';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { injectLazy } from 'ngxtension/inject-lazy';
 
 @Component({
   selector: 'app-hero-header',
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [HeroHeaderAnimation],
   standalone: true,
   imports: [MatCardModule, NgIf],
 })
 export class HeroHeaderComponent implements OnChanges {
-  @Input({ required: true }) heroData!: HeroData | null;
+  private readonly heroHeaderAnimation$ = injectLazy(
+    () => import('./hero-header-animation.service'),
+  );
 
-  private readonly injector = inject(Injector);
+  @Input({ required: true }) heroData!: HeroData | null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['heroData'].currentValue) {
@@ -35,12 +25,8 @@ export class HeroHeaderComponent implements OnChanges {
   }
 
   private initAnimation() {
-    runInInjectionContext(this.injector, () => {
-      const ngZone = inject(NgZone);
-      const heroHeaderAnimation = inject(HeroHeaderAnimation);
-      afterNextRender(() => {
-        ngZone.runOutsideAngular(heroHeaderAnimation.init);
-      });
+    this.heroHeaderAnimation$.subscribe((animation) => {
+      animation.init();
     });
   }
 }
