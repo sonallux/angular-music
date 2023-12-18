@@ -29,10 +29,10 @@ export async function createSpotifyTokenCookie(url: string) {
   spotifyToken.expires = Date.now() + spotifyToken.expires_in * 1000;
 
   return {
-    name: 'spotify-authentication-token',
+    name: '__session',
     domain,
     path: '/',
-    value: JSON.stringify(spotifyToken),
+    value: JSON.stringify({ ['spotify-authentication-token']: JSON.stringify(spotifyToken) }),
     expires: spotifyToken.expires,
   };
 }
