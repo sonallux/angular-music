@@ -64,7 +64,7 @@ export class MainLayoutComponent {
       return;
     }
 
-    this.searchResults$ = this.searchApi.search({ q: query });
+    this.searchResults$ = this.searchApi.search({ q: query, limit: 10 });
     this.showSearchResults = !!query;
   }
 
