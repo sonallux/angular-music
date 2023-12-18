@@ -47,7 +47,7 @@ function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
   return {
     title: playlist.name,
     subtitle: playlist.description,
-    imageUrl: playlist.images[0].url,
+    images: playlist.images,
     link: `/playlist/${playlist.id}`,
   };
 }
@@ -56,7 +56,7 @@ function albumToCardItem(album: SimplifiedAlbum): CardItem {
   return {
     title: album.name,
     subtitle: album.artists.map((artist) => artist.name).join(', '),
-    imageUrl: album.images[0].url,
+    images: album.images,
     link: `/album/${album.id}`,
   };
 }

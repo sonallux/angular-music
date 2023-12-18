@@ -24,7 +24,7 @@ export class BrowseComponent {
 function categoryToCardItem(category: Category): CardItem {
   return {
     title: category.name,
-    imageUrl: category.icons[0].url,
+    images: category.icons,
     link: `/category/${category.id}`,
   };
 }

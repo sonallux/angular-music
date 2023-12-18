@@ -108,7 +108,7 @@ export class ArtistComponent {
     return {
       type: 'Artist',
       title: artist.name,
-      imageUrl: artist.images[0].url ?? '',
+      images: artist.images,
       followers: artist.followers,
       genres: artist.genres,
     };
@@ -117,7 +117,7 @@ export class ArtistComponent {
   private mapAlbumToCardItem = (album: SimplifiedAlbum): CardItem => {
     return {
       title: album.name,
-      imageUrl: album.images[0].url,
+      images: album.images,
       subtitle: `${this.releaseDatePipe.transform(album, 'year')} - ${
         albumTypeNames[album.album_type]
       }`,
@@ -128,7 +128,7 @@ export class ArtistComponent {
   private mapArtistToCardItem = (artist: Artist): CardItem => {
     return {
       title: artist.name,
-      imageUrl: artist.images[0].url,
+      images: artist.images,
       subtitle: 'Artist',
       link: `/artist/${artist.id}`,
     };

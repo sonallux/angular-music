@@ -8,6 +8,7 @@
       *ngFor="let item of items; let i = index"
       [item]="item"
       [fixedWidth]="overflow === 'scroll'"
+      [priority]="i < 4"
       (itemClick)="itemClick.emit($event)"
     />
   </ng-container>

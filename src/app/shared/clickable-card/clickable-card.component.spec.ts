@@ -8,7 +8,7 @@ describe('ClickableCardComponent', () => {
         item: {
           title: 'Test Hero',
           subtitle: 'Fancy sub title',
-          imageUrl: 'https://hero.image',
+          images: [],
           link: '/hero',
         },
       },

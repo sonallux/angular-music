@@ -38,7 +38,7 @@ function mapCategoryToHeroData(category: Category): HeroData {
   return {
     title: category.name,
     type: 'Category',
-    imageUrl: category.icons[0].url,
+    images: category.icons,
   };
 }
 
@@ -46,7 +46,7 @@ function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
   return {
     title: playlist.name,
     subtitle: playlist.description,
-    imageUrl: playlist.images[0].url,
+    images: playlist.images,
     link: `/playlist/${playlist.id}`,
   };
 }
