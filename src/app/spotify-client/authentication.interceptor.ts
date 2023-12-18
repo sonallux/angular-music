@@ -1,30 +1,25 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { defaultIfEmpty, map, Observable, switchMap } from 'rxjs';
+import { inject } from '@angular/core';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { defaultIfEmpty, map, switchMap } from 'rxjs';
 import { SpotifyClientService } from './spotify-client.service';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { filterNil } from 'ngxtension/filter-nil';
 
-@Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
-  private readonly spotifyClient = inject(SpotifyClientService);
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!request.url.startsWith('https://api.spotify.com/')) {
-      return next.handle(request);
-    }
-
-    return fromPromise(this.spotifyClient.getAccessToken()).pipe(
-      filterNil(),
-      map((accessToken) =>
-        request.clone({
-          setHeaders: {
-            Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
-          },
-        }),
-      ),
-      defaultIfEmpty(request),
-      switchMap((req) => next.handle(req)),
-    );
+export const authenticationInterceptor: HttpInterceptorFn = (request, next) => {
+  if (!request.url.startsWith('https://api.spotify.com/')) {
+    return next(request);
   }
-}
+
+  return fromPromise(inject(SpotifyClientService).getAccessToken()).pipe(
+    filterNil(),
+    map((accessToken) =>
+      request.clone({
+        setHeaders: {
+          Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+        },
+      }),
+    ),
+    defaultIfEmpty(request),
+    switchMap((req) => next(req)),
+  );
+};

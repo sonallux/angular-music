@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatestWith, map, Observable } from 'rxjs';
-import { HeroData } from '../../shared/hero-header/hero-header.component';
+import { HeroData, HeroHeaderComponent } from '../../shared/hero-header/hero-header.component';
 import { Artist, SimplifiedAlbum, Track } from '@spotify/web-api-ts-sdk';
 import {
   Breakpoint,
@@ -13,6 +13,13 @@ import { State, withLoadingState } from '../../shared/loading-state';
 import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
 import { injectParams } from '../../shared/injectors/inject-params';
 import { filterNil } from 'ngxtension/filter-nil';
+import { TrackDurationPipe } from '../../shared/pipes/track-duration.pipe';
+import { CardListComponent } from '../../shared/card-list/card-list.component';
+import { MatButtonModule } from '@angular/material/button';
+import { AlbumLinkComponent } from '../../shared/album-link/album-link.component';
+import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
+import { MatTableModule } from '@angular/material/table';
+import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
 
 const albumTypeNames: Record<string, string> = {
   album: 'Album',
@@ -23,6 +30,20 @@ const albumTypeNames: Record<string, string> = {
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
+  standalone: true,
+  providers: [ReleaseDatePipe],
+  imports: [
+    NgIf,
+    HeroHeaderComponent,
+    MatTableModule,
+    ArtistLinkComponent,
+    AlbumLinkComponent,
+    MatButtonModule,
+    CardListComponent,
+    AsyncPipe,
+    DecimalPipe,
+    TrackDurationPipe,
+  ],
 })
 export class ArtistComponent {
   public displayedColumns: string[] = ['name', 'artist', 'album'];

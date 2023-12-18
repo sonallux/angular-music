@@ -11,6 +11,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import HeroHeaderAnimation from './hero-header-animation.service';
+import { NgIf } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-hero-header',
@@ -18,6 +20,8 @@ import HeroHeaderAnimation from './hero-header-animation.service';
   styleUrls: ['./hero-header.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [HeroHeaderAnimation],
+  standalone: true,
+  imports: [MatCardModule, NgIf],
 })
 export class HeroHeaderComponent implements OnChanges {
   @Input({ required: true }) heroData!: HeroData | null;

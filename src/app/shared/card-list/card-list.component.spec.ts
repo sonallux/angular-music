@@ -1,11 +1,9 @@
 import { CardListComponent } from './card-list.component';
 import { render, screen } from '@testing-library/angular';
-import { SharedModule } from '../shared.module';
 
 describe('CardListComponent', () => {
   it('should render', async () => {
     await render(CardListComponent, {
-      imports: [SharedModule],
       componentInputs: {
         items: [
           {

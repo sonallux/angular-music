@@ -1,9 +1,13 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
+  standalone: true,
+  imports: [NgIf, MatIconModule],
 })
 export class SearchBoxComponent {
   private readonly searchDebounce = 300;

@@ -15,11 +15,29 @@ import {
 import { SearchResults, SpotifySearchApi } from '../spotify-client/api/search-api.service';
 import { injectNavigationEnd } from 'ngxtension/navigation-end';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterOutlet } from '@angular/router';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SearchBoxComponent } from './search-box/search-box.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
+  standalone: true,
+  imports: [
+    NavbarComponent,
+    SearchBoxComponent,
+    MatSidenavModule,
+    SidenavComponent,
+    NgIf,
+    SearchResultComponent,
+    RouterOutlet,
+    AsyncPipe,
+  ],
 })
 export class MainLayoutComponent {
   public readonly alwaysShowSideNav$: Observable<boolean> = inject(
