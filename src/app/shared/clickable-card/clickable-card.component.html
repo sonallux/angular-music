@@ -9,12 +9,26 @@
       [class.w-36]="fixedWidth"
       mat-ripple
     >
-      <img
-        [src]="item.imageUrl"
-        class="aspect-square object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
-        alt="image"
-        aria-hidden="true"
-      />
+      @if (fixedWidth) {
+        <div class="relative aspect-square">
+          <img
+            [ngSrc]="item.imageUrl"
+            fill=""
+            class="object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+            alt="image"
+            aria-hidden="true"
+          />
+        </div>
+      } @else {
+        <img
+          [ngSrc]="item.imageUrl"
+          width="144"
+          height="144"
+          class="object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+          alt="image"
+          aria-hidden="true"
+        />
+      }
       <div class="p-2">
         <h3 class="truncate text-base" [class.mb-0]="!item.subtitle">{{ item.title }}</h3>
         <p class="line-clamp-2 h-10" *ngIf="item.subtitle">{{ item.subtitle }}</p>

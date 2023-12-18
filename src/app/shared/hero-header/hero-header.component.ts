@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { injectLazy } from 'ngxtension/inject-lazy';
 
@@ -9,7 +9,7 @@ import { injectLazy } from 'ngxtension/inject-lazy';
   styleUrls: ['./hero-header.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [MatCardModule, NgIf],
+  imports: [MatCardModule, NgIf, NgOptimizedImage],
 })
 export class HeroHeaderComponent implements OnChanges {
   private readonly heroHeaderAnimation$ = injectLazy(

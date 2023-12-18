@@ -2,9 +2,10 @@
   <ng-container *ngIf="heroData; else loadingSkeleton">
     <img
       class="hero-header-image"
-      [src]="heroData.imageUrl"
+      [ngSrc]="heroData.imageUrl"
       width="192"
       height="192"
+      priority
       alt="icon"
       aria-hidden="true"
     />
