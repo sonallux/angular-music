@@ -1,16 +1,7 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { LoginComponent } from './login/login.component';
-import { BrowseComponent } from './pages/browse/browse.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { CategoryComponent } from './pages/category/category.component';
-import { PlaylistComponent } from './pages/playlist/playlist.component';
 import { authCallbackHandler } from './spotify-client/auth-callback-handler';
 import { SpotifyClientService } from './spotify-client/spotify-client.service';
-import { AlbumComponent } from './pages/album/album.component';
-import { ArtistComponent } from './pages/artist/artist.component';
 import { logoutHandler } from './spotify-client/logout-handler';
 
 export const routes: Routes = [
@@ -35,44 +26,49 @@ export const routes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent,
+        loadComponent: () => import('./pages/home/home.component').then((a) => a.HomeComponent),
         title: 'Home - Angular Music',
       },
       {
         path: 'browse',
-        component: BrowseComponent,
+        loadComponent: () =>
+          import('./pages/browse/browse.component').then((a) => a.BrowseComponent),
         title: 'Browse - Angular Music',
       },
       {
         path: 'category/:categoryId',
-        component: CategoryComponent,
+        loadComponent: () =>
+          import('./pages/category/category.component').then((a) => a.CategoryComponent),
         title: 'Category - Angular Music',
       },
       {
         path: 'playlist/:playlistId',
-        component: PlaylistComponent,
+        loadComponent: () =>
+          import('./pages/playlist/playlist.component').then((a) => a.PlaylistComponent),
         title: 'Playlist - Angular Music',
       },
       {
         path: 'album/:albumId',
-        component: AlbumComponent,
+        loadComponent: () => import('./pages/album/album.component').then((a) => a.AlbumComponent),
         title: 'Album - Angular Music',
       },
       {
         path: 'artist/:artistId',
-        component: ArtistComponent,
+        loadComponent: () =>
+          import('./pages/artist/artist.component').then((a) => a.ArtistComponent),
         title: 'Artist - Angular Music',
       },
       {
         path: '**',
-        component: NotFoundComponent,
+        loadComponent: () =>
+          import('./pages/not-found/not-found.component').then((a) => a.NotFoundComponent),
       },
     ],
   },
   {
     path: '',
     pathMatch: 'full',
-    component: LoginComponent,
+    loadComponent: () => import('./login/login.component').then((a) => a.LoginComponent),
     title: 'Login - Angular Music',
     data: {
       hideNavigationItems: true,

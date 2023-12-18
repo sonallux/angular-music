@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -9,8 +9,11 @@ import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.s
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
-    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
+    provideAnimationsAsync(),
+    provideRouter(
+      routes,
+      withRouterConfig({ onSameUrlNavigation: 'reload' }),
+    ),
     provideHttpClient(withInterceptors([authenticationInterceptor])),
     {
       provide: CACHE_STORE_TOKEN,
