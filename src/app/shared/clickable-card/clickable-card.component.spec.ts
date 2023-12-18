@@ -1,11 +1,9 @@
 import { ClickableCardComponent } from './clickable-card.component';
 import { render, screen } from '@testing-library/angular';
-import { SharedModule } from '../shared.module';
 
 describe('ClickableCardComponent', () => {
   it('should render', async () => {
     await render(ClickableCardComponent, {
-      imports: [SharedModule],
       componentInputs: {
         item: {
           title: 'Test Hero',

@@ -9,7 +9,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { CardItem } from '../clickable-card/clickable-card.component';
+import { CardItem, ClickableCardComponent } from '../clickable-card/clickable-card.component';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Repeat } from 'ngxtension/repeat';
 
 const CARD_WIDTH = 128;
 const GAB_WIDTH = 24;
@@ -17,6 +19,8 @@ const GAB_WIDTH = 24;
 @Component({
   selector: 'app-card-list',
   templateUrl: './card-list.component.html',
+  standalone: true,
+  imports: [NgClass, NgIf, NgFor, Repeat, ClickableCardComponent],
 })
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) items!: CardItem[] | null;

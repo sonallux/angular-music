@@ -13,6 +13,11 @@ import { Observable } from 'rxjs';
 import { SearchResults, SpotifySearchApi } from '../spotify-client/api/search-api.service';
 import { injectNavigationEnd } from 'ngxtension/navigation-end';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -20,6 +25,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   host: {
     class: 'flex flex-col h-full',
   },
+  standalone: true,
+  imports: [
+    NavbarComponent,
+    SearchBoxComponent,
+    SidenavComponent,
+    NgIf,
+    SearchResultComponent,
+    AsyncPipe,
+  ],
 })
 export class MainLayoutComponent {
   public showSearchResults = false;

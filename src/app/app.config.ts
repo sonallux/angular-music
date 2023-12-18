@@ -1,0 +1,20 @@
+import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, withRouterConfig } from '@angular/router';
+import { routes } from './app.routes';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authenticationInterceptor } from './spotify-client/authentication.interceptor';
+import { CACHE_STORE_TOKEN } from './spotify-client/spotify-client.service';
+import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.service';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideAnimations(),
+    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
+    provideHttpClient(withInterceptors([authenticationInterceptor])),
+    {
+      provide: CACHE_STORE_TOKEN,
+      useClass: BrowserCacheStoreService,
+    },
+  ],
+};

@@ -1,5 +1,5 @@
-import { inject, NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { LoginComponent } from './login/login.component';
@@ -13,7 +13,7 @@ import { AlbumComponent } from './pages/album/album.component';
 import { ArtistComponent } from './pages/artist/artist.component';
 import { logoutHandler } from './spotify-client/logout-handler';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'callback',
     canActivate: [authCallbackHandler],
@@ -83,9 +83,3 @@ const routes: Routes = [
     redirectTo: '',
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
