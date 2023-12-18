@@ -18,7 +18,9 @@
     class="absolute z-50 h-full w-60 -translate-x-60 overflow-auto border-r border-r-gray-700 bg-gray-800 shadow duration-300 md:translate-x-0 md:shadow-none"
     [class.translate-x-0]="sidenavOpened"
   >
-    <app-sidenav (itemClick)="sidenavOpened = false" />
+    @defer {
+      <app-sidenav (itemClick)="sidenavOpened = false" />
+    }
   </div>
   <main
     class="h-full overflow-auto duration-300"
@@ -28,12 +30,14 @@
     <div class="p-6">
       <ng-container *ngIf="showSearchResults; then searchResultTemplate; else contentTemplate" />
       <ng-template #searchResultTemplate>
-        <app-search-result
-          #searchResultsView
-          [searchResults]="searchResults$ | async"
-          (resultSelected)="hideSearchResults()"
-          (closeButtonClick)="hideSearchResults()"
-        />
+        @defer {
+          <app-search-result
+            #searchResultsView
+            [searchResults]="searchResults$ | async"
+            (resultSelected)="hideSearchResults()"
+            (closeButtonClick)="hideSearchResults()"
+          />
+        }
       </ng-template>
       <ng-template #contentTemplate>
         <ng-content />
