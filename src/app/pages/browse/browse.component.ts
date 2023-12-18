@@ -3,10 +3,14 @@ import { map } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { Category } from '@spotify/web-api-ts-sdk';
 import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
+import { AsyncPipe } from '@angular/common';
+import { CardListComponent } from '../../shared/card-list/card-list.component';
 
 @Component({
   selector: 'app-browse',
   templateUrl: './browse.component.html',
+  standalone: true,
+  imports: [CardListComponent, AsyncPipe],
 })
 export class BrowseComponent {
   public readonly categories$ = inject(SpotifyBrowseApi)
