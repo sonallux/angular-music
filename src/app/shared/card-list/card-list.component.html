@@ -5,9 +5,13 @@
 >
   <ng-container *ngIf="items; else loadingSkeleton">
     <app-clickable-card
-      *ngFor="let item of overflow === 'truncate' ? items.slice(0, maxItemsForOneLine) : items"
+      *ngFor="
+        let item of overflow === 'truncate' ? items.slice(0, maxItemsForOneLine) : items;
+        let i = index
+      "
       [item]="item"
       [fixedWidth]="overflow === 'scroll'"
+      [priority]="i < 4"
       (itemClick)="itemClick.emit($event)"
     />
   </ng-container>

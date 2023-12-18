@@ -8,7 +8,7 @@ describe('HeroHeaderComponent', () => {
         heroData: {
           title: 'Hero Tester',
           type: 'unknown',
-          imageUrl: 'https://image.url',
+          images: [{ url: 'https://image.url' }],
         },
       },
     });

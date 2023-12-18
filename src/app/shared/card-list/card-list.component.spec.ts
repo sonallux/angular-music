@@ -9,7 +9,7 @@ describe('CardListComponent', () => {
           {
             title: 'Test Hero',
             subtitle: 'Fancy sub title',
-            imageUrl: 'https://hero.image',
+            images: [],
             link: '/hero',
           },
         ],

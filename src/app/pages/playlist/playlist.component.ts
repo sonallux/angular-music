@@ -79,7 +79,7 @@ function mapPlaylistToHeroData(playlist: Playlist) {
   return {
     type: 'Playlist',
     title: playlist.name,
-    imageUrl: playlist.images[0].url ?? '',
+    images: playlist.images,
   };
 }
 
