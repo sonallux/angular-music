@@ -9,7 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
-    "measure": "node scripts/measure.mjs"
+    "measure": "node scripts/measure.mjs",
+    "serve:ssr": "node dist/angular-music/server/server.mjs"
   },
   "private": true,
   "dependencies": {
