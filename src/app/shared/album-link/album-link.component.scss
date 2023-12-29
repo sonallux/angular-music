@@ -1,8 +1,0 @@
-:host {
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  a {
-    @apply hover:underline whitespace-nowrap;
-  }
-}

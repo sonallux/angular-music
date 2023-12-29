@@ -4,7 +4,9 @@ import { Album, SimplifiedAlbum } from '@spotify/web-api-ts-sdk';
 @Component({
   selector: 'app-album-link',
   templateUrl: './album-link.component.html',
-  styleUrl: 'album-link.component.scss',
+  host: {
+    class: 'overflow-hidden text-ellipsis',
+  },
 })
 export class AlbumLinkComponent {
   @Input({ required: true })
