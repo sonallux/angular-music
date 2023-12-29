@@ -1,4 +1,4 @@
-<mat-card class="hero-header-card">
+<div class="hero-header-card card">
   <ng-container *ngIf="heroData; else loadingSkeleton">
     <img
       class="hero-header-image"
@@ -19,7 +19,7 @@
       </div>
     </div>
   </ng-container>
-</mat-card>
+</div>
 
 <ng-template #loadingSkeleton>
   <div class="hero-header-image skeleton-wave"></div>
