@@ -1,15 +1,15 @@
-app-hero-header {
-  @apply block sticky top-0 z-20 h-48;
+:host {
+  @apply sticky top-0 z-20 block h-48;
 
   .hero-header-card {
-    @apply overflow-hidden flex-row h-48;
+    @apply h-48 flex-row overflow-hidden;
 
     .hero-header-image {
-      @apply bg-gray-700 aspect-square;
+      @apply aspect-square bg-gray-700;
     }
 
     .info-container {
-      @apply flex flex-col flex-grow h-48 gap-2 p-4 overflow-hidden;
+      @apply flex h-48 flex-grow flex-col gap-2 overflow-hidden p-4;
 
       &-type {
         @apply truncate;

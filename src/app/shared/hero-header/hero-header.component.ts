@@ -8,7 +8,6 @@ import {
   OnChanges,
   runInInjectionContext,
   SimpleChanges,
-  ViewEncapsulation,
 } from '@angular/core';
 import HeroHeaderAnimation from './hero-header-animation.service';
 
@@ -16,7 +15,6 @@ import HeroHeaderAnimation from './hero-header-animation.service';
   selector: 'app-hero-header',
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   providers: [HeroHeaderAnimation],
 })
 export class HeroHeaderComponent implements OnChanges {

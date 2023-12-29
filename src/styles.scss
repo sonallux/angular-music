@@ -1,6 +1,6 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
-@import './theme.scss';
+@use "sass:map";
+@use "@angular/material" as mat;
+@import "./theme.scss";
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +14,8 @@
 @include mat.typography-hierarchy($angular-music-theme);
 
 @layer base {
-  html, body {
+  html,
+  body {
     @apply h-screen;
     color-scheme: dark;
   }
@@ -25,15 +26,21 @@
   }
 
   h1 {
-    @apply text-4xl mb-4;
+    @apply mb-4 text-4xl;
   }
 
   h2 {
-    @apply text-2xl mb-4;
+    @apply mb-4 text-2xl;
   }
 
   h3 {
-    @apply text-lg mb-2;
+    @apply mb-2 text-lg;
+  }
+}
+
+@layer components {
+  .card {
+    @apply flex flex-col rounded bg-gray-800 shadow;
   }
 }
 
@@ -51,15 +58,20 @@
   background-color: mat.get-color-from-palette($accent-palette, 700);
 
   &:after {
-    @apply content-[''] absolute inset-0;
-    background-image: linear-gradient(90deg, transparent, mat.get-color-from-palette($accent-palette, 600), transparent);
+    @apply absolute inset-0 content-[''];
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      mat.get-color-from-palette($accent-palette, 600),
+      transparent
+    );
     animation: skeleton-wave-keyframes 1.75s linear infinite;
     @keyframes skeleton-wave-keyframes {
       0% {
-        transform: translateX(-100%)
+        transform: translateX(-100%);
       }
       to {
-        transform: translateX(100%)
+        transform: translateX(100%);
       }
     }
   }
@@ -75,4 +87,3 @@
   box-shadow: var(--mdc-elevated-card-container-elevation);
   overflow: hidden;
 }
-

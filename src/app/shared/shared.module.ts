@@ -6,7 +6,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { ClickableCardComponent } from './clickable-card/clickable-card.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { CardListComponent } from './card-list/card-list.component';
@@ -35,7 +34,6 @@ import { Repeat } from 'ngxtension/repeat';
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatCardModule,
     MatRippleModule,
     RouterLink,
     Repeat,
