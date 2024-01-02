@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SpotifyClientService } from './spotify-client/spotify-client.service';
+import { MainLayoutModule } from './main-layout/main-layout.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [MainLayoutModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [AppComponent],
+      providers: [{ provide: SpotifyClientService, useValue: { isAuthenticated: () => false } }],
     }),
   );
 

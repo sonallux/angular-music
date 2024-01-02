@@ -23,5 +23,6 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     MatListModule,
     MatIconModule,
   ],
+  exports: [MainLayoutComponent],
 })
 export class MainLayoutModule {}
