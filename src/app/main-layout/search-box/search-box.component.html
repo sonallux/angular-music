@@ -1,19 +1,19 @@
-<div class="flex items-center text-base/8 font-normal text-gray-800">
-  <input
-    #searchBox
-    type="search"
-    placeholder="Search"
-    class="w-56 rounded-full bg-white px-4 placeholder:text-gray-600 focus:outline-none search-cancel-button:hidden"
-    (input)="doSearch()"
-    (keyup)="doSearch()"
-    (focus)="doFocus()"
-    (click)="doSearch()"
-  />
-  <mat-icon
-    class="relative right-8 cursor-pointer"
-    *ngIf="searchBox.value"
-    (click)="searchBox.value = ''; searchBox.focus()"
-  >
-    close
-  </mat-icon>
-</div>
+<input
+  #searchBox
+  type="search"
+  placeholder="Search"
+  class="w-full rounded-full bg-white px-4 text-gray-800 placeholder:text-gray-600 focus:outline-none search-cancel-button:hidden"
+  (input)="doSearch()"
+  (keyup)="doSearch()"
+  (focus)="doFocus()"
+  (click)="doSearch()"
+/>
+<button
+  mat-icon-button
+  (click)="searchBox.value = ''; doSearch()"
+  [class.invisible]="searchBox.value === ''"
+  class="right-11 !text-gray-800"
+  aria-label="Clear search"
+>
+  <mat-icon>close</mat-icon>
+</button>

@@ -4,6 +4,9 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
+  host: {
+    class: 'inline-flex items-center text-base/8',
+  },
 })
 export class SearchBoxComponent {
   private readonly searchDebounce = 300;

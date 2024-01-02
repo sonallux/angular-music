@@ -4,6 +4,7 @@
   (burgerMenuClicked)="sidenav.toggle()"
 >
   <app-search-box
+    class="max-w-[250px] flex-grow"
     #searchBox
     (onSearch)="doSearch($event)"
     (onSearchFocus)="doSearch($event, true)"
