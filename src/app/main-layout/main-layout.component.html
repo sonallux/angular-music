@@ -1,6 +1,6 @@
 <app-navbar
   class="mat-elevation-z6 z-50"
-  [showBurgerMenu]="!(alwaysShowSideNav$ | async)"
+  [showBurgerMenu]="showNavigationItems && !(alwaysShowSideNav$ | async)"
   (burgerMenuClicked)="sidenav.toggle()"
 >
   <app-search-box
@@ -15,7 +15,7 @@
   <mat-sidenav
     #sidenav
     class="z-10 w-60"
-    [opened]="alwaysShowSideNav$ | async"
+    [opened]="showNavigationItems && (alwaysShowSideNav$ | async)"
     [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'"
   >
     <app-sidenav (itemClick)="sidenav.toggle(sidenav.mode === 'side')" />
@@ -35,5 +35,5 @@
 </mat-sidenav-container>
 
 <ng-template #content>
-  <router-outlet />
+  <ng-content />
 </ng-template>

@@ -1,13 +1,15 @@
 import {
+  booleanAttribute,
   Component,
   ElementRef,
   HostListener,
   inject,
+  Input,
   QueryList,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, map, Observable } from 'rxjs';
 import {
   Breakpoint,
   TailwindBreakpointObserver,
@@ -28,6 +30,9 @@ export class MainLayoutComponent {
   public showSearchResults = false;
 
   public searchResults$: Observable<SearchResults> | undefined;
+
+  @Input({ transform: booleanAttribute })
+  showNavigationItems = false;
 
   @ViewChild('scrollContainer', { read: ElementRef })
   public scrollContainer?: ElementRef<HTMLElement>;

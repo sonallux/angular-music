@@ -27,7 +27,6 @@ const routes: Routes = [
   {
     path: '',
     canMatch: [() => inject(SpotifyClientService).isAuthenticated()],
-    component: MainLayoutComponent,
     children: [
       {
         path: '',
@@ -75,6 +74,9 @@ const routes: Routes = [
     pathMatch: 'full',
     component: LoginComponent,
     title: 'Login - Angular Music',
+    data: {
+      hideNavigationItems: true,
+    },
   },
   {
     path: '**',
