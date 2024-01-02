@@ -1,4 +1,4 @@
-<header *ngIf="{ breakpoint: currentBreakpoint$ | async } as ctx">
+<header>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
       <button mat-icon-button *ngIf="showBurgerMenu" (click)="burgerMenuClicked.emit($event)">
@@ -11,11 +11,9 @@
           src="../../../assets/img/Spotify_Icon_RGB_White.png"
           aria-hidden="true"
         />
-        Angular Music
+        <span class="max-sm:hidden">Angular Music</span>
       </a>
-      <ng-container *ngIf="(ctx.breakpoint ?? Breakpoint.SM) >= Breakpoint.SM">
-        <ng-container *ngTemplateOutlet="customContent" />
-      </ng-container>
+      <ng-content />
       <span class="flex-grow"></span>
       <a mat-button href="https://github.com/sonallux/angular-music">
         <img
@@ -23,15 +21,8 @@
           src="../../../assets/img/github-circle-white-transparent.svg"
           alt="github"
         />
-        GitHub
+        <span class="max-sm:hidden">GitHub</span>
       </a>
-    </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="(ctx.breakpoint ?? Breakpoint.SM) < Breakpoint.SM">
-      <ng-container *ngTemplateOutlet="customContent" />
     </mat-toolbar-row>
   </mat-toolbar>
 </header>
-
-<ng-template #customContent>
-  <ng-content />
-</ng-template>
