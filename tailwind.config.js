@@ -7,6 +7,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "spotify-green": {
+          50: "#e6f7ae",
+          100: "#c3eacb",
+          200: "#9cdcaa",
+          300: "#71cf88",
+          400: "#4cc46e",
+          500: "#1db954",
+          600: "#10aa4a",
+          700: "#00973e",
+          800: "#006833",
+          900: "#00671e",
+        },
+
         // overwrite the default gray color palette with the $grey-palette from @angular/material
         gray: {
           50: "#fafafa",

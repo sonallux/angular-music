@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { ClickableCardComponent } from './clickable-card/clickable-card.component';
@@ -31,7 +30,6 @@ import { Repeat } from 'ngxtension/repeat';
     CommonModule,
 
     MatButtonModule,
-    MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
     MatRippleModule,
