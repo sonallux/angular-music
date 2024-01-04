@@ -1,39 +1,48 @@
 <app-navbar
   class="mat-elevation-z6 z-50"
-  [showBurgerMenu]="showNavigationItems && !(alwaysShowSideNav$ | async)"
-  (burgerMenuClicked)="sidenav.toggle()"
+  [showBurgerMenu]="showNavigationItems"
+  (burgerMenuClicked)="sidenavOpened = !sidenavOpened"
 >
   <app-search-box
     class="max-w-[250px] flex-grow"
+    *ngIf="showNavigationItems"
     #searchBox
     (onSearch)="doSearch($event)"
     (onSearchFocus)="doSearch($event, true)"
   />
 </app-navbar>
 
-<mat-sidenav-container class="flex-grow">
-  <mat-sidenav
-    #sidenav
-    class="z-10 w-60"
-    [opened]="showNavigationItems && (alwaysShowSideNav$ | async)"
-    [mode]="(alwaysShowSideNav$ | async) ? 'side' : 'over'"
+<div class="mat-app-background relative flex-grow overflow-hidden">
+  <div
+    *ngIf="showNavigationItems"
+    class="absolute z-50 h-full w-60 -translate-x-60 overflow-auto border-r border-r-gray-700 bg-gray-800 shadow duration-300 md:translate-x-0 md:shadow-none"
+    [class.translate-x-0]="sidenavOpened"
   >
-    <app-sidenav (itemClick)="sidenav.toggle(sidenav.mode === 'side')" />
-  </mat-sidenav>
-
-  <mat-sidenav-content #scrollContainer>
-    <main class="p-6">
-      <app-search-result
-        *ngIf="showSearchResults; else content"
-        #searchResultsView
-        [searchResults]="searchResults$ | async"
-        (resultSelected)="hideSearchResults()"
-        (closeButtonClick)="hideSearchResults()"
-      />
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
-<ng-template #content>
-  <ng-content />
-</ng-template>
+    <app-sidenav (itemClick)="sidenavOpened = false" />
+  </div>
+  <main
+    class="h-full overflow-auto duration-300"
+    [class.md:ml-60]="showNavigationItems"
+    #scrollContainer
+  >
+    <div class="p-6">
+      <ng-container *ngIf="showSearchResults; then searchResultTemplate; else contentTemplate" />
+      <ng-template #searchResultTemplate>
+        <app-search-result
+          #searchResultsView
+          [searchResults]="searchResults$ | async"
+          (resultSelected)="hideSearchResults()"
+          (closeButtonClick)="hideSearchResults()"
+        />
+      </ng-template>
+      <ng-template #contentTemplate>
+        <ng-content />
+      </ng-template>
+    </div>
+  </main>
+  <div
+    class="invisible absolute inset-0 z-40 duration-300"
+    [class]="{ '!visible': sidenavOpened, 'bg-gray-400/60': sidenavOpened }"
+    (click)="sidenavOpened = false"
+  ></div>
+</div>

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from './main-layout.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -19,7 +18,6 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     RouterModule,
 
     MatButtonModule,
-    MatSidenavModule,
     MatListModule,
     MatIconModule,
   ],
