@@ -10,7 +10,7 @@ export default class HeroHeaderAnimation implements OnDestroy {
 
     const timeline = gsap.timeline({
       scrollTrigger: {
-        scroller: 'mat-sidenav-content',
+        scroller: 'main',
         trigger: 'app-hero-header',
         scrub: true,
         start: 'top top',
