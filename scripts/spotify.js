@@ -23,7 +23,7 @@ async function getSpotifyToken() {
   return response.json();
 }
 
-export async function createSpotifyTokenCookie(url: string) {
+async function createSpotifyTokenCookie(url) {
   const domain = new URL(url).hostname;
   const spotifyToken = await getSpotifyToken();
   spotifyToken.expires = Date.now() + spotifyToken.expires_in * 1000;
@@ -36,3 +36,5 @@ export async function createSpotifyTokenCookie(url: string) {
     expires: spotifyToken.expires,
   };
 }
+
+exports.createSpotifyTokenCookie = createSpotifyTokenCookie;

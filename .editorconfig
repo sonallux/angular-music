@@ -9,9 +9,12 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 max_line_length = 100
 
-[*.ts]
+[*.{ts,js,mjs}]
 quote_type = single
 ij_typescript_spaces_within_imports = true
+ij_javascript_spaces_within_imports = true
+ij_javascript_spaces_within_object_literal_braces = true
+ij_typescript_spaces_within_object_literal_braces = true
 
 [*.md]
 max_line_length = off
