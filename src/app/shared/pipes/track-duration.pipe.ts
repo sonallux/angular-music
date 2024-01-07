@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'trackDuration',
+  standalone: true,
 })
 export class TrackDurationPipe implements PipeTransform {
   transform(durationMs: number): string {

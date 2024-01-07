@@ -10,12 +10,15 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import HeroHeaderAnimation from './hero-header-animation.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-hero-header',
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
   providers: [HeroHeaderAnimation],
+  standalone: true,
+  imports: [NgIf],
 })
 export class HeroHeaderComponent implements OnChanges {
   @Input({ required: true }) heroData!: HeroData | null;

@@ -4,10 +4,14 @@ import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { SimplifiedAlbum, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
 import { SpotifyUserApi } from '../../spotify-client/api/user-api.service';
+import { AsyncPipe } from '@angular/common';
+import { CardListComponent } from '../../shared/card-list/card-list.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './home.component.html',
+  standalone: true,
+  imports: [CardListComponent, AsyncPipe],
 })
 export class HomeComponent {
   public readonly userName$ = inject(SpotifyUserApi)

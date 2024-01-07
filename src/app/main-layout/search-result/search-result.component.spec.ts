@@ -1,11 +1,9 @@
 import { SearchResultComponent } from './search-result.component';
 import { findAllByRole, findByRole, render, screen } from '@testing-library/angular';
-import { SharedModule } from '../../shared/shared.module';
 
 describe('SearchResultComponent', () => {
   it('should render results', async () => {
     await render(SearchResultComponent, {
-      imports: [SharedModule],
       componentInputs: {
         searchResults: {
           albums: { items: [{ images: [{ url: 'https://search-result.image' }], artists: [] }] },
@@ -22,7 +20,6 @@ describe('SearchResultComponent', () => {
 
   it('should render no results', async () => {
     await render(SearchResultComponent, {
-      imports: [SharedModule],
       componentInputs: {
         searchResults: {
           albums: { items: [] },
