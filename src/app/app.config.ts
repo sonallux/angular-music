@@ -1,11 +1,16 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withRouterConfig } from '@angular/router';
+import {
+  provideRouter,
+  withEnabledBlockingInitialNavigation,
+  withRouterConfig,
+} from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from './spotify-client/authentication.interceptor';
 import { CACHE_STORE_TOKEN } from './spotify-client/spotify-client.service';
 import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.service';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,11 +18,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withRouterConfig({ onSameUrlNavigation: 'reload' }),
+      withEnabledBlockingInitialNavigation(),
     ),
-    provideHttpClient(withInterceptors([authenticationInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([authenticationInterceptor])),
     {
       provide: CACHE_STORE_TOKEN,
       useClass: BrowserCacheStoreService,
     },
+    provideClientHydration(),
   ],
 };
