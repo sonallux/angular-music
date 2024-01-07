@@ -6,13 +6,32 @@
     [class.w-36]="fixedWidth"
     mat-ripple
   >
-    <img
-      *ngIf="item.imageUrl; else placeholderImage"
-      [src]="item.imageUrl"
-      class="aspect-square object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
-      alt="image"
-      aria-hidden="true"
-    />
+    <ng-container *ngIf="fixedWidth; then fixedWidthImage; else freeWidthImage"></ng-container>
+    <ng-template #fixedWidthImage>
+      <img
+        *ngIf="imageUrl; else placeholderImage"
+        [ngSrc]="imageUrl"
+        [priority]="priority"
+        width="144"
+        height="144"
+        class="h-36 w-36 object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+        alt="image"
+        aria-hidden="true"
+      />
+    </ng-template>
+    <ng-template #freeWidthImage>
+      <div class="relative aspect-square">
+        <img
+          *ngIf="imageUrl; else placeholderImage"
+          [ngSrc]="imageUrl"
+          [priority]="priority"
+          fill=""
+          class="object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+          alt="image"
+          aria-hidden="true"
+        />
+      </div>
+    </ng-template>
     <div class="p-2">
       <h3 class="truncate text-base" [class.mb-0]="!item.subtitle">{{ item.title }}</h3>
       <p class="line-clamp-2 h-10" *ngIf="item.subtitle">{{ item.subtitle }}</p>
@@ -22,7 +41,7 @@
 
 <ng-template #placeholderImage>
   <div
-    class="flex h-36 w-36 duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+    class="flex aspect-square duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
   >
     <mat-icon class="m-auto !h-12 !w-12 text-5xl">album</mat-icon>
   </div>

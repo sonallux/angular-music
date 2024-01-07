@@ -62,6 +62,6 @@ function mapAlbumToHeroData(album: Album) {
   return {
     type: album.album_type.slice(0, 1).toUpperCase() + album.album_type.slice(1),
     title: album.name,
-    imageUrl: album.images[0].url ?? '',
+    images: album.images,
   };
 }
