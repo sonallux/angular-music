@@ -21,7 +21,7 @@ const GAB_WIDTH = 24;
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) items!: CardItem[] | null;
 
-  @Input() overflow: 'wrap' | 'scroll' | 'truncate' = 'wrap';
+  @Input() overflow: 'wrap' | 'scroll' = 'wrap';
 
   @Output() itemClick = new EventEmitter<CardItem>();
 
