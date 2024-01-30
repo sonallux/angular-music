@@ -61,7 +61,7 @@
     "markdown-table": "3.0.3",
     "prettier": "3.2.2",
     "prettier-plugin-tailwindcss": "0.5.11",
-    "puppeteer": "21.7.0",
+    "puppeteer": "21.10.0",
     "typescript": "5.2.2"
   },
   "lint-staged": {
