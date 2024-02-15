@@ -1,4 +1,4 @@
-<ng-container *ngIf="item; else loadingSkeleton">
+@if (item) {
   <a
     [routerLink]="item.link"
     (click)="itemClick.emit(item)"
@@ -6,52 +6,56 @@
     [class.w-36]="fixedWidth"
     mat-ripple
   >
-    <ng-container *ngIf="fixedWidth; then fixedWidthImage; else freeWidthImage"></ng-container>
-    <ng-template #fixedWidthImage>
-      <img
-        *ngIf="imageUrl; else placeholderImage"
-        [ngSrc]="imageUrl"
-        [priority]="priority"
-        width="144"
-        height="144"
-        class="h-36 w-36 object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
-        alt="image"
-        aria-hidden="true"
-      />
-    </ng-template>
-    <ng-template #freeWidthImage>
-      <div class="relative aspect-square">
+    @if (fixedWidth) {
+      @if (imageUrl) {
         <img
-          *ngIf="imageUrl; else placeholderImage"
           [ngSrc]="imageUrl"
           [priority]="priority"
-          fill=""
-          class="object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+          width="144"
+          height="144"
+          class="h-36 w-36 object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
           alt="image"
           aria-hidden="true"
         />
+      } @else {
+        <div
+          class="flex aspect-square duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+        >
+          <mat-icon class="m-auto !h-12 !w-12 text-5xl">album</mat-icon>
+        </div>
+      }
+    } @else {
+      <div class="relative aspect-square">
+        @if (imageUrl) {
+          <img
+            [ngSrc]="imageUrl"
+            [priority]="priority"
+            fill=""
+            class="object-cover duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+            alt="image"
+            aria-hidden="true"
+          />
+        } @else {
+          <div
+            class="flex aspect-square duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
+          >
+            <mat-icon class="m-auto !h-12 !w-12 text-5xl">album</mat-icon>
+          </div>
+        }
       </div>
-    </ng-template>
+    }
     <div class="p-2">
       <h3 class="truncate text-base" [class.mb-0]="!item.subtitle">{{ item.title }}</h3>
-      <p class="line-clamp-2 h-10" *ngIf="item.subtitle">{{ item.subtitle }}</p>
+      @if (item.subtitle) {
+        <p class="line-clamp-2 h-10">{{ item.subtitle }}</p>
+      }
     </div>
   </a>
-</ng-container>
-
-<ng-template #placeholderImage>
-  <div
-    class="flex aspect-square duration-300 group-hover:filter-opacity-70 group-focus-visible:filter-opacity-50"
-  >
-    <mat-icon class="m-auto !h-12 !w-12 text-5xl">album</mat-icon>
-  </div>
-</ng-template>
-
-<ng-template #loadingSkeleton>
+} @else {
   <div class="card" [class.w-36]="fixedWidth">
     <div class="skeleton-wave aspect-square rounded-[inherit]"></div>
     <div class="p-2">
       <p class="skeleton-wave w-2/3 rounded text-base">&nbsp;</p>
     </div>
   </div>
-</ng-template>
+}

@@ -14,7 +14,7 @@ import { TrackDurationPipe } from '../../shared/pipes/track-duration.pipe';
 import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
 import { MatTableModule } from '@angular/material/table';
 import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
-import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-album',
@@ -22,7 +22,6 @@ import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
   standalone: true,
   imports: [
     HeroHeaderComponent,
-    NgIf,
     ArtistLinkComponent,
     MatTableModule,
     AsyncPipe,

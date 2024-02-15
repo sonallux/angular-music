@@ -3,16 +3,18 @@
   class="gap-6"
   [ngClass]="overflow === 'scroll' ? 'flex overflow-x-auto' : 'grid ' + gridColsClass"
 >
-  <ng-container *ngIf="items; else loadingSkeleton">
-    <app-clickable-card
-      *ngFor="let item of items; let i = index"
-      [item]="item"
-      [fixedWidth]="overflow === 'scroll'"
-      [priority]="i < 4"
-      (itemClick)="itemClick.emit($event)"
-    />
-  </ng-container>
-  <ng-template #loadingSkeleton>
-    <app-clickable-card fixedWidth *ngFor="let i; repeat: maxItemsForOneLine" [item]="null" />
-  </ng-template>
+  @if (items) {
+    @for (item of items; track item; let i = $index) {
+      <app-clickable-card
+        [item]="item"
+        [fixedWidth]="overflow === 'scroll'"
+        [priority]="i < 4"
+        (itemClick)="itemClick.emit($event)"
+      />
+    }
+  } @else {
+    @for (i of skeletonItems; track i) {
+      <app-clickable-card fixedWidth [item]="null" />
+    }
+  }
 </div>

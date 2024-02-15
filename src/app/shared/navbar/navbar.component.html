@@ -1,12 +1,9 @@
 <header class="flex h-16 w-full items-center bg-spotify-green-500 px-4 text-white">
-  <button
-    mat-icon-button
-    *ngIf="showBurgerMenu"
-    class="md:!hidden"
-    (click)="burgerMenuClicked.emit($event)"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
+  @if (showBurgerMenu) {
+    <button mat-icon-button class="md:!hidden" (click)="burgerMenuClicked.emit($event)">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
   <a mat-button href="/">
     <img
       matButtonIcon

@@ -1,71 +1,79 @@
 <div class="flex flex-col gap-6">
-  <ng-container *ngIf="artistHeroData$ | async as artist">
+  @if (artistHeroData$ | async; as artist) {
     <app-hero-header [heroData]="artist.state === 'SUCCESS' ? artist.data : null">
-      <p *ngIf="artist.state === 'SUCCESS'">
-        {{ artist.data.followers.total | number }} Followers -
-        {{ artist.data.genres.join(", ") }}
-      </p>
+      @if (artist.state === "SUCCESS") {
+        <p>
+          {{ artist.data.followers.total | number }} Followers -
+          {{ artist.data.genres.join(", ") }}
+        </p>
+      }
     </app-hero-header>
-  </ng-container>
+  }
 
-  <div class="space-y-2" *ngIf="topTracks$ | async as topTracks">
-    <h2>Popular</h2>
+  @if (topTracks$ | async; as topTracks) {
+    <div class="space-y-2">
+      <h2>Popular</h2>
+      @if (topTracks.state === "SUCCESS") {
+        <mat-table [dataSource]="topTracks.data">
+          <ng-container matColumnDef="name">
+            <mat-cell *matCellDef="let element">
+              <span class="truncate">{{ element.name }}</span></mat-cell
+            >
+          </ng-container>
 
-    <mat-table *ngIf="topTracks.state === 'SUCCESS'" [dataSource]="topTracks.data">
-      <ng-container matColumnDef="name">
-        <mat-cell *matCellDef="let element"
-          ><span class="truncate">{{ element.name }}</span></mat-cell
-        >
-      </ng-container>
+          <ng-container matColumnDef="artist">
+            <mat-cell *matCellDef="let element">
+              <app-artist-link [artist]="element.artists" />
+            </mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="artist">
-        <mat-cell *matCellDef="let element">
-          <app-artist-link [artist]="element.artists" />
-        </mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="album">
+            <mat-cell *matCellDef="let element">
+              <app-album-link [album]="element.album" />
+            </mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="album">
-        <mat-cell *matCellDef="let element">
-          <app-album-link [album]="element.album" />
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="duration">
-        <mat-cell *matCellDef="let element" class="grow-0 basis-20">{{
-          element.duration_ms | trackDuration
-        }}</mat-cell>
-      </ng-container>
-
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
-
-    <div *ngIf="topTracks.state === 'LOADING'" class="flex h-[260px] flex-col justify-around">
-      <div class="skeleton-wave h-8 w-full"></div>
-      <div class="skeleton-wave h-8 w-full"></div>
-      <div class="skeleton-wave h-8 w-full"></div>
-      <div class="skeleton-wave h-8 w-full"></div>
-      <div class="skeleton-wave h-8 w-full"></div>
+          <ng-container matColumnDef="duration">
+            <mat-cell *matCellDef="let element" class="grow-0 basis-20">
+              {{ element.duration_ms | trackDuration }}
+            </mat-cell>
+          </ng-container>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      }
+      @if (topTracks.state === "LOADING") {
+        <div class="flex h-[260px] flex-col justify-around">
+          <div class="skeleton-wave h-8 w-full"></div>
+          <div class="skeleton-wave h-8 w-full"></div>
+          <div class="skeleton-wave h-8 w-full"></div>
+          <div class="skeleton-wave h-8 w-full"></div>
+          <div class="skeleton-wave h-8 w-full"></div>
+        </div>
+      }
+      <button
+        mat-button
+        (click)="toggleShowAllTopTracks()"
+        [disabled]="topTracks.state !== 'SUCCESS'"
+      >
+        {{ (showAllTopTracks$ | async) ? "Show less" : "See more" }}
+      </button>
     </div>
+  }
 
-    <button
-      mat-button
-      (click)="toggleShowAllTopTracks()"
-      [disabled]="topTracks.state !== 'SUCCESS'"
-    >
-      {{ (showAllTopTracks$ | async) ? "Show less" : "See more" }}
-    </button>
-  </div>
+  @if (albums$ | async; as albums) {
+    <section aria-label="Discography">
+      <h2>Discography</h2>
+      <app-card-list [items]="albums.state === 'SUCCESS' ? albums.data : null" overflow="scroll" />
+    </section>
+  }
 
-  <section *ngIf="albums$ | async as albums" aria-label="Discography">
-    <h2>Discography</h2>
-    <app-card-list [items]="albums.state === 'SUCCESS' ? albums.data : null" overflow="scroll" />
-  </section>
-
-  <section *ngIf="relatedArtists$ | async as relatedArtists" aria-label="Fans also like">
-    <h2>Fans also like</h2>
-    <app-card-list
-      [items]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null"
-      overflow="scroll"
-    />
-  </section>
+  @if (relatedArtists$ | async; as relatedArtists) {
+    <section aria-label="Fans also like">
+      <h2>Fans also like</h2>
+      <app-card-list
+        [items]="relatedArtists.state === 'SUCCESS' ? relatedArtists.data : null"
+        overflow="scroll"
+      />
+    </section>
+  }
 </div>

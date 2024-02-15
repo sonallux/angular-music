@@ -10,8 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CardItem, ClickableCardComponent } from '../clickable-card/clickable-card.component';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Repeat } from 'ngxtension/repeat';
+import { NgClass } from '@angular/common';
 
 const CARD_WIDTH = 128;
 const GAB_WIDTH = 24;
@@ -20,7 +19,7 @@ const GAB_WIDTH = 24;
   selector: 'app-card-list',
   templateUrl: './card-list.component.html',
   standalone: true,
-  imports: [NgClass, NgIf, NgFor, Repeat, ClickableCardComponent],
+  imports: [NgClass, ClickableCardComponent],
 })
 export class CardListComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) items!: CardItem[] | null;
@@ -32,6 +31,9 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
   @ViewChild('container') containerElement!: ElementRef<HTMLElement>;
 
   maxItemsForOneLine = 3;
+  skeletonItems = Array(this.maxItemsForOneLine)
+    .fill(0)
+    .map((_, i) => i);
   gridColsClass = 'grid-cols-3';
 
   private resizeObserver: ResizeObserver;
@@ -59,6 +61,9 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
       Math.floor((entry.contentBoxSize[0].inlineSize + GAB_WIDTH) / (CARD_WIDTH + GAB_WIDTH)),
     );
     this.gridColsClass = `grid-cols-${this.maxItemsForOneLine}`;
+    this.skeletonItems = Array(this.maxItemsForOneLine)
+      .fill(0)
+      .map((_, i) => i);
 
     // ResizeObserver does not run in Angular Zone, so trigger change detection if value has changed
     if (oldMaxItemsForOneLine !== this.maxItemsForOneLine) {

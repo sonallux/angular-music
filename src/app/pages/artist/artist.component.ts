@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlbumLinkComponent } from '../../shared/album-link/album-link.component';
 import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
 import { MatTableModule } from '@angular/material/table';
-import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 
 const albumTypeNames: Record<string, string> = {
   album: 'Album',
@@ -33,7 +33,6 @@ const albumTypeNames: Record<string, string> = {
   standalone: true,
   providers: [ReleaseDatePipe],
   imports: [
-    NgIf,
     HeroHeaderComponent,
     MatTableModule,
     ArtistLinkComponent,

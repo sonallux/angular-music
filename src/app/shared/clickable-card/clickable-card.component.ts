@@ -1,7 +1,7 @@
 import { booleanAttribute, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { findBestMatchingImage, Image } from '../images';
 
@@ -9,7 +9,7 @@ import { findBestMatchingImage, Image } from '../images';
   selector: 'app-clickable-card',
   templateUrl: './clickable-card.component.html',
   standalone: true,
-  imports: [NgIf, RouterLink, MatRippleModule, MatIconModule, NgOptimizedImage],
+  imports: [RouterLink, MatRippleModule, MatIconModule, NgOptimizedImage],
 })
 export class ClickableCardComponent implements OnChanges {
   @Input({ required: true }) item!: CardItem | null;
