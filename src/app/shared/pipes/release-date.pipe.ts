@@ -8,6 +8,7 @@ export interface ReleaseDate {
 
 @Pipe({
   name: 'releaseDate',
+  standalone: true,
 })
 export class ReleaseDatePipe implements PipeTransform {
   private readonly locale = inject(LOCALE_ID);

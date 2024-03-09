@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { map, Observable, shareReplay, switchMap } from 'rxjs';
-import { HeroData } from '../../shared/hero-header/hero-header.component';
+import { HeroData, HeroHeaderComponent } from '../../shared/hero-header/hero-header.component';
 import { Album, Page, SimplifiedTrack } from '@spotify/web-api-ts-sdk';
 import {
   Breakpoint,
@@ -10,10 +10,26 @@ import { SpotifyAlbumApi } from '../../spotify-client/api/album-api.service';
 import { injectParams } from '../../shared/injectors/inject-params';
 import { filterNil } from 'ngxtension/filter-nil';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TrackDurationPipe } from '../../shared/pipes/track-duration.pipe';
+import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
+import { MatTableModule } from '@angular/material/table';
+import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
+import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-album',
   templateUrl: './album.component.html',
+  standalone: true,
+  imports: [
+    HeroHeaderComponent,
+    NgIf,
+    ArtistLinkComponent,
+    MatTableModule,
+    AsyncPipe,
+    DecimalPipe,
+    ReleaseDatePipe,
+    TrackDurationPipe,
+  ],
 })
 export class AlbumComponent {
   public displayedColumns: string[] = ['name', 'artist'];

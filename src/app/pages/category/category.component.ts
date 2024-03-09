@@ -1,15 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { map, Observable, switchMap } from 'rxjs';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
-import { HeroData } from '../../shared/hero-header/hero-header.component';
+import { HeroData, HeroHeaderComponent } from '../../shared/hero-header/hero-header.component';
 import { Category, SimplifiedPlaylist } from '@spotify/web-api-ts-sdk';
 import { SpotifyBrowseApi } from '../../spotify-client/api/browse-api.service';
 import { injectParams } from '../../shared/injectors/inject-params';
 import { filterNil } from 'ngxtension/filter-nil';
+import { AsyncPipe } from '@angular/common';
+import { CardListComponent } from '../../shared/card-list/card-list.component';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
+  standalone: true,
+  imports: [HeroHeaderComponent, CardListComponent, AsyncPipe],
 })
 export class CategoryComponent {
   private readonly browseApi = inject(SpotifyBrowseApi);

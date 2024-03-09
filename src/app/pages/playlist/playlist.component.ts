@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { map, Observable, shareReplay, switchMap } from 'rxjs';
-import { HeroData } from '../../shared/hero-header/hero-header.component';
+import { HeroData, HeroHeaderComponent } from '../../shared/hero-header/hero-header.component';
 import { Page, Playlist, PlaylistedTrack, Track } from '@spotify/web-api-ts-sdk';
 import { SpotifyPlaylistApi } from '../../spotify-client/api/playlist-api.service';
 import {
@@ -10,6 +10,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { injectParams } from '../../shared/injectors/inject-params';
 import { filterNil } from 'ngxtension/filter-nil';
+import { RouterLink } from '@angular/router';
+import { TrackDurationPipe } from '../../shared/pipes/track-duration.pipe';
+import { AlbumLinkComponent } from '../../shared/album-link/album-link.component';
+import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
+import { MatTableModule } from '@angular/material/table';
+import { AsyncPipe, DatePipe, DecimalPipe, NgIf } from '@angular/common';
 
 export interface PlaylistTrack extends PlaylistedTrack {
   track: Track;
@@ -18,6 +24,19 @@ export interface PlaylistTrack extends PlaylistedTrack {
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
+  standalone: true,
+  imports: [
+    HeroHeaderComponent,
+    NgIf,
+    RouterLink,
+    MatTableModule,
+    ArtistLinkComponent,
+    AlbumLinkComponent,
+    AsyncPipe,
+    DecimalPipe,
+    DatePipe,
+    TrackDurationPipe,
+  ],
 })
 export class PlaylistComponent {
   public displayedColumns: string[] = ['name', 'artist', 'album'];
