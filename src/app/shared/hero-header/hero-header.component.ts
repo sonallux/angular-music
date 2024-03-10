@@ -1,13 +1,14 @@
 import { Component, inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import { injectLazy } from 'ngxtension/inject-lazy';
+import { findBestMatchingImage, Image } from '../images';
 
 @Component({
   selector: 'app-hero-header',
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgOptimizedImage],
 })
 export class HeroHeaderComponent implements OnChanges {
   private readonly heroHeaderAnimation$ = injectLazy(
@@ -16,8 +17,13 @@ export class HeroHeaderComponent implements OnChanges {
   private readonly ngZone = inject(NgZone);
 
   @Input({ required: true }) heroData!: HeroData | null;
+  headerImage = '';
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.heroData) {
+      this.headerImage = findBestMatchingImage(192, this.heroData?.images) ?? '';
+    }
+
     if (changes['heroData'].currentValue) {
       this.initAnimation();
     }
@@ -33,5 +39,5 @@ export class HeroHeaderComponent implements OnChanges {
 export interface HeroData {
   title: string;
   type: string;
-  imageUrl: string;
+  images: Image[];
 }
