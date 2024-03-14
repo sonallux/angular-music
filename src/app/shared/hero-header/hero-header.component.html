@@ -1,5 +1,5 @@
 <div class="hero-header-card card">
-  <ng-container *ngIf="heroData; else loadingSkeleton">
+  @if (heroData) {
     <img
       class="hero-header-image"
       [ngSrc]="headerImage"
@@ -19,13 +19,11 @@
         <ng-content />
       </div>
     </div>
-  </ng-container>
+  } @else {
+    <div class="hero-header-image skeleton-wave"></div>
+    <div class="info-container">
+      <p class="info-container-type skeleton-wave w-1/3 rounded">&nbsp;</p>
+      <h1 class="info-container-title skeleton-wave w-2/3 rounded">&nbsp;</h1>
+    </div>
+  }
 </div>
-
-<ng-template #loadingSkeleton>
-  <div class="hero-header-image skeleton-wave"></div>
-  <div class="info-container">
-    <p class="info-container-type skeleton-wave w-1/3 rounded">&nbsp;</p>
-    <h1 class="info-container-title skeleton-wave w-2/3 rounded">&nbsp;</h1>
-  </div>
-</ng-template>

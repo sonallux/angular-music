@@ -1,5 +1,5 @@
 import { Component, inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
-import { NgIf, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { injectLazy } from 'ngxtension/inject-lazy';
 import { findBestMatchingImage, Image } from '../images';
 
@@ -8,7 +8,7 @@ import { findBestMatchingImage, Image } from '../images';
   templateUrl: './hero-header.component.html',
   styleUrls: ['./hero-header.component.scss'],
   standalone: true,
-  imports: [NgIf, NgOptimizedImage],
+  imports: [NgOptimizedImage],
 })
 export class HeroHeaderComponent implements OnChanges {
   private readonly heroHeaderAnimation$ = injectLazy(

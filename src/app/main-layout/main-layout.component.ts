@@ -14,7 +14,7 @@ import { SearchResults, SpotifySearchApi } from '../spotify-client/api/search-ap
 import { injectNavigationEnd } from 'ngxtension/navigation-end';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchResultComponent } from './search-result/search-result.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
@@ -30,7 +30,6 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
     NavbarComponent,
     SearchBoxComponent,
     SidenavComponent,
-    NgIf,
     SearchResultComponent,
     AsyncPipe,
   ],

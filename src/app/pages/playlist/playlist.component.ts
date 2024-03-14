@@ -15,7 +15,7 @@ import { TrackDurationPipe } from '../../shared/pipes/track-duration.pipe';
 import { AlbumLinkComponent } from '../../shared/album-link/album-link.component';
 import { ArtistLinkComponent } from '../../shared/artist-link/artist-link.component';
 import { MatTableModule } from '@angular/material/table';
-import { AsyncPipe, DatePipe, DecimalPipe, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 
 export interface PlaylistTrack extends PlaylistedTrack {
   track: Track;
@@ -27,7 +27,6 @@ export interface PlaylistTrack extends PlaylistedTrack {
   standalone: true,
   imports: [
     HeroHeaderComponent,
-    NgIf,
     RouterLink,
     MatTableModule,
     ArtistLinkComponent,

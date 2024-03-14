@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SimplifiedArtist } from '@spotify/web-api-ts-sdk';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-artist-link',
@@ -10,7 +9,7 @@ import { NgFor, NgIf } from '@angular/common';
     class: 'truncate',
   },
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [RouterLink],
 })
 export class ArtistLinkComponent {
   @Input({ required: true })

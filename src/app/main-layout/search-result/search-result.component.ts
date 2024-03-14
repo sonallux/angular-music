@@ -4,14 +4,13 @@ import { Artist, SimplifiedAlbum } from '@spotify/web-api-ts-sdk';
 import { CardItem } from '../../shared/clickable-card/clickable-card.component';
 import { ReleaseDatePipe } from '../../shared/pipes/release-date.pipe';
 import { CardListComponent } from '../../shared/card-list/card-list.component';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
   standalone: true,
   providers: [ReleaseDatePipe],
-  imports: [NgIf, CardListComponent],
+  imports: [CardListComponent],
 })
 export class SearchResultComponent {
   @Input({ required: true })
