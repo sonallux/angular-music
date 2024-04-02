@@ -63,7 +63,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.13",
     "puppeteer": "21.7.0",
-    "typescript": "5.3.3"
+    "typescript": "5.4.3"
   },
   "lint-staged": {
     "**/*.{js,mjs,ts,html,scss,md,json}": "prettier --write"
