@@ -14,9 +14,6 @@ updates:
           - "@angular/*"
           - "@angular-devkit/*"
           - "zone.js"
-      type-definitions:
-        patterns:
-          - "@types/*"
       formatting:
         patterns:
           - "prettier*"
@@ -27,15 +24,10 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "@angular-devkit/*"
         update-types: [ "version-update:semver-major" ]
-      - dependency-name: "@types/node"
-        versions:
-          - '>=21.0.0'
       - dependency-name: "jasmine-core"
         versions:
           - '>=5.0.0'
-      - dependency-name: "@types/jasmine"
-        versions:
-          - '>=5.0.0'
+      - dependency-name: '@types/*'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
