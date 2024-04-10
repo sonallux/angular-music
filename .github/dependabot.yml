@@ -28,6 +28,9 @@ updates:
         versions:
           - '>=5.0.0'
       - dependency-name: '@types/*'
+      - dependency-name: 'puppeteer'
+        versions:
+          - '>=22.0.0'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
