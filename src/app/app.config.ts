@@ -10,10 +10,7 @@ import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.s
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
-    provideRouter(
-      routes,
-      withRouterConfig({ onSameUrlNavigation: 'reload' }),
-    ),
+    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptors([authenticationInterceptor])),
     {
       provide: CACHE_STORE_TOKEN,
