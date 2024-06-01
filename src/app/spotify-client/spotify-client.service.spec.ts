@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CACHE_STORE_TOKEN, SpotifyClientService } from './spotify-client.service';
-import { BrowserCacheStoreService } from './browser-cache-store.service';
+import { SpotifyClientService } from './spotify-client.service';
+import { BrowserSessionStorage } from './browser-session-storage.service';
+import { SessionStorage } from './session-store.service';
 
 describe('SpotifyClientService', () => {
   let service: SpotifyClientService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }],
+      providers: [{ provide: SessionStorage, useClass: BrowserSessionStorage }],
     });
     service = TestBed.inject(SpotifyClientService);
   });

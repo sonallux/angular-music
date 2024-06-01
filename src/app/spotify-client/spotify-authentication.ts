@@ -1,111 +1,83 @@
-import {
-  AccessToken,
-  GenericCache,
-  ICachable,
-  ICacheStore,
-  ICachingStrategy,
-} from '@spotify/web-api-ts-sdk';
-import { AccessTokenHelpers } from './access-token-helpers';
+import { SessionStoreService } from './session-store.service';
+import { AccessToken, SpotifyTokenApiService } from './spotify-token-api.service';
 
-interface CachedVerifier extends ICachable {
-  verifier: string;
-  expiresOnAccess: boolean;
+export interface StoredAccessToken extends AccessToken {
+  /**
+   * The timestamp in milliseconds since epoch this cache entry expires
+   */
+  expires: number;
 }
 
+const TOKEN_RENEW_WINDOW = 2 * 60 * 1000; // 2 minutes
+
+const ACCESS_TOKEN_KEY = 'spotify-authentication-token';
+const CODE_VERIFIER_KEY = 'spotify-authentication-verifier';
+
 export class SpotifyAuthentication {
-  private static readonly tokenCacheKey = 'spotify-authentication-token';
-  private static readonly verifierCacheKey = 'spotify-authentication-verifier';
-
-  protected cache: ICachingStrategy;
-
   constructor(
-    protected clientId: string,
-    protected redirectUri: string,
-    protected scopes: string[],
-    cacheStore: ICacheStore,
-  ) {
-    this.cache = new GenericCache(cacheStore, this.cacheUpdateFunctions());
-  }
+    private readonly spotifyTokenApiService: SpotifyTokenApiService,
+    private readonly sessionStore: SessionStoreService,
+  ) {}
 
-  public async getAccessToken(): Promise<AccessToken | null> {
-    return await this.cache.get<AccessToken>(SpotifyAuthentication.tokenCacheKey);
+  public async getAccessToken(): Promise<StoredAccessToken | null> {
+    let accessTokenString: string | null = this.sessionStore.get(ACCESS_TOKEN_KEY);
+    if (!accessTokenString) {
+      return null;
+    }
+
+    let accessToken: StoredAccessToken = JSON.parse(accessTokenString);
+
+    // If the token is close to expiring, try to refresh it with a refresh_token
+    if (accessToken.expires - Date.now() < TOKEN_RENEW_WINDOW && accessToken.refresh_token) {
+      try {
+        const refreshedAccessToken = await this.spotifyTokenApiService.refreshToken(
+          accessToken.refresh_token,
+        );
+        accessToken = toStoredAccessToken(refreshedAccessToken);
+        this.sessionStore.set(ACCESS_TOKEN_KEY, JSON.stringify(accessToken));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Check if the token is expired
+    if (accessToken.expires <= Date.now()) {
+      this.sessionStore.remove(ACCESS_TOKEN_KEY);
+      return null;
+    }
+
+    return accessToken;
   }
 
   public removeAccessToken(): void {
-    this.cache.remove(SpotifyAuthentication.tokenCacheKey);
+    this.sessionStore.remove(ACCESS_TOKEN_KEY);
   }
 
-  public cacheUpdateFunctions(): Map<string, (item: any) => Promise<ICachable>> {
-    const updateFunctions = new Map<string, (item: any) => Promise<ICachable>>();
-    updateFunctions.set(SpotifyAuthentication.tokenCacheKey, (expiring) =>
-      AccessTokenHelpers.refreshCachedAccessToken(this.clientId, expiring),
-    );
-    return updateFunctions;
-  }
+  public async generateAuthorizeUrl(scopes: string[]): Promise<string> {
+    const { url, codeVerifier } = await this.spotifyTokenApiService.generateAuthorizeUrl(scopes);
 
-  public async redirect(): Promise<void> {
-    const verifier = AccessTokenHelpers.generateCodeVerifier(128);
-    const challenge = await AccessTokenHelpers.generateCodeChallenge(verifier);
+    this.sessionStore.set(CODE_VERIFIER_KEY, codeVerifier);
 
-    const singleUseVerifier: CachedVerifier = { verifier, expiresOnAccess: true };
-    this.cache.setCacheItem(SpotifyAuthentication.verifierCacheKey, singleUseVerifier);
-
-    document.location = await this.generateRedirectUrlForUser(this.scopes, challenge);
+    return url;
   }
 
   public async exchangeCode(code: string): Promise<void> {
-    const cachedItem = await this.cache.get<CachedVerifier>(SpotifyAuthentication.verifierCacheKey);
-    const verifier = cachedItem?.verifier;
-
-    if (!verifier) {
+    const codeVerifier = this.sessionStore.get(CODE_VERIFIER_KEY);
+    if (codeVerifier == null) {
       throw new Error(
         "No verifier found in cache - can't validate query string callback parameters.",
       );
     }
 
-    const accessToken = await this.exchangeCodeForToken(code, verifier);
+    // Remove verifier so it can not be used twice
+    this.sessionStore.remove(CODE_VERIFIER_KEY);
 
-    this.cache.setCacheItem(
-      SpotifyAuthentication.tokenCacheKey,
-      AccessTokenHelpers.toCachable(accessToken),
-    );
+    const accessToken = await this.spotifyTokenApiService.exchangeCodeForToken(code, codeVerifier);
+
+    this.sessionStore.set(ACCESS_TOKEN_KEY, JSON.stringify(toStoredAccessToken(accessToken)));
   }
+}
 
-  protected async generateRedirectUrlForUser(scopes: string[], challenge: string) {
-    scopes = scopes ?? [];
-    const scope = scopes.join(' ');
-
-    const params = new URLSearchParams();
-    params.append('client_id', this.clientId);
-    params.append('response_type', 'code');
-    params.append('redirect_uri', this.redirectUri);
-    params.append('scope', scope);
-    params.append('code_challenge_method', 'S256');
-    params.append('code_challenge', challenge);
-
-    return `https://accounts.spotify.com/authorize?${params.toString()}`;
-  }
-
-  protected async exchangeCodeForToken(code: string, verifier: string): Promise<AccessToken> {
-    const params = new URLSearchParams();
-    params.append('client_id', this.clientId);
-    params.append('grant_type', 'authorization_code');
-    params.append('code', code);
-    params.append('redirect_uri', this.redirectUri);
-    params.append('code_verifier', verifier!);
-
-    const result = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params,
-    });
-
-    const text = await result.text();
-
-    if (!result.ok) {
-      throw new Error(`Failed to exchange code for token: ${result.statusText}, ${text}`);
-    }
-
-    return JSON.parse(text);
-  }
+function toStoredAccessToken(item: AccessToken): StoredAccessToken {
+  return { ...item, expires: Date.now() + item.expires_in * 1000 };
 }

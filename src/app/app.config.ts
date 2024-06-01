@@ -4,8 +4,8 @@ import { provideRouter, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from './spotify-client/authentication.interceptor';
-import { CACHE_STORE_TOKEN } from './spotify-client/spotify-client.service';
-import { BrowserCacheStoreService } from './spotify-client/browser-cache-store.service';
+import { BrowserSessionStorage } from './spotify-client/browser-session-storage.service';
+import { SessionStorage } from './spotify-client/session-store.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,8 +13,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptors([authenticationInterceptor])),
     {
-      provide: CACHE_STORE_TOKEN,
-      useClass: BrowserCacheStoreService,
+      provide: SessionStorage,
+      useClass: BrowserSessionStorage,
     },
   ],
 };
