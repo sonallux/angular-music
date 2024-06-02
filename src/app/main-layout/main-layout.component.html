@@ -16,7 +16,7 @@
 <div class="mat-app-background relative flex-grow overflow-hidden">
   @if (showNavigationItems) {
     <div
-      class="absolute z-50 h-full w-60 -translate-x-60 overflow-auto border-r border-r-gray-700 bg-gray-800 shadow duration-300 md:translate-x-0 md:shadow-none"
+      class="absolute z-50 h-full w-60 -translate-x-60 overflow-auto border-r border-r-gray-700 bg-gray-800 shadow max-md:duration-300 md:translate-x-0 md:shadow-none"
       [class.translate-x-0]="sidenavOpened"
     >
       @defer {
@@ -24,11 +24,7 @@
       }
     </div>
   }
-  <main
-    class="h-full overflow-auto duration-300"
-    [class.md:ml-60]="showNavigationItems"
-    #scrollContainer
-  >
+  <main class="h-full overflow-auto" [class.md:ml-60]="showNavigationItems" #scrollContainer>
     <div class="p-6">
       @if (showSearchResults) {
         @defer {
