@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
   OnDestroy,
   Output,
@@ -11,6 +12,7 @@ import {
 } from '@angular/core';
 import { CardItem, ClickableCardComponent } from '../clickable-card/clickable-card.component';
 import { NgClass } from '@angular/common';
+import { RESIZE_OBSERVER_FACTORY, ResizeObserverFactory } from '../resize-observer';
 
 const CARD_WIDTH = 128;
 const GAB_WIDTH = 24;
@@ -38,8 +40,11 @@ export class CardListComponent implements AfterViewInit, OnDestroy {
 
   private resizeObserver: ResizeObserver;
 
-  constructor(private cdr: ChangeDetectorRef) {
-    this.resizeObserver = new ResizeObserver(this.onResize);
+  constructor(
+    private cdr: ChangeDetectorRef,
+    @Inject(RESIZE_OBSERVER_FACTORY) resizeObserverFactory: ResizeObserverFactory,
+  ) {
+    this.resizeObserver = resizeObserverFactory(this.onResize);
   }
 
   ngAfterViewInit(): void {
