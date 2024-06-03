@@ -3,8 +3,9 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: daily
-      time: '01:00'
+      interval: weekly
+      day: 'friday'
+      time: '04:00'
     open-pull-requests-limit: 10
     reviewers:
       - sonallux
@@ -34,7 +35,8 @@ updates:
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
-      interval: daily
-      time: '02:00'
+      interval: weekly
+      day: 'friday'
+      time: '04:00'
     reviewers:
       - sonallux
