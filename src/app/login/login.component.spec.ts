@@ -1,12 +1,12 @@
 import { LoginComponent } from './login.component';
 import { render, screen } from '@testing-library/angular';
-import { CACHE_STORE_TOKEN } from '../spotify-client/spotify-client.service';
-import { BrowserCacheStoreService } from '../spotify-client/browser-cache-store.service';
+import { BrowserSessionStorage } from '../spotify-client/browser-session-storage.service';
+import { SessionStorage } from '../spotify-client/session-store.service';
 
 describe('LoginComponent', () => {
   it('should render', async () => {
     await render(LoginComponent, {
-      providers: [{ provide: CACHE_STORE_TOKEN, useClass: BrowserCacheStoreService }],
+      providers: [{ provide: SessionStorage, useClass: BrowserSessionStorage }],
     });
 
     expect(await screen.findByRole('heading', { name: 'Angular Music' })).toBeDefined();
