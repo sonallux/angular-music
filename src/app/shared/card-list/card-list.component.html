@@ -1,7 +1,10 @@
 <div
-  #container
   class="gap-6"
-  [ngClass]="overflow === 'scroll' ? 'flex overflow-x-auto' : 'grid ' + gridColsClass"
+  [class]="
+    overflow === 'scroll'
+      ? 'flex overflow-x-auto'
+      : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8'
+  "
 >
   @if (items) {
     @for (item of items; track item; let i = $index) {
@@ -13,8 +16,8 @@
       />
     }
   } @else {
-    @for (i of skeletonItems; track i) {
-      <app-clickable-card fixedWidth [item]="null" />
+    @for (i of [0, 1, 2, 3]; track i) {
+      <app-clickable-card [item]="null" [fixedWidth]="overflow === 'scroll'" />
     }
   }
 </div>
