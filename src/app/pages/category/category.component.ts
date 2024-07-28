@@ -45,7 +45,8 @@ function mapCategoryToHeroData(category: Category): HeroData {
 function playlistToCardItem(playlist: SimplifiedPlaylist): CardItem {
   return {
     title: playlist.name,
-    subtitle: playlist.description,
+    // Remove links from description
+    subtitle: playlist.description.replaceAll(/<a href=spotify:\w+:\w+>(.+?)<\/a>/g, '$1'),
     images: playlist.images,
     link: `/playlist/${playlist.id}`,
   };

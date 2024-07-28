@@ -2,7 +2,7 @@
   <app-hero-header [heroData]="playlistHeroData$ | async">
     @if (playlist$ | async; as playlist) {
       @if (playlist.description) {
-        <p class="truncate">{{ playlist.description }}</p>
+        <p class="truncate [&_a:hover]:underline" [innerHTML]="playlist | playlistDescription"></p>
       }
       <p>
         <a routerLink="/user/{{ playlist.owner.id }}">{{ playlist.owner.display_name }}</a> -
