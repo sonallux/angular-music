@@ -51,7 +51,7 @@
     "@types/js-cookie": "3.0.6",
     "@types/node": "20.11.25",
     "firebase-tools": "13.10.2",
-    "husky": "9.1.2",
+    "husky": "9.1.4",
     "jasmine-core": "4.6.1",
     "karma": "6.4.3",
     "karma-chrome-launcher": "3.2.0",
