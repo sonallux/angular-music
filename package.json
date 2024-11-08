@@ -50,7 +50,7 @@
     "@types/jasmine": "4.6.4",
     "@types/js-cookie": "3.0.6",
     "@types/node": "20.11.25",
-    "firebase-tools": "13.23.1",
+    "firebase-tools": "13.24.2",
     "husky": "9.1.6",
     "jasmine-core": "4.6.1",
     "karma": "6.4.4",
