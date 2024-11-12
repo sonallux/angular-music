@@ -1,5 +1,5 @@
-import { Component, inject, Input, NgZone, OnChanges, SimpleChanges } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, inject, Input, NgZone, OnChanges, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { injectLazy } from 'ngxtension/inject-lazy';
 import { findBestMatchingImage, Image } from '../images';
 
@@ -15,6 +15,7 @@ export class HeroHeaderComponent implements OnChanges {
     () => import('./hero-header-animation.service'),
   );
   private readonly ngZone = inject(NgZone);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   @Input({ required: true }) heroData!: HeroData | null;
   headerImage = '';
@@ -30,9 +31,11 @@ export class HeroHeaderComponent implements OnChanges {
   }
 
   private initAnimation() {
-    this.heroHeaderAnimation$.subscribe((animation) =>
-      this.ngZone.runOutsideAngular(() => animation.init()),
-    );
+    if (this.isBrowser) {
+      this.heroHeaderAnimation$.subscribe((animation) =>
+        this.ngZone.runOutsideAngular(() => animation.init()),
+      );
+    }
   }
 }
 
