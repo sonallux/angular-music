@@ -1,6 +1,9 @@
 name: Deploy preview
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - disabled
 
 concurrency:
   group: deploy-preview-${{ github.ref }}
