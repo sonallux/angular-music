@@ -14,4 +14,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Test
-        run: echo ${{ github.event.check_run }}
+        run: echo ${{ toJSON(github.event.check_run) }}
