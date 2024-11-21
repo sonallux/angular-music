@@ -32,10 +32,9 @@ jobs:
       - name: Upload measurements
         uses: actions/upload-artifact@v4
         with:
-          name: measurements.md
+          name: measurements
           path: measurements.md
-      # - name: Create or update comment
-      #   uses: marocchino/sticky-pull-request-comment@v2
-      #   with:
-      #     header: measurements
-      #     path: measurements.md
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v3
+        with:
+          body-path: measurements.md

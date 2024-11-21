@@ -4,7 +4,9 @@ import { measureBuildTime } from './measure-build-time.mjs';
 import { measureLinesOfCode } from './measure-loc.mjs';
 import { markdownTable } from 'markdown-table';
 
-const BASE_URL = process.env['BASE_URL'] ?? 'https://angular-music-7f2ba.web.app';
+const BASE_URL =
+  process.env['BASE_URL'] ??
+  'https://angular-music-backend--angular-music-38a04.europe-west4.hosted.app/';
 const OUT_FILE = 'measurements.md';
 
 const content = [

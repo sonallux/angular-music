@@ -37,9 +37,6 @@
     "zone.js": "0.14.8"
   },
   "devDependencies": {
-    "@actions/core": "1.11.1",
-    "@actions/exec": "1.1.1",
-    "@actions/github": "6.0.0",
     "@angular-devkit/build-angular": "17.3.11",
     "@angular/cli": "17.3.11",
     "@angular/compiler-cli": "17.3.12",
@@ -50,7 +47,6 @@
     "@types/jasmine": "4.6.4",
     "@types/js-cookie": "3.0.6",
     "@types/node": "20.11.25",
-    "firebase-tools": "13.23.1",
     "husky": "9.1.6",
     "jasmine-core": "4.6.1",
     "karma": "6.4.4",
