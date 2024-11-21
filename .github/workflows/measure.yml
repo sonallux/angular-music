@@ -1,0 +1,41 @@
+name: Measure
+
+on:
+  check_run:
+    types:
+      - completed
+
+concurrency:
+  group: measure
+
+jobs:
+  measure:
+    if: github.event.check_run.conclusion == 'success'
+    name: Measure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Measure
+        run: npm run measure
+        env:
+          BASE_URL: https://angular-music-backend--angular-music-38a04.europe-west4.hosted.app
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      - name: Upload measurements
+        uses: actions/upload-artifact@v4
+        with:
+          name: measurements.md
+          path: measurements.md
+      # - name: Create or update comment
+      #   uses: marocchino/sticky-pull-request-comment@v2
+      #   with:
+      #     header: measurements
+      #     path: measurements.md
