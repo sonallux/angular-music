@@ -8,6 +8,9 @@ on:
 concurrency:
   group: measure
 
+permissions:
+  contents: write
+
 jobs:
   measure:
     if: github.event.check_run.conclusion == 'success'
