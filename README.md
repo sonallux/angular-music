@@ -1,6 +1,6 @@
 # Angular Music
 
-🚧 This project is still WIP 🚧
+This project is retired because Spotify removed some of the API endpoints this project was built on (see [Introducing some changes to our Web API | Spotify for Developers](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)).
 
 ## Goal
 
